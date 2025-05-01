@@ -1,0 +1,8 @@
+sphinx
+sphinx-rtd-theme
+myst_parser
+
+# Runtime-only deps needed by autodoc
+torch
+numpy
+pandas

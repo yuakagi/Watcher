@@ -1,0 +1,258 @@
+/* ======================================================
+   Font and Base Layout
+   ====================================================== */
+body {
+  font-family: 'Georgia', serif;
+  color: #1a1a1a;
+  background-color: #ffffff;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Georgia', serif;
+  font-weight: 700;
+  color: #111;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 0.2em;
+}
+
+a {
+  color: #0172b3;
+  text-decoration: none;
+}
+a:hover,
+a:focus {
+  color: #004e91;
+  text-decoration: underline;
+}
+a:visited {
+  color: #ca3f3f;
+}
+a:active {
+  color: #044f91;
+}
+
+code, pre {
+  font-family: 'Courier', monospace;
+  background-color: #f7f7f7;
+  color: #000;
+}
+
+/* ======================================================
+   Sidebar Styling
+   ====================================================== */
+:root {
+  --bg-0: #f7f5ee;
+  --bg-1: #e3e0cd;
+  --bg-2: #c7c2a6;
+  --bg-3: #a8a486;
+  --bg-4: #898265;
+  --bg-5: #625f4a;
+}
+
+.wy-nav-side {
+  background: var(--bg-0) !important;
+  color: #4a4a4a;
+  font-family: 'Georgia', serif;
+}
+
+.wy-side-nav-search {
+  background-color: var(--bg-1) !important;
+  border-bottom: 1px solid var(--bg-2) !important;
+  padding: 1.2em 1em;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333 !important;
+}
+
+.wy-side-nav-search > a,
+.wy-side-nav-search > a:visited {
+  color: #333 !important;
+}
+
+.wy-side-nav-search > a > img.logo {
+  margin-right: 8px;
+}
+
+.wy-menu-vertical header,
+.wy-menu-vertical .caption-text {
+  background: transparent !important;
+  padding: 0.5em 1em;
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+}
+
+.wy-menu-vertical li a {
+  background-color: transparent !important;
+  color: #4a4a4a !important;
+  padding: 0.4em 1em;
+  transition: background 0.2s ease;
+}
+
+.wy-menu-vertical li a:hover {
+  background-color: var(--bg-1) !important;
+  color: #000 !important;
+}
+
+.wy-menu-vertical li.current > a,
+.wy-menu-vertical li.on a {
+  background-color: var(--bg-2) !important;
+  font-weight: bold;
+  color: #000 !important;
+}
+
+.wy-menu-vertical li.current > ul li a {
+  background-color: var(--bg-0) !important;
+  color: #4a4a4a !important;
+}
+.wy-menu-vertical li.current > ul li a:hover {
+  background-color: var(--bg-1) !important;
+  color: #000 !important;
+}
+
+/* Mobile header */
+.wy-nav-top {
+  background-color: #e3e0cd !important;
+  color: #333 !important;
+  font-family: 'Georgia', serif;
+}
+.wy-nav-top a,
+.wy-nav-top a:visited {
+  color: #333 !important;
+  font-weight: bold;
+  text-decoration: none;
+}
+.wy-nav-top a:hover {
+  color: #000 !important;
+  text-decoration: underline;
+}
+
+/* ======================================================
+   Function Boxes and Admonitions
+   ====================================================== */
+.viewcode-link,
+.viewcode-link:hover {
+  color: #625f4a !important;
+  font-weight: normal;
+  font-family: Arial, sans-serif;
+  text-decoration: none;
+}
+
+/* Signature block styles */
+.sig {
+  font-family: Arial, sans-serif !important;
+  background-color: var(--bg-0) !important;
+  border-top: 3px solid var(--bg-2) !important;
+  border-left: none !important;
+  box-shadow: none !important;
+  margin-left: 0 !important;
+  padding-left: 0.5em !important;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.sig,
+.sig-name,
+.sig-return {
+  color: #000 !important;
+  font-family: Arial, sans-serif !important;
+}
+
+.sig-param,
+.sig-paren {
+  color: #49566d !important;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.toctree-wrapper li code,
+.toctree-wrapper li .pre,
+.toctree-wrapper li .xref.py,
+.toctree-wrapper li .xref.py.py-obj {
+  all: unset;
+  font-family: Arial, sans-serif;
+  color: #0172b3;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.toctree-wrapper li .xref.py:hover,
+.toctree-wrapper li .xref.py.py-obj:hover {
+  color: #004e91;
+}
+
+div.admonition.warning {
+  background-color: #f9cfce !important;
+  border-left: 6px solid #de6866 !important;
+}
+div.admonition.warning > .admonition-title {
+  background-color: #eda4a7 !important;
+  color: #000;
+}
+
+div.admonition.note {
+  background-color: #c9e7fc !important;
+  border-left: 6px solid #5799d2 !important;
+}
+div.admonition.note > .admonition-title {
+  background-color: #9dccec !important;
+  color: #000;
+}
+
+/* ======================================================
+   Mobile Overflow & Readability Fixes
+   ====================================================== */
+
+/* Prevent nav content from overflowing on small screens */
+.wy-nav-content {
+  overflow-x: hidden;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+/* Field lists like Parameters and Returns */
+.field-list,
+.docutils .field,
+dl.field-list {
+  overflow-x: auto;
+  word-wrap: break-word;
+  white-space: normal;
+  max-width: 100%;
+}
+
+/* Code blocks */
+pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-width: 100%;
+}
+
+/* Signature line overflow control */
+dl.class > dt,
+dl.function > dt {
+  overflow-x: auto;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Shrink text on narrow screens for better fit */
+@media (max-width: 768px) {
+  .sig {
+    font-size: 90%;
+    padding-right: 0.5em;
+  }
+  pre {
+    font-size: 90%;
+  }
+  .wy-nav-content {
+    padding-left: 0.7em;
+    padding-right: 0.7em;
+  }
+}

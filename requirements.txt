@@ -1,0 +1,69 @@
+# ==============================================================================
+# ==============================================================================
+# Minimal Installation Requirements for Sphinx Autodoc
+# ==============================================================================
+# This file lists only the essential Python dependencies needed to install the
+# 'watcher' package for documentation generation using Sphinx autodoc.
+#
+# NOTE:
+#   - This is **not** intended for actual development or deployment.
+#   - It omits GPU, RAPIDS, and CUDA-specific packages to avoid installation issues.
+#   - For full functionality, use the Docker setup based on NVIDIA PyTorch containers
+#     (e.g., nvcr.io/nvidia/pytorch:24.05-py3). See the Dockerfile for details.
+# ==============================================================================
+
+# ----------------------
+# Core packages
+# ----------------------
+torch==2.3.0
+torchvision==0.18.0
+torchaudio==2.3.0
+numpy==1.24.4
+pandas==2.2.1
+scipy==1.13.0
+matplotlib==3.8.4
+protobuf==3.20.* # For pytorch/tensorboard 
+
+# ----------------------
+# Database & ORM Support
+# ----------------------
+psycopg==3.2.6               # PostgreSQL client (psycopg3)
+SQLAlchemy==2.0.40           # SQL ORM
+
+# -----------------
+# Data & Statistics
+# -----------------
+statsmodels==0.14.4          # Statistical modeling and tests
+seaborn==0.13.2              # Statistical plotting
+tqdm==4.67.1                 # Progress bars
+psutil==7.0.0                # Process and system monitoring
+
+# ----------------------------
+# Visualization & Notebooks
+# ----------------------------
+tensorboard==2.9.0           # TensorBoard for visualization
+jupyterlab==4.4.0            # JupyterLab interface
+ipywidgets==8.1.5            # Interactive widgets
+ipython==8.21.0              # Enhanced interactive shell
+
+# --------------------------
+# Web App / API Dependencies
+# --------------------------
+Flask==3.1.0                 # Flask web framework
+Flask-Limiter==3.12          # Rate limiting for Flask
+limits[redis]==4.7.1         # Storage backend for rate limiting (compatible version)
+redis==5.0.0                 # Redis client for Python
+gunicorn==23.0.0             # WSGI server for Flask
+
+# -------
+# General
+# -------
+requests==2.31.0             # HTTP requests
+
+# --------
+# Optional
+# --------
+torch-tb-profiler==0.4.3     # Torch TensorBoard Profiler
+Faker==37.1.0                # Synthetic data generator
+
+
