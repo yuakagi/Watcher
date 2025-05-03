@@ -122,7 +122,7 @@ Tutorial
 
    .. note::
 
-      - This API is designed to be used as the simulator backend in our digital-twin EHR system (https://github.com/yuakagi/project_twin)
+      - This API is designed to be used as the simulator backend in our digital-twin EHR system (https://github.com/yuakagi/TwinEHR)
       - Please use this API in combination with digital-twin EHR together with this AI
 
    **Launching the API Server**

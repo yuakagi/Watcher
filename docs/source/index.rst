@@ -12,6 +12,19 @@ Start with 👉 :doc:`Tutorial <tutorial>`
 
 GitHub 👉 https://github.com/yuakagi/Watcher
 
+Model Overview
+======================
+
+.. image:: _static/model_overview.png
+    :alt: Watcher model architecture
+    :width: 600px
+    :class: center
+
+Watcher takes a patient timeline—real or synthetic—as input and autoregressively generates future clinical events.
+It encodes categorical, numeric, and temporal entries into vectors, which are processed by decoder-only transformer layers.
+At each step, the model outputs a probability distribution over its entire vocabulary.
+
+
 Digital-Twin EHR System
 =======================
 Watcher serves as the backend simulator in our digital-twin framework (Figure):
@@ -24,7 +37,7 @@ This system enables the simulation of patient trajectories based on real-world c
 It consists of three components:
 
 1. **AI model** `[GitHub] <https://github.com/yuakagi/Watcher>`_: A generative model that simulates patient timelines.  (👈 This package you are currently reading.)
-2. **Digital-twin EHR** `[GitHub] <https://github.com/yuakagi/project_twin>`_: A web-based, AI-powered EHR that interacts with the model and visualizes simulation results.  
+2. **Digital-twin EHR** `[GitHub] <https://github.com/yuakagi/TwinEHR>`_: A web-based, AI-powered EHR that interacts with the model and visualizes simulation results.  
 3. **Data pipeline**: A data pipeline that supplies real-world clinical data to the data server.  (Use `our data pipeline <https://github.com/yuakagi/ssmixtools>`_ or,use **clinical data you prepared yourself**)
 
 To use the full digital-twin system, please follow these steps:
@@ -46,8 +59,8 @@ To use the full digital-twin system, please follow these steps:
       - This will be the API server that the digital-twin EHR system will communicate with.
       - Launch the server following the :doc:`tutorial <tutorial>`.
 
-   Step 5: Launch the digital-twin EHR system (Use project_twin)
-      - project_twin is a Django based web application that provides a user interface for the simulation API.
+   Step 5: Launch the digital-twin EHR system (Use TwinEHR)
+      - TwinEHR is a Django based web application that provides a user interface for the simulation API.
       - Clone the repository and set proper environment variables to connect to the simulation API server.
       - Then, run the Django server and access the web application.
 

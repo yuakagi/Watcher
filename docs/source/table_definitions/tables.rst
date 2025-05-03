@@ -89,7 +89,7 @@ Basic demographic information for each patient
 .. note:: 
 
     - First and last names are not used by the Watcher AI model. **The model does not learn or memorize patient names**.
-    - Patient name columns exist only for display in the `digital-twin EHR app <https://github.com/yuakagi/project_twin>`_.
+    - Patient name columns exist only for display in the `digital-twin EHR app <https://github.com/yuakagi/TwinEHR>`_.
     - Therefore, **patient names can be deidentified, random, or left empty**.
     - Dates of birth are used only to compute patient age at each event. **The model does not learn or memorize DOBs**.
 

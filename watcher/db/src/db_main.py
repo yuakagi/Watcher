@@ -14,11 +14,12 @@ from ...utils import load_db_engine, load_psycopg_params
 
 def _generate_create_table_query(
     table_name: str, table_params: dict, schema: str = "public"
-) -> str:
+) -> tuple[str, list[str]]:
     """
     Generate a CREATE TABLE SQL query from a dictionary definition.
     """
     columns_definitions = []
+    index_statements = []
 
     # Generate IDs
     if table_params.get("id_prefix"):
@@ -49,7 +50,13 @@ def _generate_create_table_query(
     CREATE TABLE IF NOT EXISTS {schema}.{table_name} ({joind_defs});
     """
 
-    return query.strip()
+    # Generate CREATE INDEX statements
+    for index_col in table_params.get("index", []):
+        index_name = f"idx_{table_name}_{index_col}"
+        index_sql = f"CREATE INDEX IF NOT EXISTS {index_name} ON {schema}.{table_name} ({index_col});"
+        index_statements.append(index_sql)
+
+    return query.strip(), index_statements
 
 
 def create_schema(schema: str = "public"):
@@ -101,10 +108,12 @@ def create_empty_tables(schema: str = "public"):
                     table_existing = table_exists(cur, table=table, schema=schema)
                     if not table_existing:
                         # Create query
-                        query = _generate_create_table_query(
+                        table_sql, index_sqls = _generate_create_table_query(
                             table_name=table, table_params=table_params, schema=schema
                         )
-                        cur.execute(query)
+                        cur.execute(table_sql)
+                        for sql in index_sqls:
+                            cur.execute(sql)
                         print(f"Table '{table}' was created.")
                     else:
                         print(f"table '{table}' already exists.")

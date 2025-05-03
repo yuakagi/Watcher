@@ -107,6 +107,7 @@ RECORD_PARAMS = {
         # TODO: make 'COL_PID' primary key.
         "primary_key": COL_RECORD_ID,
         "foreign_key": None,
+        "index": [COL_PID],
     },
     TB_ADMISSIONS: {
         "source_csv": SRC_ADMISSION_TABLE_PATTERN,
@@ -130,6 +131,7 @@ RECORD_PARAMS = {
         },
         "primary_key": COL_RECORD_ID,
         "foreign_key": (COL_PID, TB_PATIENTS),
+        "index": [COL_PID],
     },
     TB_DISCHARGES: {
         "source_csv": SRC_DISCHARGE_TABLE_PATTERN,
@@ -154,6 +156,7 @@ RECORD_PARAMS = {
         },
         "primary_key": COL_RECORD_ID,
         "foreign_key": (COL_PID, TB_PATIENTS),
+        "index": [COL_PID],
     },
     TB_DIAGNOSES: {
         "source_csv": SRC_DIAGNOSIS_TABLE_PATTERN,
@@ -182,6 +185,7 @@ RECORD_PARAMS = {
         },
         "primary_key": COL_RECORD_ID,
         "foreign_key": (COL_PID, TB_PATIENTS),
+        "index": [COL_PID, COL_ITEM_CODE],
     },
     TB_PRESC_ORD: {
         "source_csv": SRC_PRESCRIPTION_ORDER_TABLE_PATTERN,
@@ -205,6 +209,7 @@ RECORD_PARAMS = {
         },
         "primary_key": COL_RECORD_ID,
         "foreign_key": (COL_PID, TB_PATIENTS),
+        "index": [COL_PID, COL_ITEM_CODE],
     },
     TB_INJEC_ORD: {
         "source_csv": SRC_INJECTION_ORDER_TABLE_PATTERN,
@@ -228,6 +233,7 @@ RECORD_PARAMS = {
         },
         "primary_key": COL_RECORD_ID,
         "foreign_key": (COL_PID, TB_PATIENTS),
+        "index": [COL_PID, COL_ITEM_CODE],
     },
     TB_LAB_RES: {
         "source_csv": SRC_LAB_RESULT_TABLE_PATTERN,
@@ -271,5 +277,6 @@ RECORD_PARAMS = {
         },
         "primary_key": COL_RECORD_ID,
         "foreign_key": (COL_PID, TB_PATIENTS),
+        "index": [COL_PID, COL_ITEM_CODE],
     },
 }
