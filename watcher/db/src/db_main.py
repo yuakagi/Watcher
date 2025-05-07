@@ -5,6 +5,7 @@ import glob
 from datetime import datetime, date
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from tqdm import tqdm
+from sqlalchemy.exc import SQLAlchemyError
 import psycopg
 from psycopg import ServerCursor
 import pandas as pd
@@ -14,12 +15,11 @@ from ...utils import load_db_engine, load_psycopg_params
 
 def _generate_create_table_query(
     table_name: str, table_params: dict, schema: str = "public"
-) -> tuple[str, list[str]]:
+) -> str:
     """
     Generate a CREATE TABLE SQL query from a dictionary definition.
     """
     columns_definitions = []
-    index_statements = []
 
     # Generate IDs
     if table_params.get("id_prefix"):
@@ -50,13 +50,7 @@ def _generate_create_table_query(
     CREATE TABLE IF NOT EXISTS {schema}.{table_name} ({joind_defs});
     """
 
-    # Generate CREATE INDEX statements
-    for index_col in table_params.get("index", []):
-        index_name = f"idx_{table_name}_{index_col}"
-        index_sql = f"CREATE INDEX IF NOT EXISTS {index_name} ON {schema}.{table_name} ({index_col});"
-        index_statements.append(index_sql)
-
-    return query.strip(), index_statements
+    return query.strip()
 
 
 def create_schema(schema: str = "public"):
@@ -108,12 +102,10 @@ def create_empty_tables(schema: str = "public"):
                     table_existing = table_exists(cur, table=table, schema=schema)
                     if not table_existing:
                         # Create query
-                        table_sql, index_sqls = _generate_create_table_query(
+                        query = _generate_create_table_query(
                             table_name=table, table_params=table_params, schema=schema
                         )
-                        cur.execute(table_sql)
-                        for sql in index_sqls:
-                            cur.execute(sql)
+                        cur.execute(query)
                         print(f"Table '{table}' was created.")
                     else:
                         print(f"table '{table}' already exists.")
@@ -166,20 +158,32 @@ def _upload_single_csv(
 
             # Data type conversion
             dtype = params["dtype"]
+            null_mask = df[col].isna()
             if dtype == datetime:
-                df[col] = pd.to_datetime(
-                    df[col],
+                df["new_col"] = pd.NaT
+                df.loc[~null_mask, "new_col"] = pd.to_datetime(
+                    df.loc[~null_mask, col],
                     format="%Y/%m/%d %H:%M",
                     errors="raise",
                 )
             elif dtype == date:
-                df[col] = pd.to_datetime(
-                    df[col],
+                df["new_col"] = pd.NaT
+                df.loc[~null_mask, "new_col"] = pd.to_datetime(
+                    df.loc[~null_mask, col],
                     format="%Y/%m/%d",
                     errors="raise",
                 )
+            elif dtype == float:
+                df["new_col"] = pd.to_numeric(df[col], errors="coerce")
+            elif dtype == int:
+                df["new_col"] = pd.to_numeric(df[col], errors="coerce").astype("Int64")
             else:
-                df[col] = df[col].astype(dtype)
+                df["new_col"] = pd.NA
+                df.loc[~null_mask, "new_col"] = df.loc[~null_mask, col].astype(dtype)
+            # Assign
+            df[col] = df["new_col"]
+            df.drop("new_col", axis=1, inplace=True)
+
         # Missing col
         else:
             # Raise if the column is required
@@ -212,8 +216,13 @@ def _upload_single_csv(
     df = df[valid_cols]
 
     # Write
-    engine = load_db_engine()
-    df.to_sql(table, con=engine, schema=schema, if_exists="append", index=False)
+    try:
+        engine = load_db_engine()
+        df.to_sql(table, con=engine, schema=schema, if_exists="append", index=False)
+    except SQLAlchemyError as e:
+        # This will show you the underlying INSERT or COPY error
+        print("to_sql failed:", e)
+        raise
 
 
 def upload_csv(
