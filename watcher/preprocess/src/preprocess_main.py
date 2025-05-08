@@ -7,6 +7,8 @@ import json
 import tempfile
 from datetime import datetime
 from typing import Literal
+import pandas as pd
+import torch
 from torch import Tensor
 from .cleaning import clean_data, clean_data_single
 from .split import find_visiting_dates, split_patient_ids
@@ -26,7 +28,12 @@ from ...general_params import (
     get_settings,
 )
 from ...general_params import watcher_config as config
-from ...utils import LogRedirector, load_categorical_dim, load_patient_id_dict
+from ...utils import (
+    LogRedirector,
+    load_categorical_dim,
+    load_patient_id_dict,
+    preprocess_timedelta_series,
+)
 
 
 def create_dataset(
@@ -269,6 +276,23 @@ def preprocess_for_inference(
     )
     timeline = timeline_and_labels[:, :-1].unsqueeze(0)
     catalog_indexes = timeline_and_labels[:, -1].long().tolist()
+
+    # Handling for edge cases
+    if torch.isinan(timeline[0, 0, 0]):
+        if end is not None:
+            # If the initial age row is null (No records other than demographics),
+            # Create the first age row using 'end'
+            end_date = datetime.strptime(end, "%Y%m%d %H%M").date()
+            end_diff = end_date - dob
+            first_age_vals = (
+                preprocess_timedelta_series(pd.Series([end_diff])).iloc[0].values
+            )
+            first_age_vals = torch.from_numpy(first_age_vals)
+            timeline[0, 0, : first_age_vals.size(0)] = first_age_vals
+        else:
+            # Current implementation relies on 'end'. Therefore, this is skipped if end is None.
+            # TODO (Yu Akagi): Make this handlings available without 'end'.
+            pass
 
     return timeline, catalog_indexes, dob
 
