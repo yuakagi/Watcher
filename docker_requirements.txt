@@ -16,14 +16,14 @@
 # ----------------------
 psycopg==3.2.6               # PostgreSQL client (psycopg3)
 SQLAlchemy==2.0.40           # SQL ORM
+psutil==7.0.0                # Process and system monitoring
+tqdm==4.67.1
 
 # -----------------
 # Data & Statistics
 # -----------------
 statsmodels==0.14.4          # Statistical modeling and tests
 seaborn==0.13.2              # Statistical plotting
-tqdm==4.67.1                 # Progress bars
-psutil==7.0.0                # Process and system monitoring
 
 # ----------------------------
 # Visualization & Notebooks
@@ -39,7 +39,7 @@ ipython==8.21.0              # Enhanced interactive shell
 Flask==3.1.0                 # Flask web framework
 Flask-Limiter==3.12          # Rate limiting for Flask
 limits[redis]==4.7.1         # Storage backend for rate limiting (compatible version)
-redis==5.0.0                 # Redis client for Python
+redis==5.2.1                 # Redis client for Python
 gunicorn==23.0.0             # WSGI server for Flask
 
 # -------
