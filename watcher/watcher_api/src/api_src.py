@@ -26,7 +26,7 @@ STATE_204 = {
     "status": 204,
     "progress": "Empty",
     "errors": ["Request not found"],
-    "updated": "",
+    "updated": datetime.now().isoformat(),
 }
 
 # ==================
@@ -91,6 +91,7 @@ def submit_monte_carlo_request():
             "status": 202,
             "progress": "Waiting for data preprocessing",
             "errors": [],
+            "updated": datetime.now().isoformat(),
         }
 
         # Return the simulation id

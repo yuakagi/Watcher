@@ -278,7 +278,7 @@ def preprocess_for_inference(
     catalog_indexes = timeline_and_labels[:, -1].long().tolist()
 
     # Handling for edge cases
-    if torch.isinan(timeline[0, 0, 0]):
+    if torch.isnan(timeline[0, 0, 0]):
         if end is not None:
             # If the initial age row is null (No records other than demographics),
             # Create the first age row using 'end'
