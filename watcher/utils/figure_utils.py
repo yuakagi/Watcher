@@ -479,6 +479,10 @@ def calib(
         y = np.array(y)
     if not isinstance(t, np.ndarray):
         t = np.array(t)
+    # Clip once, immediately, and use this everywhere
+    eps = 1e-4
+    y = np.clip(y, eps, 1 - eps)
+    # Sort
     sorted_index = y.argsort()
     y = y[sorted_index]
     t = t[sorted_index]
@@ -502,9 +506,6 @@ def calib(
     valid_mask = ~np.isnan(y) & ~np.isnan(t) & ~np.isinf(y) & ~np.isinf(t)
     y_clean, t_clean = y[valid_mask], t[valid_mask]
 
-    # Clip values to avoid near-zero instability
-    eps = 1e-10  # Small value to prevent numerical issues
-    y_clean = np.clip(y_clean, eps, 1 - eps)
     # Apply LOWESS safely
     raw_loess_ys = lowess(endog=t_clean, exog=y_clean, **loess_kw)
     o_e_ratio, calibration_in_the_large, slope, intercept = _quantify_calibration(y, t)

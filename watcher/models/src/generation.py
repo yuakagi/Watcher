@@ -133,7 +133,6 @@ def monte_carlo(
         prompt_t, prompt_c, latest_time = model.preprocess_prompt(
             timeline, catalog_ids, time_anchor
         )
-        print(prompt_t, prompt_c, latest_time)
         # Shuffle
         if config.SHUFFLE_INPUT and prompt_t.size(1) > config.DEMOGRAPHIC_ROWS:
             shuffled_indexes = shuffle_timeline_matrix_indexes(

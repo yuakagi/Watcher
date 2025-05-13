@@ -1,6 +1,7 @@
 # Dev files 
 *_mc_adm.py
 init_db.py
+api_launcher_dev.py
 
 # Dev dirs
 **/notebooks/dev/
