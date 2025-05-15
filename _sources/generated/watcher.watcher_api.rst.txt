@@ -1,0 +1,7 @@
+watcher.watcher\_api package
+============================
+
+.. automodule:: watcher.watcher_api
+   :members:
+   :undoc-members:
+   :show-inheritance:
