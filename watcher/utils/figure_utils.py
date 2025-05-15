@@ -626,28 +626,32 @@ def plot_calibration(
             percentile=percentile,
         )
         # Metrics
-        slope_raw = quants.loc["slope", "raw"].item()
-        slope_l = quants.loc["slope", "low"].item()
-        slope_h = quants.loc["slope", "high"].item()
-        slope_mid = (slope_l + slope_h) / 2
-        slope_span = (slope_h - slope_l) / 2
-        label_with_slope = label + f": {slope_mid:.3f} ± {slope_span:.3f}"
+        oe_raw = quants.loc["oe", "raw"].item()
+        oe_l = quants.loc["oe", "low"].item()
+        oe_h = quants.loc["oe", "high"].item()
+        oe_mid = (oe_l + oe_h) / 2
+        oe_span = (oe_h - oe_l) / 2
+        label_with_oe = label + f": {oe_mid:.3f} ± {oe_span:.3f}"
         if verbose:
             metrics = []
+            # Sope
+            slope_raw = quants.loc["slope", "raw"].item()
+            slope_l = quants.loc["slope", "low"].item()
+            slope_h = quants.loc["slope", "high"].item()
             metrics.append(f"Slope:{slope_raw:.3f} ({slope_l:.3f} – {slope_h:.3f})")
+            # Intercept
             intercept_raw = quants.loc["intercept", "raw"].item()
             intercept_l = quants.loc["intercept", "low"].item()
             intercept_h = quants.loc["intercept", "high"].item()
             metrics.append(
                 f"Intercept:{intercept_raw:.3f} ({intercept_l:.3f} – {intercept_h:.3f})"
             )
-            oe_raw = quants.loc["oe", "raw"].item()
-            oe_l = quants.loc["oe", "low"].item()
-            oe_h = quants.loc["oe", "high"].item()
+            # OE
             metrics.append(f"O/E:{oe_raw:.3f} ({oe_l:.3f} – {oe_h:.3f})")
             citl_raw = quants.loc["citl", "raw"].item()
             citl_l = quants.loc["citl", "low"].item()
             citl_h = quants.loc["citl", "high"].item()
+            # Calibration-in-the-large
             metrics.append(
                 f"Calibration-in-the-large:{citl_raw:.3f} ({citl_l:.3f} – {citl_h:.3f})"
             )
@@ -660,7 +664,7 @@ def plot_calibration(
             x=loess.index,
             y=loess["raw"],
             ax=ax,
-            label=label_with_slope,
+            label=label_with_oe,
             color=color,
         )  # Plot LOESS
         ax.fill_between(
