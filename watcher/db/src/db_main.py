@@ -293,7 +293,7 @@ def init_db_with_csv(
         - If `delete_existing` is True, all tables in the schema will be dropped. This action is irreversible.
 
     Note:
-        - Prepare source clinical records as separated CSV files in accordance with :ref:`source_csv_tables`.
+        - Prepare source clinical records as separated CSV files in accordance with :ref:`clinical_records`.
 
 
     Example:

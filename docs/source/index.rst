@@ -1,26 +1,31 @@
 Watcher Documentation
 ======================
 
-Watcher is a generative AI model that simulates patient timelines.
-It enables computational modeling of patient trajectories.
-These capabilities support downstream applications such as personalized medicine, in-silico clinical trials, and counterfactual predictions.
+Watcher is a generative AI model that simulates patient timelines. The AI takes a patient timeline—real or synthetic—as input and autoregressively generates future clinical timeline.
+It enables computational modeling of patient trajectories. These capabilities may support future downstream applications such as personalized medicine, in-silico clinical trials, and counterfactual predictions.
 Or, it can simply synthesize large-scale synthetic patient databases.
 
-Watcher serves as the backend simulator in our digital-twin framework (see below). However, it can also be used independently as a stand-alone simulation engine for various applications.
+.. image:: _static/generation_video.gif
+    :alt: How the model generates patient timelines
+    :width: 800px
+    :class: center
+
+Watcher was initially designed as the backend simulator in our digital-twin framework (see below). However, it can also be used independently as a stand-alone simulation engine for various applications.
 
 Start with 👉 :doc:`Tutorial <tutorial>`
 
 GitHub 👉 https://github.com/yuakagi/Watcher
+
 
 Model Overview
 ======================
 
 .. image:: _static/model_overview.png
     :alt: Watcher model architecture
-    :width: 600px
+    :width: 800px
     :class: center
 
-Watcher takes a patient timeline—real or synthetic—as input and autoregressively generates future clinical events.
+Watcher takes a patient timeline as input and autoregressively generates future clinical events.
 It encodes categorical, numeric, and temporal entries into vectors, which are processed by decoder-only transformer layers.
 At each step, the model outputs a probability distribution over its entire vocabulary.
 
@@ -31,7 +36,7 @@ Watcher serves as the backend simulator in our digital-twin framework (Figure):
 
 .. image:: _static/digital_twin_system.png
     :alt: Watcher model architecture
-    :width: 600px
+    :width: 800px
     :class: center
 This system enables the simulation of patient trajectories based on real-world clinical data, allowing opportunities for possible downstream applications such as personalized medicine, in-silico clinical trials and more.
 It consists of three components:
