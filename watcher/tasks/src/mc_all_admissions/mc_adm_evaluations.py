@@ -8,6 +8,7 @@ import psutil
 from tqdm import tqdm
 import numpy as np
 import pandas as pd
+from scipy.sparse import csr_matrix  # Sparse matrix
 from .general_ivds import GENERAL_IVDS
 from ....general_params import watcher_config as config
 from ....general_params.watcher_settings import BaseSettingsManager
@@ -141,6 +142,16 @@ NEUTROPENIA_SETS = {
 ATC_RECORD_TYPES = [config.RECORD_TYPE_NUMBERS[t] for t in [config.PSC_O, config.INJ_O]]
 
 
+def _select_codes(df: pd.DataFrame, percent: float = 90) -> list[str]:
+    """Select top N codes based on percent appearing in the dataset."""
+    df = df.sort_values("count", ascending=False)
+    threshold = df["count"].sum() * percent / 100
+    df["cumsum"] = df["count"].cumsum()
+    filtered_labs = df[df["cumsum"] <= threshold]
+    selected_codes = filtered_labs[config.COL_ITEM_CODE].unique().tolist()
+    return selected_codes
+
+
 def _count_codes(
     df: pd.DataFrame,
     target_dx_codes: list,
@@ -199,9 +210,11 @@ def _count_codes(
 
             # Convert data to matrix
             # NOTE: use np.uint8 for efficient computing & memory use
-            counts_np = pivot_table.drop("patient_id", axis=1).values.astype(np.uint8)
+            # counts_np = pivot_table.drop("patient_id", axis=1).values.astype(np.uint8)
+            counts_np = pivot_table.drop("patient_id", axis=1).values
+        counts_sparse = csr_matrix(counts_np)  # Sparse matrix for memory efficiency.
 
-        counts[category] = {"total": all_code_counts_np, "counts": counts_np}
+        counts[category] = {"total": all_code_counts_np, "counts": counts_sparse}
 
     return counts
 
@@ -1121,7 +1134,7 @@ def _eval_mc_adm_count_fn_future(
 def eval_mc_adm_count(
     result_dir: str,
     dataset_dir: str,
-    n_codes: int,
+    code_percentile: int,
     max_workers: int = None,
 ):
     # Select target codes
@@ -1148,10 +1161,28 @@ def eval_mc_adm_count(
             usecols=list(dtypes.keys()),
             dtype=dtypes,
         ).sort_values("train_ID_and_train_period", ascending=False)
-        target_dx_codes = dx_code_counts_df["original_value"].tolist()[:n_codes]
-        target_med_codes = med_code_counts_df["original_value"].tolist()[:n_codes]
-        target_lab_codes = lab_code_counts_df["original_value"].tolist()[:n_codes]
+        # Rename
+        col_mapper = {
+            "original_value": config.COL_ITEM_CODE,
+            "train_ID_and_train_period": "count",
+        }
+        dx_code_counts_df.rename(columns=col_mapper, inplace=True)
+        med_code_counts_df.rename(columns=col_mapper, inplace=True)
+        lab_code_counts_df.rename(columns=col_mapper, inplace=True)
+        # Select codes
+        target_dx_codes = _select_codes(
+            dx_code_counts_df[[config.COL_ITEM_CODE, "count"]], percent=code_percentile
+        )
+        target_med_codes = _select_codes(
+            med_code_counts_df[[config.COL_ITEM_CODE, "count"]], percent=code_percentile
+        )
+        target_lab_codes = _select_codes(
+            lab_code_counts_df[[config.COL_ITEM_CODE, "count"]], percent=code_percentile
+        )
         del med_code_counts_df, lab_code_counts_df, dx_code_counts_df
+        print("N dx codes;", len(target_dx_codes))
+        print("N med codes;", len(target_med_codes))
+        print("N lab codes;", len(target_lab_codes))
 
         # Collect stats
         codes_kwargs = {
@@ -1461,14 +1492,13 @@ def eval_mc_adm_corr(
     )
     settings_manager.write()
     try:
+        # Select codes
         num_stats = load_numeric_stats(file_path=None, single_unit=True).sort_values(
             "count", ascending=False
         )
-        threshold = num_stats["count"].sum() * code_percentile / 100
-        num_stats["cumsum"] = num_stats["count"].cumsum()
-        filtered_labs = num_stats[num_stats["cumsum"] <= threshold]
-        selected_codes = filtered_labs[config.COL_ITEM_CODE].tolist()
-
+        selected_codes = _select_codes(
+            df=num_stats[[config.COL_ITEM_CODE, "count"]], percent=code_percentile
+        )
         # selected_codes = list(GENERAL_IVDS.values())
         if max_workers is None:
             max_workers = psutil.cpu_count(logical=False) - 1

@@ -13,7 +13,7 @@ from .paletes import CUSTOM_PALETTES
 def set_figure_params(
     font_family="Arial",
     font_small=5,
-    font_medium=5,
+    font_medium=6,
     font_large=7,
     spine_width=0.5,
     line_width=1,
@@ -219,7 +219,7 @@ def plot_roc(
         edgecolor="none",
     )
     legend.get_frame().set_facecolor(CUSTOM_PALETTES["bg_gray"][0])
-    legend.get_frame().set_alpha(0.3)
+    legend.get_frame().set_alpha(0.4)
     ax.spines[["right", "top"]].set_visible(False)
     ax.set_ylim(0, 1)
     ax.set_xlim(0, 1)
@@ -387,7 +387,7 @@ def plot_prc(
         edgecolor="none",
     )
     legend.get_frame().set_facecolor(CUSTOM_PALETTES["bg_gray"][0])
-    legend.get_frame().set_alpha(0.3)
+    legend.get_frame().set_alpha(0.4)
     ax.spines[["right", "top"]].set_visible(False)
     ax.set_ylim(0, 1)
     ax.set_xlim(0, 1)
@@ -582,6 +582,7 @@ def plot_calibration(
     ts: list[np.ndarray] | np.ndarray,
     labels: list[str],
     ax,
+    plot_last_only: bool = False,
     colors: list | None = None,
     verbose: bool = True,
     show_bars: bool = True,
@@ -617,137 +618,138 @@ def plot_calibration(
         colors = colors[1:-1]
 
     for i, (y, t, label, color) in enumerate(zip(ys, ts, labels, colors)):
-        # Compute plotted values and metrics
-        loess, bins, quants = calib(
-            y,
-            t,
-            loess_frac=loess_frac,
-            n_resampling=n_resampling,
-            percentile=percentile,
-        )
-        # Metrics
-        oe_raw = quants.loc["oe", "raw"].item()
-        oe_l = quants.loc["oe", "low"].item()
-        oe_h = quants.loc["oe", "high"].item()
-        oe_mid = (oe_l + oe_h) / 2
-        oe_span = (oe_h - oe_l) / 2
-        label_with_oe = label + f": {oe_mid:.3f} ± {oe_span:.3f}"
-        if verbose:
-            metrics = []
-            # Sope
-            slope_raw = quants.loc["slope", "raw"].item()
-            slope_l = quants.loc["slope", "low"].item()
-            slope_h = quants.loc["slope", "high"].item()
-            metrics.append(f"Slope:{slope_raw:.3f} ({slope_l:.3f} – {slope_h:.3f})")
-            # Intercept
-            intercept_raw = quants.loc["intercept", "raw"].item()
-            intercept_l = quants.loc["intercept", "low"].item()
-            intercept_h = quants.loc["intercept", "high"].item()
-            metrics.append(
-                f"Intercept:{intercept_raw:.3f} ({intercept_l:.3f} – {intercept_h:.3f})"
+        if not (plot_last_only and i != len(ys) - 1):
+            # Compute plotted values and metrics
+            loess, bins, quants = calib(
+                y,
+                t,
+                loess_frac=loess_frac,
+                n_resampling=n_resampling,
+                percentile=percentile,
             )
-            # OE
-            metrics.append(f"O/E:{oe_raw:.3f} ({oe_l:.3f} – {oe_h:.3f})")
-            citl_raw = quants.loc["citl", "raw"].item()
-            citl_l = quants.loc["citl", "low"].item()
-            citl_h = quants.loc["citl", "high"].item()
-            # Calibration-in-the-large
-            metrics.append(
-                f"Calibration-in-the-large:{citl_raw:.3f} ({citl_l:.3f} – {citl_h:.3f})"
-            )
-            joined_metrics = ",\n".join(metrics)
-            metrics_str = f"***Metrics from '{label}'***\n {joined_metrics}"
-            print(metrics_str)
+            # Metrics
+            oe_raw = quants.loc["oe", "raw"].item()
+            oe_l = quants.loc["oe", "low"].item()
+            oe_h = quants.loc["oe", "high"].item()
+            oe_mid = (oe_l + oe_h) / 2
+            oe_span = (oe_h - oe_l) / 2
+            label_with_oe = label + f": {oe_mid:.3f} ± {oe_span:.3f}"
+            if verbose:
+                metrics = []
+                # Sope
+                slope_raw = quants.loc["slope", "raw"].item()
+                slope_l = quants.loc["slope", "low"].item()
+                slope_h = quants.loc["slope", "high"].item()
+                metrics.append(f"Slope:{slope_raw:.3f} ({slope_l:.3f} – {slope_h:.3f})")
+                # Intercept
+                intercept_raw = quants.loc["intercept", "raw"].item()
+                intercept_l = quants.loc["intercept", "low"].item()
+                intercept_h = quants.loc["intercept", "high"].item()
+                metrics.append(
+                    f"Intercept:{intercept_raw:.3f} ({intercept_l:.3f} – {intercept_h:.3f})"
+                )
+                # OE
+                metrics.append(f"O/E:{oe_raw:.3f} ({oe_l:.3f} – {oe_h:.3f})")
+                citl_raw = quants.loc["citl", "raw"].item()
+                citl_l = quants.loc["citl", "low"].item()
+                citl_h = quants.loc["citl", "high"].item()
+                # Calibration-in-the-large
+                metrics.append(
+                    f"Calibration-in-the-large:{citl_raw:.3f} ({citl_l:.3f} – {citl_h:.3f})"
+                )
+                joined_metrics = ",\n".join(metrics)
+                metrics_str = f"***Metrics from '{label}'***\n {joined_metrics}"
+                print(metrics_str)
 
-        # Calibration curve
-        sns.lineplot(
-            x=loess.index,
-            y=loess["raw"],
-            ax=ax,
-            label=label_with_oe,
-            color=color,
-        )  # Plot LOESS
-        ax.fill_between(
-            loess.index,
-            loess["low"],
-            loess["high"],
-            color=color,
-            alpha=0.3,
-            edgecolor=None,
-        )
-
-        # Plot bins and errorbars
-        if (i == len(ys) - 1) and show_bars:
-            # Skip bins with no items
-            nonnull_bins = bins.dropna()
-            y_error = np.abs(
-                np.vstack([nonnull_bins["low"].values, nonnull_bins["high"].values])
-                - nonnull_bins["raw"].values
-            )
-            ax.errorbar(
-                x=nonnull_bins.index.values,
-                y=nonnull_bins["raw"].values,
-                yerr=y_error,
-                capsize=plt.rcParams["lines.markersize"] * 1.2,
-                ms=plt.rcParams["lines.markersize"],
-                capthick=0.5,
-                fmt="o",
-                color=CUSTOM_PALETTES["bg_gray"][-1],
-                linewidth=plt.rcParams["axes.linewidth"],
-            )
-
-        # Hist
-        if (i == len(ys) - 1) and show_hist:
-            divider = make_axes_locatable(ax)
-            ax_hist = divider.append_axes("bottom", size=0.15, pad=0.15, sharex=ax)
-            bin_boundaries = np.linspace(0, 1, n_bins + 1)
-            hist_counts = []
-            for i, lower_b in enumerate(bin_boundaries[:-1]):
-                upper_b = bin_boundaries[i + 1]
-                if i != n_bins:
-                    h_count = ((y >= lower_b) & (y < upper_b)).sum()
-                else:
-                    h_count = ((y >= lower_b) & (y <= upper_b)).sum()
-                hist_counts.append(h_count)
-            bin_centers = bins.index.values
-            bin_width = bin_centers[1] - bin_centers[0]
-            hist_counts = np.array(hist_counts)
-            if hist_log_scale:
-                hist_counts = np.log10(hist_counts)
-            ax_hist.bar(
-                bin_centers,
-                hist_counts,
+            # Calibration curve
+            sns.lineplot(
+                x=loess.index,
+                y=loess["raw"],
+                ax=ax,
+                label=label_with_oe,
                 color=color,
-                edgecolor="w",
-                width=bin_width,
+            )  # Plot LOESS
+            ax.fill_between(
+                loess.index,
+                loess["low"],
+                loess["high"],
+                color=color,
+                alpha=0.3,
+                edgecolor=None,
             )
-            # Configure ax for hist
-            ax_hist.set_xlabel(None)
-            ax_hist.set_ylabel(None)
-            ax_hist.spines[["right", "top"]].set_visible(False)
-            # Refresh the ticks first
-            if hist_log_scale:
-                max_power = int(np.floor(hist_counts.max()))
-                yticks = [p for p in range(max_power + 1)]
-                yticklabels = []
-                for t in yticks:
-                    if t == 0:
-                        yticklabels.append("0")
-                    elif t == max_power:
-                        yticklabels.append(r"$10^{{{}}}$".format(t))
+
+            # Plot bins and errorbars
+            if (i == len(ys) - 1) and show_bars:
+                # Skip bins with no items
+                nonnull_bins = bins.dropna()
+                y_error = np.abs(
+                    np.vstack([nonnull_bins["low"].values, nonnull_bins["high"].values])
+                    - nonnull_bins["raw"].values
+                )
+                ax.errorbar(
+                    x=nonnull_bins.index.values,
+                    y=nonnull_bins["raw"].values,
+                    yerr=y_error,
+                    capsize=plt.rcParams["lines.markersize"] * 1.2,
+                    ms=plt.rcParams["lines.markersize"],
+                    capthick=0.5,
+                    fmt="o",
+                    color=CUSTOM_PALETTES["bg_gray"][-1],
+                    linewidth=plt.rcParams["axes.linewidth"],
+                )
+
+            # Hist
+            if (i == len(ys) - 1) and show_hist:
+                divider = make_axes_locatable(ax)
+                ax_hist = divider.append_axes("bottom", size=0.15, pad=0.15, sharex=ax)
+                bin_boundaries = np.linspace(0, 1, n_bins + 1)
+                hist_counts = []
+                for i, lower_b in enumerate(bin_boundaries[:-1]):
+                    upper_b = bin_boundaries[i + 1]
+                    if i != n_bins:
+                        h_count = ((y >= lower_b) & (y < upper_b)).sum()
                     else:
-                        yticklabels.append("")
-            else:
-                yticks = ax_hist.get_yticks()
-                yticks[0] = 0
-                yticklabels = ["" for _ in yticks]
-                yticklabels[0] = 0
-                yticklabels[-1] = int(yticks[-1])
-            ax_hist.set_yticks(yticks)
-            ax_hist.set_yticklabels(yticklabels)
-            if not show_tick_labels:
-                ax_hist.set_yticklabels([])
-                ax_hist.set_xticklabels([])
+                        h_count = ((y >= lower_b) & (y <= upper_b)).sum()
+                    hist_counts.append(h_count)
+                bin_centers = bins.index.values
+                bin_width = bin_centers[1] - bin_centers[0]
+                hist_counts = np.array(hist_counts)
+                if hist_log_scale:
+                    hist_counts = np.log10(hist_counts)
+                ax_hist.bar(
+                    bin_centers,
+                    hist_counts,
+                    color=color,
+                    edgecolor="w",
+                    width=bin_width,
+                )
+                # Configure ax for hist
+                ax_hist.set_xlabel(None)
+                ax_hist.set_ylabel(None)
+                ax_hist.spines[["right", "top"]].set_visible(False)
+                # Refresh the ticks first
+                if hist_log_scale:
+                    max_power = int(np.floor(hist_counts.max()))
+                    yticks = [p for p in range(max_power + 1)]
+                    yticklabels = []
+                    for t in yticks:
+                        if t == 0:
+                            yticklabels.append("0")
+                        elif t == max_power:
+                            yticklabels.append(r"$10^{{{}}}$".format(t))
+                        else:
+                            yticklabels.append("")
+                else:
+                    yticks = ax_hist.get_yticks()
+                    yticks[0] = 0
+                    yticklabels = ["" for _ in yticks]
+                    yticklabels[0] = 0
+                    yticklabels[-1] = int(yticks[-1])
+                ax_hist.set_yticks(yticks)
+                ax_hist.set_yticklabels(yticklabels)
+                if not show_tick_labels:
+                    ax_hist.set_yticklabels([])
+                    ax_hist.set_xticklabels([])
 
     # Tick settings
     if not show_tick_labels:
@@ -765,7 +767,7 @@ def plot_calibration(
     # Configure legend
     legend = ax.legend(
         loc="best",
-        title=f"Slope ({percentile}%CI)",
+        title=f"O/E ({percentile}%CI)",
         handletextpad=0.5,
         borderaxespad=0.3,
         labelspacing=0.2,
@@ -775,6 +777,6 @@ def plot_calibration(
     )
     legend.get_title().set_horizontalalignment("right")
     legend.get_frame().set_facecolor(CUSTOM_PALETTES["bg_gray"][0])
-    legend.get_frame().set_alpha(0.3)
+    legend.get_frame().set_alpha(0.4)
 
     return ax, ax_hist
