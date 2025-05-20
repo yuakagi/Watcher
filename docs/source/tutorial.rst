@@ -108,7 +108,7 @@ Tutorial
    The model learns from all training data without weighting. Such training may be suboptimal because medical practices shift over time.
    Therefore, this package allows fine-tuning the model using only the latest data.
 
-   Fine-tune the model using :meth:watcher.training.train_watcher.
+   Fine-tune the model using :meth:`watcher.training.train_watcher`.
 
 8. [OPTIONAL] Simulator demo with GUI
 -------------------------------------

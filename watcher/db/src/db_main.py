@@ -77,6 +77,17 @@ def create_schema(schema: str = "public"):
                 print(f"Schema '{schema}' already exists.")
 
 
+def create_indexes(cur, table: str, index_fields: list, schema: str = "public"):
+    for col in index_fields:
+        index_name = f"idx_{table}_{col}"
+        query = f"""
+        CREATE INDEX IF NOT EXISTS {index_name}
+        ON {schema}.{table} ({col});
+        """
+        cur.execute(query)
+        print(f"Index '{index_name}' created.")
+
+
 def table_exists(cur: ServerCursor, table: str, schema: str = "public") -> bool:
     """
     Examine if a table already exists.
@@ -109,6 +120,13 @@ def create_empty_tables(schema: str = "public"):
                         print(f"Table '{table}' was created.")
                     else:
                         print(f"table '{table}' already exists.")
+
+                    # Create indexes if specified
+                    if "index_fields" in table_params:
+                        create_indexes(
+                            cur, table, table_params["index_fields"], schema=schema
+                        )
+
     print("Tables created")
 
 
