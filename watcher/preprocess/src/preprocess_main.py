@@ -270,7 +270,6 @@ def preprocess_for_inference(
     tables = sequence_data_single(tables=tables, model=model)
     df = aggregate_data_single(categorical_dim=model.categorical_dim, tables=tables)
     df = make_labels_single(agg_df=df, model=model)
-
     timeline_and_labels = create_matrix_for_inference(
         df=df, categorical_dim=model.categorical_dim
     )
@@ -293,6 +292,8 @@ def preprocess_for_inference(
             # Current implementation relies on 'end'. Therefore, this is skipped if end is None.
             # TODO (Yu Akagi): Make this handlings available without 'end'.
             pass
+
+    print("END")
 
     return timeline, catalog_indexes, dob
 

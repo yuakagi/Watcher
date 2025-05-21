@@ -103,7 +103,6 @@ class Simulator:
                 - Each simulation is labeled by 'patient_id' (e.g., 'simulation0', 'simulation1', etc.).
         """
         # Preprocess args
-        horizon_start_td = datetime.strptime(simulation_start, "%Y/%m/%d %H:%M")
         time_horizon_td = timedelta(days=time_horizon)
         # Preprocess clinical records
         timeline, catalog_ids, dob = preprocess_for_inference(
@@ -113,6 +112,9 @@ class Simulator:
             end=simulation_start,
             db_schema=db_schema,
         )
+        # Preprocess_time
+        horizon_start_td = datetime.strptime(simulation_start, "%Y/%m/%d %H:%M") - dob
+        # Monte Carlo
         prod_timelines, prod_catalog_ids = monte_carlo(
             model=self.model,
             timeline=timeline,

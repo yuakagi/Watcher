@@ -466,6 +466,6 @@ def create_timeline_matrix_single(
         + [config.COL_ADM, config.COL_LABEL]
     )
     # Create a timeline matrix out from the dataframe
-    timeline_np_array = df[matrix_cols].to_numpy()
-    timeline_and_labels = torch.from_numpy(timeline_np_array).float()
+    timeline_np_array = df[matrix_cols].to_numpy(dtype=np.float64)
+    timeline_and_labels = torch.tensor(timeline_np_array).float()
     return timeline_and_labels

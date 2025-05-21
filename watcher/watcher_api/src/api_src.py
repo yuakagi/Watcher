@@ -8,6 +8,7 @@ from multiprocessing import Process, JoinableQueue, Manager
 from multiprocessing.managers import DictProxy
 from datetime import datetime, timedelta
 import pandas as pd
+import torch
 from flask import Flask, make_response, request
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
@@ -28,6 +29,15 @@ STATE_204 = {
     "errors": ["Request not found"],
     "updated": datetime.now().isoformat(),
 }
+
+import atexit
+
+
+@atexit.register
+def cleanup_all():
+    print("Shutting down on exit.")
+    _graceful_shutdown("atexit", None)
+
 
 # ==================
 # Flask app setup
@@ -189,17 +199,13 @@ def _preprocess_requests(
     db_schema: str,
 ):
     """Monitors completed requests and stores simulation output in a shared product store."""
-
+    torch.set_num_threads(1)
     while True:
         try:
             errors = []
             # Get one request
             req = request_queue.get()
             patient_id, sim_start_str, time_horizon_str, n_iter_str, simulation_id = req
-            print("Preprocess request accepted:")
-            print(
-                patient_id, sim_start_str, time_horizon_str, n_iter_str, simulation_id
-            )
             # ==========================
             # Input validation
             # ==========================
