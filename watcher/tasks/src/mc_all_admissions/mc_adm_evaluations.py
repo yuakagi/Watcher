@@ -1232,6 +1232,10 @@ def eval_mc_adm_count(
                             tallied_stats[day][horizon]["simulation_code_counts"][
                                 code_type
                             ].append(sc)
+        # Add codes
+        tallied_stats["target_dx_codes"] = target_dx_codes
+        tallied_stats["target_med_codes"] = target_med_codes
+        tallied_stats["target_lab_codes"] = target_lab_codes
 
         return tallied_stats
 

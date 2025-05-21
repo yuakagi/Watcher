@@ -141,8 +141,6 @@ def get_result(simulation_id):
 
     # simulation id not found (e.g., expired)
     else:
-        print(STATE_204)
-        print(json.dumps(STATE_204))
         return make_response(json.dumps(STATE_204), 204)
 
 
@@ -198,10 +196,13 @@ def _preprocess_requests(
             # Get one request
             req = request_queue.get()
             patient_id, sim_start_str, time_horizon_str, n_iter_str, simulation_id = req
-
+            print("Preprocess request accepted:")
             print(
                 patient_id, sim_start_str, time_horizon_str, n_iter_str, simulation_id
             )
+            # ==========================
+            # Input validation
+            # ==========================
             # Validate patient ID
             # NOTE: If the patient ID is not in the database, currently, ValueError is raised by `preprocess_for_inference()`
             if patient_id is None:
@@ -246,7 +247,9 @@ def _preprocess_requests(
                 status = 400
                 progress = "Aborted."
 
+            # ===================================
             # Try to download and preprocess data
+            # ===================================
             else:
                 try:
                     timeline, catalog_ids, dob = preprocess_for_inference(
@@ -282,7 +285,9 @@ def _preprocess_requests(
                     status = 202
                     progress = "Data preprocessing completed."
 
+            # ===================================
             # Update the request status
+            # ===================================
             status_board[simulation_id] = {
                 "status": status,
                 "progress": progress,
@@ -393,6 +398,7 @@ def start_simulators(
         return_unfinished (bool, optional): If True, includes unfinished trajectories. Defaults to False.
     """
     if not hasattr(app, "_simulators_started"):
+        print("Please wait for API initialization...")
         # Setup objects
         manager = Manager()
         status_board = manager.dict()
@@ -482,6 +488,9 @@ def start_simulators(
 
         # Falg for simulators started
         app._simulators_started = True
+
+        # Final message
+        print("API is ready.")
 
     # Register handlers
     # _setup_signal_handlers()
