@@ -319,6 +319,7 @@ def plot_prc(
     n_resampling: int = 100,
     colors: list[str] | None = None,
     alphas: list[float] | None = None,
+    verbose: bool = True,
 ):
     """Plots PR with AUPRC, computing 95%CI by non-parametric bootstrapping."""
     # Check args
@@ -365,8 +366,9 @@ def plot_prc(
         )
 
         # Baseline
+        baseline_prec = raw_precisions[-1]
         ax.hlines(
-            y=raw_precisions[-1],
+            y=baseline_prec,
             xmax=1,
             xmin=0,
             color=color,
@@ -374,6 +376,15 @@ def plot_prc(
             linewidth=plt.rcParams["axes.linewidth"],
             alpha=alpha,
         )
+        if verbose:
+            # Print relative AUPRC gain from the random baseline
+            relative_auprc_gain = f"{a_raw/baseline_prec:.3f} ({a_low/baseline_prec:.3f} – {a_high/baseline_prec:.3f})"
+            print("=====", label, "=====")
+            print(
+                f"N positive: {int(np.array(t).sum())}, N inference: {int(len(t))}, Baseline precision: {baseline_prec}"
+            )
+            print("Relative AUPRC gain from the random baseline", relative_auprc_gain)
+            print("====================")
 
     # Configure ax and legend
     legend = ax.legend(
@@ -610,6 +621,13 @@ def plot_calibration(
         linewidth=plt.rcParams["axes.linewidth"],
     )
 
+    # Ax for hist
+    if show_hist:
+        divider = make_axes_locatable(ax)
+        ax_hist = divider.append_axes("bottom", size=0.15, pad=0.15, sharex=ax)
+    else:
+        ax_hist = None
+
     # Generate colors
     if colors is None:
         num_lines = len(ys) + 2
@@ -700,8 +718,6 @@ def plot_calibration(
 
             # Hist
             if (i == len(ys) - 1) and show_hist:
-                divider = make_axes_locatable(ax)
-                ax_hist = divider.append_axes("bottom", size=0.15, pad=0.15, sharex=ax)
                 bin_boundaries = np.linspace(0, 1, n_bins + 1)
                 hist_counts = []
                 for i, lower_b in enumerate(bin_boundaries[:-1]):
