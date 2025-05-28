@@ -125,7 +125,6 @@ def get_result(simulation_id):
     # Check request status
     status_board = app.config["STATUS_BOARD"]
     state = status_board.get(simulation_id)
-    print(state)
     if state is not None:
         status = state["status"]
         if status in [200, 400]:
@@ -316,17 +315,22 @@ def _watch_products(
     """Gets products and put them in a dict."""
     for prod in orch:
         df, simulation_id = prod
+        # NOTE:
+        #   product_store must be updated first, otherwise, the status_board may be read first while the
+        #   product has not yet been saved.
+        # Make everyhting to strings for consistency
+        df = df.astype(str)
+        # Add the product to the store
+        product_store[simulation_id] = df.to_json(orient="records")
+
         # Update status
+        # NOTE: As mentioned above, this must follow the product_store update
         status_board[simulation_id] = {
             "status": 200,
             "progress": "Simulation completed",
             "errors": [],
             "updated": datetime.now().isoformat(),
         }
-        # Make everyhting to strings for consistency
-        df = df.astype(str)
-        # Add the product to the store
-        product_store[simulation_id] = df.to_json(orient="records")
 
 
 def _watch_expired(
