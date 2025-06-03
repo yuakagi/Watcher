@@ -1,5 +1,6 @@
 """Utils for data visualization"""
 
+import os
 import numpy as np
 import pandas as pd
 import statsmodels.api as sm
@@ -8,6 +9,19 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 import seaborn as sns
 from .paletes import CUSTOM_PALETTES
+
+
+def cm_to_inch(cm: float):
+    """Converts centimeter to inch."""
+    return cm / 2.54
+
+
+def save_as_svg(fig, path):
+    """Save fig as SVG, the best format for scientific figs."""
+    if not path.endswith(".svg"):
+        path += ".svg"
+    fig.savefig(path, format="svg", transparent=True, bbox_inches="tight")
+    print(f"Figure saved at {path}")
 
 
 def set_figure_params(
@@ -76,6 +90,7 @@ def roc(
     n_resampling: int = 100,
 ):
     """Computes ROC and AUROC."""
+    epsilon = 1e-8
     if not isinstance(y, np.ndarray):
         y = np.array(y)
     if not isinstance(t, np.ndarray):
@@ -84,18 +99,19 @@ def roc(
     y = y[sorted_index]
     t = t[sorted_index]
     n_items = y.shape[0]
+    thresholds = np.linspace(min(y), max(y), n_thresholds)
 
-    def _roc(y, t, n_thresholds):
+    def _roc(y, t, thresholds):
         fpr, tpr = [], []
-        for threshold in np.linspace(min(y), max(y), n_thresholds):
-            pred = y >= threshold
+        for thr in thresholds:
+            pred = y >= thr
             t_bool = t.astype(bool)
             tp = (t_bool & pred).sum()
             fn = (t_bool & (~pred)).sum()
             tn = ((~t_bool) & (~pred)).sum()
             fp = ((~t_bool) & pred).sum()
-            fpr.append(fp / (fp + tn))
-            tpr.append(tp / (tp + fn))
+            fpr.append(fp / max(fp + tn, epsilon))
+            tpr.append(tp / max(tp + fn, epsilon))
 
         # Compute auc
         df = pd.DataFrame({"fpr": fpr, "tpr": tpr})
@@ -114,7 +130,7 @@ def roc(
         return fpr, tpr, auc
 
     # Compute the raw auc value
-    raw_fpr, raw_tpr, raw_auc = _roc(y, t, n_thresholds)
+    raw_fpr, raw_tpr, raw_auc = _roc(y, t, thresholds)
 
     # Compute confidence intervals by resampling
     if percentile:
@@ -130,7 +146,10 @@ def roc(
             sorted_new_idx = resampled_y.argsort()
             resampled_y = resampled_y[sorted_new_idx]
             resampled_t = resampled_t[sorted_new_idx]
-            _, _, boot_auc = _roc(resampled_y, resampled_t, n_thresholds)
+            resampled_thresholds = np.linspace(
+                min(resampled_y), max(resampled_y), n_thresholds
+            )
+            _, _, boot_auc = _roc(resampled_y, resampled_t, resampled_thresholds)
             boot_auc_list.append(boot_auc)
         # Finalize results
         boot_aucs = np.array(boot_auc_list)
@@ -141,7 +160,49 @@ def roc(
     else:
         auc = (raw_auc, None, None)
 
-    return raw_fpr, raw_tpr, auc
+    # Best thresholds by F1 maximization
+    # Compute confusion matrix for all thresholds
+    predicted_pos = y >= thresholds.reshape(-1, 1)  # 2D (thresholds x observations)
+    predicted_neg = np.logical_not(predicted_pos)  # 2D (thresholds x observations)
+    positives = t.astype(bool)  # 1D
+    negatives = np.logical_not(positives)  # 1D
+    tp = np.sum(predicted_pos & positives, axis=1)  # 1D (thresholds, )
+    fp = np.sum(predicted_pos & negatives, axis=1)
+    fn = np.sum(predicted_neg & positives, axis=1)
+    tn = np.sum(predicted_neg & negatives, axis=1)
+    sensitivity = recall = tp / np.maximum(tp + fn, epsilon)  # 1D (thresholds, )
+    specificity = tn / np.maximum(tn + fp, epsilon)
+    precision = tp / np.maximum(tp + fp, epsilon)
+    negative_predictive_value = tn / np.maximum(tn + fn, epsilon)
+    accuracy = (tp + tn) / np.maximum(tp + tn + fp + fn, epsilon)
+    f1 = 2 * (precision * recall) / np.maximum(precision + recall, epsilon)
+    # Determine the best thresholds (Use raw) by ROC distance
+    distance = np.sqrt(np.array(raw_fpr) ** 2 + (1 - np.array(raw_tpr)) ** 2)
+    best_roc_idx = np.argmin(distance)
+    # Determine the bes
+    best_f1_idx = np.argmax(f1)
+    stats = {
+        "best_by_ROC": {
+            "best_threshold": thresholds[best_roc_idx],
+            "sensitivity": sensitivity[best_roc_idx],
+            "specificity": specificity[best_roc_idx],
+            "precision": precision[best_roc_idx],
+            "negative_predictive_value": negative_predictive_value[best_roc_idx],
+            "accuracy": accuracy[best_roc_idx],
+            "f1": f1[best_roc_idx],
+        },
+        "best_by_F1": {
+            "best_threshold": thresholds[best_f1_idx],
+            "sensitivity": sensitivity[best_f1_idx],
+            "specificity": specificity[best_f1_idx],
+            "precision": precision[best_f1_idx],
+            "negative_predictive_value": negative_predictive_value[best_f1_idx],
+            "accuracy": accuracy[best_f1_idx],
+            "f1": f1[best_f1_idx],
+        },
+    }
+
+    return raw_fpr, raw_tpr, auc, stats
 
 
 def plot_roc(
@@ -154,6 +215,7 @@ def plot_roc(
     n_resampling: int = 100,
     colors: list[str] | None = None,
     alphas: list[float] | None = None,
+    verbose: bool = True,
 ):
     """Plots ROC with AUROC, computing 95%CI by non-parametric bootstrapping."""
     # Check args
@@ -180,7 +242,7 @@ def plot_roc(
 
     # Plot lines
     for y, t, label, color, alpha in zip(ys, ts, labels, colors, alphas):
-        raw_fpr, raw_tpr, auc = roc(
+        raw_fpr, raw_tpr, auc, stats = roc(
             y=y,
             t=t,
             n_thresholds=n_thresholds,
@@ -206,6 +268,15 @@ def plot_roc(
             alpha=alpha,
             errorbar=None,
         )
+
+        # Verbose
+        # Print confusion matrix vals and thresholds
+        if verbose:
+            print(f"=== {label}: stats ===")
+            for k1, v1 in stats.items():
+                print(" ".join(k1.split("_")))
+                for k2, v2 in v1.items():
+                    print("--", " ".join(k2.split("_")), ":", v2)
 
     # Configure ax and legend
     legend = ax.legend(

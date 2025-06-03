@@ -102,7 +102,7 @@ class LogitsTrainer:
             self.criteria = WatcherLoss(
                 ignore_index=self.ignore_index,
                 # Focal loss gamma (fall back to CE if gamma == 0.0)
-                gamma=0,
+                gamma=1,
                 # Scaling
                 scaled=False,
             )

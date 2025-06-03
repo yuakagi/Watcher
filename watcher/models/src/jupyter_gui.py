@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 import matplotlib.colors as mcolors
 import matplotlib.gridspec as gridspec
+import matplotlib.cm as cm
 import seaborn as sns
 from IPython.display import display
 from ipywidgets import (
@@ -91,6 +92,7 @@ class WatcherGui:
             )
 
             # Numerics
+            # <-- Z-score --> (to be depricated)
             if config.NUM_STRATEGY == "z-score":
                 df = pd.merge(
                     df,
@@ -114,6 +116,18 @@ class WatcherGui:
                     df.loc[num_mask, "unscaled"] + " " + df.loc[num_mask, "unit"]
                 )
                 df[config.COL_TEXT] = df[config.COL_TEXT].mask(num_mask, df["unscaled"])
+
+            # <-- Percentile -->
+            else:
+                num_series = pd.to_numeric(
+                    df[config.COL_ORIGINAL_VALUE], errors="coerce"
+                )
+                num_mask = num_series.notna()
+                nums = num_series.loc[num_mask].values
+                unscaled = self.model.interpreter.translate_numerics(
+                    lab_codes=np.full(nums.shape, lab_code), numerics=nums
+                )
+                df.loc[num_mask, config.COL_TEXT] = unscaled
 
             texts = df[config.COL_TEXT]
 
