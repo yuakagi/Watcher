@@ -200,6 +200,15 @@ def roc(
             "accuracy": accuracy[best_f1_idx],
             "f1": f1[best_f1_idx],
         },
+        "all": {
+            "thresholds": thresholds,
+            "specificity": specificity,
+            "sensitivity": sensitivity,
+            "precision": precision,
+            "negative_predictive_value": negative_predictive_value,
+            "accuracy": accuracy,
+            "f1": f1,
+        },
     }
 
     return raw_fpr, raw_tpr, auc, stats
@@ -235,12 +244,13 @@ def plot_roc(
     # Generate colors
     if colors is None:
         num_lines = len(ys) + 2
-        colors = plt.cm.plasma(np.linspace(0, 1, num_lines))
+        colors = plt.cm.plasma(np.linspace(1, 0, num_lines))
         colors = colors[1:-1]
     if alphas is None:
         alphas = [1 for _ in range(len(colors))]
 
     # Plot lines
+    final_stats = {}
     for y, t, label, color, alpha in zip(ys, ts, labels, colors, alphas):
         raw_fpr, raw_tpr, auc, stats = roc(
             y=y,
@@ -274,9 +284,13 @@ def plot_roc(
         if verbose:
             print(f"=== {label}: stats ===")
             for k1, v1 in stats.items():
-                print(" ".join(k1.split("_")))
-                for k2, v2 in v1.items():
-                    print("--", " ".join(k2.split("_")), ":", v2)
+                if k1.startswith("best"):
+                    print(" ".join(k1.split("_")))
+                    for k2, v2 in v1.items():
+                        print("--", " ".join(k2.split("_")), ":", v2)
+
+        # Save for final stats
+        final_stats[label] = stats["all"]
 
     # Configure ax and legend
     legend = ax.legend(
@@ -295,7 +309,7 @@ def plot_roc(
     ax.set_ylim(0, 1)
     ax.set_xlim(0, 1)
 
-    return ax
+    return ax, final_stats
 
 
 def pr(
@@ -402,7 +416,7 @@ def plot_prc(
     # Generate colors
     if colors is None:
         num_lines = len(ys) + 2
-        colors = plt.cm.plasma(np.linspace(0, 1, num_lines))
+        colors = plt.cm.plasma(np.linspace(1, 0, num_lines))
         colors = colors[1:-1]
     if alphas is None:
         alphas = [1 for _ in range(len(colors))]
@@ -703,7 +717,7 @@ def plot_calibration(
     if colors is None:
         num_lines = len(ys) + 2
         # pylint: disable=no-member
-        colors = plt.cm.plasma(np.linspace(0, 1, num_lines))
+        colors = plt.cm.plasma(np.linspace(1, 0, num_lines))
         colors = colors[1:-1]
 
     for i, (y, t, label, color) in enumerate(zip(ys, ts, labels, colors)):
