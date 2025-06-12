@@ -177,7 +177,7 @@ def roc(
     accuracy = (tp + tn) / np.maximum(tp + tn + fp + fn, epsilon)
     f1 = 2 * (precision * recall) / np.maximum(precision + recall, epsilon)
     # Determine the best thresholds (Use raw) by ROC distance
-    distance = np.sqrt(np.array(raw_fpr) ** 2 + (1 - np.array(raw_tpr)) ** 2)
+    distance = np.sqrt((1 - specificity) ** 2 + (1 - sensitivity) ** 2)
     best_roc_idx = np.argmin(distance)
     # Determine the bes
     best_f1_idx = np.argmax(f1)
