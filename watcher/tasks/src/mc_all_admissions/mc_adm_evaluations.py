@@ -209,8 +209,6 @@ def _count_codes(
             pivot_table = pivot_table.reset_index()
 
             # Convert data to matrix
-            # NOTE: use np.uint8 for efficient computing & memory use
-            # counts_np = pivot_table.drop("patient_id", axis=1).values.astype(np.uint8)
             counts_np = pivot_table.drop("patient_id", axis=1).values
         counts_sparse = csr_matrix(counts_np)  # Sparse matrix for memory efficiency.
 
@@ -219,61 +217,48 @@ def _count_codes(
     return counts
 
 
-def _cooccurrence_codes(
+def _cooccurrence_lab_codes(
     df: pd.DataFrame,
-    target_dx_codes: list,
-    target_med_codes: list,
     target_lab_codes: list,
 ) -> dict:
     """
-    Create binary co-occurrence matrices for diagnosis, drug, and lab codes.
+    Create binary co-occurrence matrices for lab codes.
 
-    Returns a dict with keys 'diagnosis', 'drug', 'lab'. Each value is a dict with:
     - 'cooccurrence': 2D binary matrix [n_patients, n_codes], 1 if the code was present at least once.
     """
 
-    cooc = {}
-    type_map = {"diagnosis": [3], "drug": [4, 5], "lab": [6]}
     all_patient_ids = df["patient_id"].unique()
 
-    for category, type_values in type_map.items():
-        # Select target code list
-        if category == "diagnosis":
-            expected_codes = target_dx_codes
-        elif category == "drug":
-            expected_codes = target_med_codes
-        else:
-            expected_codes = target_lab_codes
+    # Select target code list
+    expected_codes = target_lab_codes
 
-        # Filter records by type and code
-        type_mask = df["type"].isin(type_values)
-        code_mask = df["code"].isin(expected_codes)
-        subset = df[type_mask & code_mask]
+    # Filter records by type and code
+    type_mask = df["type"].isin([6])
+    code_mask = df["code"].isin(expected_codes)
+    subset = df[type_mask & code_mask]
 
-        if subset.empty:
-            cooc_matrix = np.zeros(
-                (len(all_patient_ids), len(expected_codes)), dtype=np.uint8
-            )
-        else:
-            # Binary matrix: 1 if code is present at least once per patient
-            pivot_table = (
-                subset.groupby(["patient_id", "code"])
-                .size()
-                .unstack(fill_value=0)
-                .clip(upper=1)
-            )
+    if subset.empty:
+        cooc_matrix = np.zeros(
+            (len(all_patient_ids), len(expected_codes)), dtype=np.uint8
+        )
+    else:
+        # Binary matrix: 1 if code is present at least once per patient
+        pivot_table = (
+            subset.groupby(["patient_id", "code"])
+            .size()
+            .unstack(fill_value=0)
+            .clip(upper=1)
+        )
 
-            # Ensure all codes are columns (in expected order)
-            pivot_table = pivot_table.reindex(columns=expected_codes, fill_value=0)
+        # Ensure all codes are columns (in expected order)
+        pivot_table = pivot_table.reindex(columns=expected_codes, fill_value=0)
 
-            # Ensure all patients are included (fill missing with 0s)
-            pivot_table = pivot_table.reindex(index=all_patient_ids, fill_value=0)
+        # Ensure all patients are included (fill missing with 0s)
+        pivot_table = pivot_table.reindex(index=all_patient_ids, fill_value=0)
 
-            cooc_matrix = pivot_table.values.astype(np.uint8)
+        cooc_matrix = pivot_table.values.astype(bool).astype(np.uint8)
 
-        cooc[category] = {"cooccurrence": cooc_matrix}
-
-    return cooc
+    return cooc_matrix
 
 
 def _collect_pivot_tables(df: pd.DataFrame, selected_codes: list[str]) -> np.ndarray:
@@ -1246,13 +1231,11 @@ def eval_mc_adm_count(
 # ***************
 # * Coocurrence *
 # ***************
-def _eval_mc_adm_cooc_fn_future(
+def _eval_mc_adm_lab_cooc_fn_future(
     future_data: pd.DataFrame,
     sim_result: pd.DataFrame,
     eval_time: timedelta,
     max_horizon_td: timedelta,
-    target_dx_codes: list,
-    target_med_codes: list,
     target_lab_codes: list,
 ):
 
@@ -1275,21 +1258,18 @@ def _eval_mc_adm_cooc_fn_future(
             # ****************
             # * Coocurrences *
             # ****************
-            codes_kwargs = {
-                "target_dx_codes": target_dx_codes,
-                "target_med_codes": target_med_codes,
-                "target_lab_codes": target_lab_codes,
-            }
             # Code counts
-            actual_code_cooc = _cooccurrence_codes(actual, **codes_kwargs)
-            sim_code_cooc = _cooccurrence_codes(sim, **codes_kwargs)
+            actual_cooc = _cooccurrence_lab_codes(
+                actual, target_lab_codes=target_lab_codes
+            )
+            sim_cooc = _cooccurrence_lab_codes(sim, target_lab_codes=target_lab_codes)
 
             # ********************************
             # * Add results to the main dict *
             # ********************************
             stats[f"{horizon}_days"] = {
-                "actual_code_cooc": actual_code_cooc,
-                "simulation_code_cooc": sim_code_cooc,
+                "actual_cooc": actual_cooc,
+                "simulation_cooc": sim_cooc,
             }
 
     # When n_sim ==0, avoid ZeroDivisionError
@@ -1300,10 +1280,10 @@ def _eval_mc_adm_cooc_fn_future(
     return stats
 
 
-def eval_mc_adm_cooc(
+def eval_mc_adm_lab_cooc(
     result_dir: str,
     dataset_dir: str,
-    n_codes: int,
+    code_percentile: int = 90,
     max_workers: int = None,
 ):
     # Select target codes
@@ -1315,38 +1295,33 @@ def eval_mc_adm_cooc(
     settings_manager.write()
     try:
         dtypes = {"original_value": str, "train_ID_and_train_period": int}
-        dx_code_counts_df = pd.read_csv(
-            get_settings("DX_CODE_COUNTS_PTH"),
-            usecols=list(dtypes.keys()),
-            dtype=dtypes,
-        ).sort_values("train_ID_and_train_period", ascending=False)
-        med_code_counts_df = pd.read_csv(
-            get_settings("MED_CODE_COUNTS_PTH"),
-            usecols=list(dtypes.keys()),
-            dtype=dtypes,
-        ).sort_values("train_ID_and_train_period", ascending=False)
         lab_code_counts_df = pd.read_csv(
             get_settings("LAB_CODE_COUNTS_PTH"),
             usecols=list(dtypes.keys()),
             dtype=dtypes,
         ).sort_values("train_ID_and_train_period", ascending=False)
-        target_dx_codes = dx_code_counts_df["original_value"].tolist()[:n_codes]
-        target_med_codes = med_code_counts_df["original_value"].tolist()[:n_codes]
-        target_lab_codes = lab_code_counts_df["original_value"].tolist()[:n_codes]
-        del med_code_counts_df, lab_code_counts_df, dx_code_counts_df
+        # Rename
+        col_mapper = {
+            "original_value": config.COL_ITEM_CODE,
+            "train_ID_and_train_period": "count",
+        }
+        lab_code_counts_df.rename(columns=col_mapper, inplace=True)
+        # Select codes
+        target_lab_codes = _select_codes(
+            lab_code_counts_df[[config.COL_ITEM_CODE, "count"]], percent=code_percentile
+        )
+        del lab_code_counts_df
+        print("N lab codes;", len(target_lab_codes))
 
         # Collect stats
-        codes_kwargs = {
-            "target_dx_codes": target_dx_codes,
-            "target_med_codes": target_med_codes,
-            "target_lab_codes": target_lab_codes,
-        }
         stats = eval_mc_adm_results(
             result_dir=result_dir,
-            fn_future=_eval_mc_adm_cooc_fn_future,
+            fn_future=_eval_mc_adm_lab_cooc_fn_future,
             fn_past=None,
             max_workers=max_workers,
-            kwargs_future=codes_kwargs,
+            kwargs_future=dict(
+                target_lab_codes=target_lab_codes,
+            ),
         )
 
         # Tally stats
@@ -1360,29 +1335,18 @@ def eval_mc_adm_cooc(
                     for horizon, hor_result in day_results.items():
                         if horizon not in tallied_stats[day]:
                             tallied_stats[day][horizon] = {
-                                "actual_code_cooc": {
-                                    "diagnosis": [],
-                                    "drug": [],
-                                    "lab": [],
-                                },
-                                "simulation_code_cooc": {
-                                    "diagnosis": [],
-                                    "drug": [],
-                                    "lab": [],
-                                },
+                                "actual_cooc": [],
+                                "simulation_cooc": [],
                             }
-                        # Code counts
-                        for code_type in ["diagnosis", "drug", "lab"]:
-                            # Actual counts (np.ndarray)
-                            ac = hor_result["actual_code_cooc"][code_type]
-                            tallied_stats[day][horizon]["actual_code_cooc"][
-                                code_type
-                            ].append(ac)
-                            # Simulation counts (DataFrame)
-                            sc = hor_result["simulation_code_cooc"][code_type]
-                            tallied_stats[day][horizon]["simulation_code_cooc"][
-                                code_type
-                            ].append(sc)
+                        # Actual counts (np.ndarray)
+                        ac = hor_result["actual_cooc"]
+                        tallied_stats[day][horizon]["actual_cooc"].append(ac)
+                        # Simulation counts (DataFrame)
+                        sc = hor_result["simulation_cooc"]
+                        tallied_stats[day][horizon]["simulation_cooc"].append(sc)
+
+        # Add codes
+        tallied_stats["codes"] = target_lab_codes
 
         return tallied_stats
 
