@@ -290,6 +290,31 @@ def _collect_pivot_tables(df: pd.DataFrame, selected_codes: list[str]) -> np.nda
     return pv
 
 
+def _collect_pivot_tables_dist(
+    df: pd.DataFrame, selected_codes: list[str]
+) -> np.ndarray:
+    """
+    Extract a patient × lab matrix (values only) for selected lab codes.
+    """
+    # Filter and extract numeric values
+    df = df[df["code"].isin(selected_codes)].copy()
+    df["numeric"] = extract_numeric_from_text(df["result"])
+    df = df.dropna(subset=["numeric"])
+    # Remove duplicates per (patient_id, age, code)
+    df = df.drop_duplicates(subset=["patient_id", "age", "code"])
+    # Pivot to wide format
+    pv = df.pivot(index=["patient_id", "age"], columns="code", values="numeric")
+    # Ensure all selected codes are present
+    pv = pv.reindex(columns=selected_codes)
+    # Reset index
+    pv = pv.reset_index(drop=False)
+    # Make the values float32 for memory efficiency
+    # NOTE: float32 is sufficient for lab values
+    pv = pv.values.astype(np.float32)
+
+    return pv
+
+
 def _extract_lab_values(df: pd.DataFrame, target_code: str, unit: str) -> pd.DataFrame:
     """
     Extracts numeric values of a specific laboratory test from a DataFrame,
@@ -1447,6 +1472,171 @@ def _eval_mc_adm_corr(
 
 
 def eval_mc_adm_corr(
+    result_dir: str,
+    dataset_dir: str,
+    code_percentile: int = 80,
+    max_workers: int | None = None,
+):
+    # Select target codes
+    settings_manager = BaseSettingsManager(
+        dataset_dir=dataset_dir,
+        debug=os.environ.get("DEBUG_MODE") == "1",
+        debug_chunks=int(os.environ.get("DEBUG_CHUNKS", "10")),
+    )
+    settings_manager.write()
+    try:
+        # Select codes
+        num_stats = load_numeric_stats(file_path=None, single_unit=True).sort_values(
+            "count", ascending=False
+        )
+        selected_codes = _select_codes(
+            df=num_stats[[config.COL_ITEM_CODE, "count"]], percent=code_percentile
+        )
+        # selected_codes = list(GENERAL_IVDS.values())
+        if max_workers is None:
+            max_workers = psutil.cpu_count(logical=False) - 1
+        patient_list = pd.read_pickle(os.path.join(result_dir, "patient_list.pkl"))
+        if not result_dir.endswith("/"):
+            result_dir = result_dir + "/"
+        patient_list["path"] = result_dir + patient_list["path"]
+        with open(os.path.join(result_dir, "metadata.pkl"), "rb") as f:
+            metadata = pickle.load(f)
+
+        time_of_eval = metadata["time_of_eval"]
+        max_horizon = metadata["time_horizon"]
+        max_days = metadata["max_days"]
+        time_of_eval_td = timedelta(hours=time_of_eval)
+        max_horizon_td = timedelta(days=max_horizon)
+
+        # Debug handling
+        if os.environ.get("DEBUG_MODE") == "1":
+            debug_chunks = os.environ.get("DEBUG_CHUNKS", str(max_workers * 10))
+            debug_chunks = int(debug_chunks)
+            patient_list = patient_list.iloc[:debug_chunks]
+
+        all_act_pivots = []
+        all_sim_pivots = []
+        with ProcessPoolExecutor(max_workers=max_workers) as executor:
+            futures = [
+                executor.submit(
+                    _eval_mc_adm_corr,
+                    patient_dir=patient_dir,
+                    selected_codes=selected_codes,
+                    time_of_eval_td=time_of_eval_td,
+                    max_horizon_td=max_horizon_td,
+                    max_days=max_days,
+                )
+                for patient_dir in patient_list["path"]
+            ]
+            for future in tqdm(as_completed(futures), total=len(patient_list["path"])):
+                patient_no, act_pivots, sim_pivots = future.result()
+                if act_pivots.size > 0:
+                    all_act_pivots.append(act_pivots)
+                if sim_pivots.size > 0:
+                    all_sim_pivots.append(sim_pivots)
+
+        return all_act_pivots, all_sim_pivots, selected_codes
+
+    finally:
+        settings_manager.delete()
+
+
+# ********
+# * Dist *
+# ********
+def _eval_mc_adm_dist(
+    patient_dir: str,
+    selected_codes: list,
+    time_of_eval_td: timedelta,
+    max_horizon: timedelta,
+    max_days: int,
+):
+    # Load the full timelineand apply a custom function if indicated
+    patient_no = patient_dir.split("/")[-1]
+    total_stats = {}
+    full_timeline = pd.read_pickle(os.path.join(patient_dir, "full_timeline.pkl"))
+    admissions = [d for d in os.listdir(patient_dir) if d.startswith("admission")]
+    act_pivots = []
+    sim_pivots = []
+    for adm in admissions:
+        # Load the time of admission and discharge
+        with open(os.path.join(patient_dir, adm, "admission_info.pkl"), "rb") as f:
+            info_data = pickle.load(f)
+        time_adm, time_dsc, timestamp_adm, dept_adm = info_data
+        date_adm = timedelta(days=time_adm.days)
+        date_dsc = timedelta(days=time_dsc.days)
+        n_days = (date_dsc - date_adm).days
+        n_days = min(max_days, n_days)
+        # Slice full real timeline with decent pad
+        full_adm_mask = (full_timeline[config.COL_AGE] > time_adm) & (
+            full_timeline[config.COL_AGE] <= (time_dsc + timedelta(days=max_horizon))
+        )
+        full_adm = full_timeline.loc[full_adm_mask].copy()
+
+        # Read through the simulation results per day
+        total_stats[adm] = {}
+        for day in range(0, n_days + 1):
+            eval_time = date_adm + timedelta(days=day) + time_of_eval_td
+            if (time_adm <= eval_time) & (eval_time <= time_dsc):
+                try:
+                    # Open a simulation result
+                    sim_result_path = os.path.join(patient_dir, adm, f"day{day}.pkl")
+                    sim_result = pd.read_pickle(sim_result_path)
+                    # Slice out the simulation results
+                    dmg_mask_sim = sim_result[config.COL_TYPE] == 0
+                    # Loop through horizons
+                    for horizon in range(1, max_horizon + 1):
+                        horizon_dt = timedelta(days=horizon)
+                        eval_end_time = eval_time + horizon_dt
+                        # Slice out the real timeline
+                        horizon_masl_ac = (full_adm[config.COL_AGE] > eval_time) & (
+                            full_adm[config.COL_AGE] <= eval_end_time
+                        )
+                        actual_result = full_adm.loc[horizon_masl_ac | dmg_mask_sim]
+                        # Slice out the simulation results
+                        horizon_mask_sim = (sim_result[config.COL_AGE] > eval_time) & (
+                            sim_result[config.COL_AGE] <= eval_end_time
+                        )
+                        sim_result = sim_result.loc[horizon_mask_sim | dmg_mask_sim]
+                        # Collect stats
+                        n_sim = sim_result[config.COL_PID].nunique()
+                        # *** DEBUG ***
+                        if n_sim != 256:
+                            print("Irregular n-sim encountered")
+                            print("n-sim", n_sim)
+                            print(sim_result_path)
+                        # *************
+                        if n_sim > 0:
+                            # NOTE: Collect all lab values in the entire simulation
+                            sim_pv = _collect_pivot_tables_dist(
+                                sim_result, selected_codes=selected_codes
+                            )
+                            if sim_pv.size:
+                                sim_pivots.append(sim_pv)
+                        else:
+                            pass
+
+                except (FileNotFoundError, EOFError) as e:
+                    print(f"Failed to open {sim_result_path}")
+                    print("ERROR:", e)
+                    print("*****TRACEBACK*******")
+                    traceback.print_exc()
+                    print("*********************")
+                    continue
+
+    if act_pivots:
+        act_pivots = np.concatenate(act_pivots, axis=0)
+    else:
+        act_pivots = np.array([])
+    if sim_pivots:
+        sim_pivots = np.concatenate(sim_pivots, axis=0)
+    else:
+        sim_pivots = np.array([])
+
+    return patient_no, act_pivots, sim_pivots
+
+
+def eval_mc_adm_dist(
     result_dir: str,
     dataset_dir: str,
     code_percentile: int = 80,
