@@ -3,6 +3,8 @@ import pickle
 import traceback
 from typing import Callable
 from datetime import datetime, timedelta
+from tempfile import TemporaryDirectory
+from uuid import uuid4
 from concurrent.futures import as_completed, ProcessPoolExecutor
 import psutil
 from tqdm import tqdm
@@ -1704,3 +1706,315 @@ def eval_mc_adm_dist(
 
     finally:
         settings_manager.delete()
+
+
+# *************************
+# * Baseline acquisitions *
+# *************************
+def _create_sampling_table_fn(
+    labelled_path: str,
+    hour_of_sampling: int | None = None,
+    max_days: int = None,
+    min_days: int = 0,
+) -> pd.DataFrame:
+    """Create sampling weights for sampling training data to generate baseline.
+    Because data are saved in multiple files, this is needed.
+
+    Args:
+        labelled_path (str): Path to the labelled data file.
+        hour_of_sampling (int|None): Hour of sampling. If None, nothing is excluded.
+        max_days (int): Maximum number of days from an admission.
+        min_days (int): Minimum number of days from an admission.
+    """
+    # Load
+    df = pd.read_pickle(labelled_path)
+    df = df[["patient_id", "timedelta", "admitted", "original_value"]]
+    time_of_adm = df.loc[
+        df["original_value"] == "[ADM]", ["patient_id", "timedelta"]
+    ].copy()
+    time_of_adm = time_of_adm.loc[time_of_adm["timedelta"].notna()]
+    time_of_dsc = df.loc[
+        df["original_value"] == "[DSC]", ["patient_id", "timedelta"]
+    ].copy()
+    time_of_dsc = time_of_dsc.loc[time_of_dsc["timedelta"].notna()]
+    # Concatenate admission and discharge times
+    time_of_adm = time_of_adm.rename(columns={"timedelta": "time_adm"})
+    time_of_dsc = time_of_dsc.rename(columns={"timedelta": "time_dsc"})
+    days_df = pd.merge(
+        time_of_adm,
+        time_of_dsc,
+        on="patient_id",
+        how="left",
+    )  # <- This results in many duplicates! you need to drop them later
+    # Select valud dsc time only
+    days_df["diff"] = days_df["time_dsc"] - days_df["time_adm"]
+    days_df = days_df.loc[
+        days_df["diff"] >= timedelta(seconds=0)
+    ]  # Exclude discharge times before admission
+    days_df = days_df.sort_values("diff", ascending=True).drop_duplicates(
+        subset=["patient_id", "time_adm"]
+    )  # Drop duplicates
+    # Determine the start of counts
+    days_df["start"] = days_df["time_adm"].dt.floor("D")
+    days_df["end"] = days_df["time_dsc"].dt.floor("D")
+    # Prevent the final day of admission from being counted if the discharge is before the hour of sampling
+    if hour_of_sampling is not None:
+        dsc_before_sampling_hour = (
+            days_df["time_dsc"].dt.total_seconds() / 3600 < hour_of_sampling
+        )
+        # Make the end day -1
+        days_df.loc[dsc_before_sampling_hour, "end"] -= timedelta(days=1)
+    # Min days handlings
+    if min_days == 0:
+        # Prevent the first day of admission from being counted if the admission is after the hour of sampling
+        if hour_of_sampling is not None:
+            adm_after_sampling_hour = (
+                days_df["time_adm"].dt.total_seconds() / 3600 > hour_of_sampling
+            )
+            # Make the initial day +1
+            days_df.loc[adm_after_sampling_hour, "start"] += timedelta(days=1)
+    else:
+        days_df["start"] += timedelta(days=min_days)
+    # Max days handling
+    if max_days is not None:
+        days_df["end"] = np.minimum(
+            days_df["end"], days_df["start"] + timedelta(days=max_days - 1)
+        )
+    # Check consistency of start and end dates
+    negative_days_mask = days_df["end"] < days_df["start"]
+    if negative_days_mask.any():
+        days_df = days_df.loc[~negative_days_mask]
+    # Generate list of sampling dates for each row
+    base_date = pd.Timestamp("2000-01-01")  # Dummy date for computing date range
+    days_df["start_dt"] = base_date + days_df["start"]
+    days_df["end_dt"] = base_date + days_df["end"]
+    days_df["sampling_dates_dt"] = days_df.apply(
+        lambda row: pd.date_range(start=row["start_dt"], end=row["end_dt"], freq="D"),
+        axis=1,
+    )
+    # Subtract base_date from each date in the range
+    days_df["sampling_dates"] = days_df["sampling_dates_dt"].apply(
+        lambda arr: arr - base_date
+    )
+    # Explode to have one row per (patient_id, sampling_date)
+    days_df = days_df.explode("sampling_dates").reset_index(drop=True)
+    # Add source file name
+    days_df["source_file"] = labelled_path
+    # Organize columns
+    days_df = days_df[["patient_id", "sampling_dates", "source_file"]]
+
+    return days_df
+
+
+def create_baseline_sampling_table(
+    tables_dir: str,
+    max_workers: int,
+    saved_dir: str,
+    hour_of_sampling: int | None = None,
+    max_days: int | None = None,
+    min_days: int = 0,
+):
+    """Create sampling weights for sampling training data to generate baseline."""
+    # Load
+    with ProcessPoolExecutor(max_workers=max_workers) as executor:
+        futures = [
+            executor.submit(
+                _create_sampling_table_fn,
+                labelled_path=os.path.join(tables_dir, f),
+                hour_of_sampling=hour_of_sampling,
+                max_days=max_days,
+                min_days=min_days,
+            )
+            for f in os.listdir(tables_dir)
+            if "train" in f
+        ]
+        total_count_df = None
+        # Collect df
+        for future in tqdm(as_completed(futures), total=len(futures)):
+            count_df = future.result()
+            if count_df.size:
+                if total_count_df is None:
+                    total_count_df = count_df
+                else:
+                    total_count_df = pd.concat(
+                        [total_count_df, count_df], ignore_index=True
+                    ).reset_index(drop=True)
+        # Finalize df
+        total_count_df = total_count_df.sort_values(
+            ["patient_id", "sampling_dates"]
+        ).reset_index(drop=True)
+
+        # Save
+        saved_path = os.path.join(saved_dir, "baseline_sampling_table.pkl")
+        os.makedirs(saved_dir, exist_ok=True)
+        total_count_df.to_pickle(saved_path)
+
+
+def draw_baseline_samples(
+    sampling_table_path: str,
+    n_samples: int,
+) -> pd.DataFrame:
+    """Draw baseline samples from the sampling weights."""
+    # Load
+    sampling_table_df = pd.read_pickle(sampling_table_path)
+    # Draw samples
+    if n_samples > sampling_table_df.shape[0]:
+        raise ValueError(
+            f"Requested {n_samples} samples, but only {sampling_table_df.shape[0]} available."
+        )
+    sampled_df = sampling_table_df.sample(
+        n=n_samples,
+        replace=False,  # No replacement
+    )
+    # Reset index
+    sampled_df = sampled_df.reset_index(drop=True)
+    # Return
+    return sampled_df
+
+
+def baseline_day_sampler(
+    sampling_table_path: str,
+    n_samples: int,
+):
+    """Draw baseline samples from the sampling weights."""
+    sampled_df = draw_baseline_samples(
+        sampling_table_path=sampling_table_path,
+        n_samples=n_samples,
+    )
+    files = sampled_df["source_file"].unique()
+    # Load by files
+    for file in files:
+        # Slice the sampled dataframe for the current file
+        file_df = sampled_df.loc[sampled_df["source_file"] == file]
+        yield file, file_df
+
+
+def _get_baseline_distribution_helper(
+    file: str,
+    file_df: pd.DataFrame,
+    fn: Callable,
+    temp_dir: str,
+    min_horizon: int = 1,
+    max_horizon: int = 7,
+    hour_of_sampling: int = None,
+    **kwargs,
+) -> dict:
+    """Helper function to get baseline distribution."""
+    # Load lablled data tabel
+    labelled_df = pd.read_pickle(file)
+    # Iterate over horizons (May not be efficient, but for memory footprint and analysis, saving results by horizon is effecitve overall.)
+    for horizon in range(min_horizon, max_horizon + 1):
+        # Initialize a list to hold day-level stats
+        horizon_level_stats = []
+        # Check by patients
+        for patient_id, patient_days_df in file_df.groupby("patient_id"):
+            # Get the days
+            days = patient_days_df["sampling_dates"].values
+            # Slice patient data only
+            patient_data = labelled_df.loc[labelled_df["patient_id"] == patient_id]
+            for hosp_day in days:
+                hosp_day = pd.to_timedelta(hosp_day)
+                # Start of sampling time
+                if hour_of_sampling is not None:
+                    start = hosp_day + timedelta(hours=hour_of_sampling)
+                else:
+                    # Get the nearest admission time
+                    adm_mask = patient_data["original_value"] == "[ADM]"
+                    adm_times = patient_data.loc[adm_mask, "timedelta"]
+                    adm_times = adm_times[adm_times < hosp_day]
+                    adm_times = adm_times.sort_values(ascending=False)
+                    # Ensure that starging time is after the admission time
+                    if not adm_times.empty:
+                        adm_time = adm_times.iloc[0]
+                        sample_range = min(
+                            hosp_day.total_seconds() - adm_time.total_seconds(),
+                            24 * 3600,
+                        )
+                        time_of_sampling = np.random.uniform(0, sample_range)
+                        start = adm_time + timedelta(seconds=time_of_sampling)
+                    else:
+                        print(
+                            "WARNING: No admission time found for patient", patient_id
+                        )
+                        continue  # No admission before this day, which is not expected.
+                # End of sampling time
+                end = start + timedelta(days=horizon)
+                # Get the data for the patient
+                horizon_data = patient_data.loc[
+                    (patient_data["timedelta"] >= start)
+                    & (patient_data["timedelta"] <= end)
+                ]
+                # Get the distribution
+                stats = fn(horizon_data, **kwargs)
+                # Append to the list
+                horizon_level_stats.append(stats)
+
+        # Save data by horizons
+        if horizon_level_stats:
+            saved_path = os.path.join(
+                temp_dir, f"{horizon}_days_baseline_distribution_{uuid4().hex}.pkl"
+            )
+            with open(saved_path, "wb") as f:
+                pickle.dump(horizon_level_stats, f)
+
+    return
+
+
+def get_baseline_distribution(
+    sampling_table_path: str,
+    n_samples: int,
+    max_workers: int,
+    fn: Callable,
+    output_dir: str,
+    min_horizon: int = 1,
+    max_horizon: int = 7,
+    hour_of_sampling: int = None,
+    **kwargs: dict,
+) -> dict:
+    """Get baseline distribution of sampled data."""
+    # Sampler
+    sampler = baseline_day_sampler(
+        sampling_table_path=sampling_table_path,
+        n_samples=n_samples,
+    )
+    # Multiprocess
+    with TemporaryDirectory(dir=output_dir) as temp_dir:
+        # Collect stats and save by horizons (chunked)
+        with ProcessPoolExecutor(max_workers=max_workers) as executor:
+            futures = [
+                executor.submit(
+                    _get_baseline_distribution_helper,
+                    file=file,
+                    file_df=file_df,
+                    fn=fn,
+                    temp_dir=temp_dir,
+                    min_horizon=min_horizon,
+                    max_horizon=max_horizon,
+                    hour_of_sampling=hour_of_sampling,
+                    **kwargs,
+                )
+                for file, file_df in sampler
+            ]
+            for future in tqdm(as_completed(futures), total=len(futures)):
+                _ = future.result()
+
+        # Aggregate chunked files
+        for horizon in range(min_horizon, max_horizon + 1):
+            horizon_key = f"{horizon}_days"
+            horizon_files = [
+                os.path.join(temp_dir, tempfname)
+                for tempfname in os.listdir(temp_dir)
+                if f"{horizon_key}" in tempfname
+            ]
+            horizon_level_stats = []
+            for horizon_file in horizon_files:
+                with open(horizon_file, "rb") as f:
+                    horizon_data = pickle.load(f)
+                    horizon_level_stats.extend(horizon_data)
+            # Save aggregated data
+            if horizon_level_stats:
+                saved_path = os.path.join(
+                    output_dir, f"{horizon_key}_baseline_distribution.pkl"
+                )
+                with open(saved_path, "wb") as f:
+                    pickle.dump(horizon_level_stats, f)
