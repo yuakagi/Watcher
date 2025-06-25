@@ -263,7 +263,9 @@ def _cooccurrence_lab_codes(
     return cooc_matrix
 
 
-def _collect_pivot_tables(df: pd.DataFrame, selected_codes: list[str]) -> np.ndarray:
+def _collect_pivot_tables_corr(
+    df: pd.DataFrame, selected_codes: list[str]
+) -> np.ndarray:
     """
     Extract a patient × lab matrix (values only) for selected lab codes.
 
@@ -1413,7 +1415,7 @@ def _eval_mc_adm_corr(
             full_timeline[config.COL_AGE] <= time_dsc
         )
         full_adm = full_timeline.loc[full_adm_mask].copy()
-        act_pv = _collect_pivot_tables(full_adm, selected_codes=selected_codes)
+        act_pv = _collect_pivot_tables_corr(full_adm, selected_codes=selected_codes)
         if act_pv.size > 0:
             act_pivots.append(act_pv)
 
@@ -1445,7 +1447,7 @@ def _eval_mc_adm_corr(
                     # *************
                     if n_sim > 0:
                         # NOTE: Collect all lab values in the entire simulation
-                        sim_pv = _collect_pivot_tables(
+                        sim_pv = _collect_pivot_tables_corr(
                             sim_result, selected_codes=selected_codes
                         )
                         if sim_pv.size:

@@ -99,7 +99,7 @@ def roc(
     y = y[sorted_index]
     t = t[sorted_index]
     n_items = y.shape[0]
-    thresholds = np.linspace(min(y), max(y), n_thresholds)
+    thresholds = np.linspace(0, 1, n_thresholds)
 
     def _roc(y, t, thresholds):
         fpr, tpr = [], []
@@ -333,7 +333,7 @@ def pr(
 
     def _pr(y, t, n_thresholds):
         precisions, recalls = [], []
-        for threshold in np.linspace(min(y), max(y), n_thresholds):
+        for threshold in np.linspace(0, 1, n_thresholds):
             pred = y >= threshold
             t_bool = t.astype(bool)
             tp = (t_bool & pred).sum()
