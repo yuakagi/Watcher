@@ -4,6 +4,7 @@ from .mc_adm_evaluations import (
     eval_mc_adm_count,
     eval_mc_adm_lab_cooc,
     eval_mc_adm_corr,
+    eval_mc_adm_lab_dist,
     create_baseline_sampling_table,
     draw_baseline_samples,
     get_baseline_distribution,

@@ -1,6 +1,9 @@
 """Utils for data visualization"""
 
 import os
+import warnings
+from concurrent.futures import ProcessPoolExecutor, as_completed
+from tqdm import tqdm
 import numpy as np
 import pandas as pd
 import statsmodels.api as sm
@@ -82,15 +85,60 @@ def set_figure_params(
     return plt.rcParams
 
 
+def _roc(y: np.ndarray, t: np.ndarray, thresholds: np.ndarray, epsilon: float = 1e-8):
+    # Reshape for broadcasting
+    preds = thresholds.reshape(-1, 1) <= y.reshape(1, -1)  # (n_thresholds, n_samples)
+    t_bool = t.astype(bool).reshape(1, -1)  # shape: (1, n_samples)
+    # Compute confusion matrix elements
+    tp = np.sum(preds & t_bool, axis=1)  # shape: (n_thresholds,)
+    fn = np.sum(~preds & t_bool, axis=1)
+    tn = np.sum(~preds & ~t_bool, axis=1)
+    fp = np.sum(preds & ~t_bool, axis=1)
+    # Compute TPR and FPR
+    tpr = np.divide(tp, tp + fn + epsilon)
+    fpr = np.divide(fp, fp + tn + epsilon)
+    # Compute auc
+    df = pd.DataFrame({"fpr": fpr, "tpr": tpr})
+    df = df.sort_values("fpr")
+    df["base"] = (df["fpr"] - df["fpr"].shift(1)).fillna(0)
+    df["shifted tpr"] = df["tpr"].shift(1, fill_value=0)
+    df["higher height"] = df[["tpr", "shifted tpr"]].max(axis=1)
+    df["lower height"] = df[["tpr", "shifted tpr"]].min(axis=1)
+    auc = (
+        df["base"] * df["lower height"]
+        + 0.5 * (df["base"] * (df["higher height"] - df["lower height"]))
+    ).sum()
+    # Finalize
+    fpr = df["fpr"].tolist()
+    tpr = df["tpr"].tolist()
+    return fpr, tpr, auc
+
+
+def _boot_roc(y: np.ndarray, t: np.ndarray, thresholds: np.ndarray):
+    """Computes ROC and AUROC by non-parametric bootstrapping."""
+    n_items = y.shape[0]
+    indexes = np.arange(0, n_items)
+    # Non-parametric bootstrapping
+    resampled_idx = np.random.choice(indexes, size=n_items, replace=True)
+    resampled_y = y[resampled_idx]
+    resampled_t = t[resampled_idx]
+    sorted_new_idx = resampled_y.argsort()
+    resampled_y = resampled_y[sorted_new_idx]
+    resampled_t = resampled_t[sorted_new_idx]
+    _, _, boot_auc = _roc(resampled_y, resampled_t, thresholds)
+    return boot_auc
+
+
 def roc(
     y: list | np.ndarray,
     t: list | np.ndarray,
     n_thresholds: int = 100,
     percentile: int = 95,
     n_resampling: int = 100,
+    max_workers: int = 1,
+    epsilon: float = 1e-8,
 ):
     """Computes ROC and AUROC."""
-    epsilon = 1e-8
     if not isinstance(y, np.ndarray):
         y = np.array(y)
     if not isinstance(t, np.ndarray):
@@ -98,36 +146,7 @@ def roc(
     sorted_index = y.argsort()
     y = y[sorted_index]
     t = t[sorted_index]
-    n_items = y.shape[0]
-    thresholds = np.linspace(0, 1, n_thresholds)
-
-    def _roc(y, t, thresholds):
-        fpr, tpr = [], []
-        for thr in thresholds:
-            pred = y >= thr
-            t_bool = t.astype(bool)
-            tp = (t_bool & pred).sum()
-            fn = (t_bool & (~pred)).sum()
-            tn = ((~t_bool) & (~pred)).sum()
-            fp = ((~t_bool) & pred).sum()
-            fpr.append(fp / max(fp + tn, epsilon))
-            tpr.append(tp / max(tp + fn, epsilon))
-
-        # Compute auc
-        df = pd.DataFrame({"fpr": fpr, "tpr": tpr})
-        df = df.sort_values("fpr")
-        df["base"] = (df["fpr"] - df["fpr"].shift(1)).fillna(0)
-        df["shifted tpr"] = df["tpr"].shift(1, fill_value=0)
-        df["higher height"] = df[["tpr", "shifted tpr"]].max(axis=1)
-        df["lower height"] = df[["tpr", "shifted tpr"]].min(axis=1)
-        auc = (
-            df["base"] * df["lower height"]
-            + 0.5 * (df["base"] * (df["higher height"] - df["lower height"]))
-        ).sum()
-        # Finalize
-        fpr = df["fpr"].tolist()
-        tpr = df["tpr"].tolist()
-        return fpr, tpr, auc
+    thresholds = np.linspace(y.min() - 1e-8, y.max() + 1e-8, n_thresholds)
 
     # Compute the raw auc value
     raw_fpr, raw_tpr, raw_auc = _roc(y, t, thresholds)
@@ -136,21 +155,18 @@ def roc(
     if percentile:
         lower_p = (100 - percentile) / 2
         upper_p = 100 - lower_p
-        indexes = np.arange(0, n_items)
         boot_auc_list = []
-        for _ in range(n_resampling):
-            # Non-parametric bootstrapping
-            resampled_idx = np.random.choice(indexes, size=n_items, replace=True)
-            resampled_y = y[resampled_idx]
-            resampled_t = t[resampled_idx]
-            sorted_new_idx = resampled_y.argsort()
-            resampled_y = resampled_y[sorted_new_idx]
-            resampled_t = resampled_t[sorted_new_idx]
-            resampled_thresholds = np.linspace(
-                min(resampled_y), max(resampled_y), n_thresholds
-            )
-            _, _, boot_auc = _roc(resampled_y, resampled_t, resampled_thresholds)
-            boot_auc_list.append(boot_auc)
+        with ProcessPoolExecutor(max_workers=max_workers) as executor:
+            futures = [
+                executor.submit(_boot_roc, y, t, thresholds)
+                for _ in range(n_resampling)
+            ]
+            for future in tqdm(
+                as_completed(futures), desc="Bootstrapping ROC", total=n_resampling
+            ):
+                boot_auc = future.result()
+                boot_auc_list.append(boot_auc)
+
         # Finalize results
         boot_aucs = np.array(boot_auc_list)
         auc_low = np.percentile(boot_aucs, lower_p)
@@ -312,12 +328,73 @@ def plot_roc(
     return ax, final_stats
 
 
+def _pr(
+    y: np.ndarray, t: np.ndarray, thresholds: np.ndarray
+) -> tuple[list, list, float]:
+    precisions, recalls = [], []
+    preds = thresholds.reshape(-1, 1) <= y.reshape(1, -1)  # (n_thresholds, n_samples)
+    t_bool = t.astype(bool).reshape(1, -1)  # (1, n_samples)
+    tp = np.sum(preds & t_bool, axis=1)  # sum across samples
+    fn = np.sum(~preds & t_bool, axis=1)
+    fp = np.sum(preds & ~t_bool, axis=1)
+    denom_p = tp + fp
+    denom_r = tp + fn
+    precision = np.divide(
+        tp, denom_p, out=np.full_like(tp, np.nan, dtype=float), where=denom_p > 0
+    )
+    recall = np.divide(
+        tp, denom_r, out=np.full_like(tp, np.nan, dtype=float), where=denom_r > 0
+    )
+    precisions = precision.tolist()
+    recalls = recall.tolist()
+
+    # Compute auc
+    df = pd.DataFrame({"rc": recalls, "pr": precisions})
+    df = df.dropna(
+        subset=["rc", "pr"]
+    )  # Drop any threshold where either precision or recall is NaN
+    df = df.sort_values("rc")
+    df["base"] = (df["rc"] - df["rc"].shift(1)).fillna(0)
+    df["shifted pr"] = df["pr"].shift(1, fill_value=0)
+    df["higher height"] = df[["pr", "shifted pr"]].max(axis=1)
+    df["lower height"] = df[["pr", "shifted pr"]].min(axis=1)
+    auc = (
+        df["base"] * df["lower height"]
+        + 0.5 * (df["base"] * (df["higher height"] - df["lower height"]))
+    ).sum()
+    # If the recall doesn't start from 0, add the area of the rectangle from recall=0 to the first recall value
+    if df["rc"].min() > 0:
+        auc += (
+            df["rc"].min() * 1.0
+        )  # Assuming precision = 1 when recall < first recall point
+    # Finalize
+    recalls = df["rc"].tolist()
+    precisions = df["pr"].tolist()
+
+    return recalls, precisions, auc
+
+
+def _boot_pr(y: np.ndarray, t: np.ndarray, thresholds: np.ndarray) -> float:
+    n_items = y.shape[0]
+    indexes = np.arange(0, n_items)
+    # Non-parametric bootstrapping
+    resampled_idx = np.random.choice(indexes, size=n_items, replace=True)
+    resampled_y = y[resampled_idx]
+    resampled_t = t[resampled_idx]
+    sorted_new_idx = resampled_y.argsort()
+    resampled_y = resampled_y[sorted_new_idx]
+    resampled_t = resampled_t[sorted_new_idx]
+    _, _, boot_auc = _pr(resampled_y, resampled_t, thresholds)
+    return boot_auc
+
+
 def pr(
     y: list | np.ndarray,
     t: list | np.ndarray,
     n_thresholds: int = 100,
     percentile: int = 95,
     n_resampling: int = 100,
+    max_workers: int = 1,
 ):
     """Computes PR curve."""
     if n_thresholds is None:
@@ -329,59 +406,25 @@ def pr(
     sorted_index = y.argsort()
     y = y[sorted_index]
     t = t[sorted_index]
-    n_items = y.shape[0]
-
-    def _pr(y, t, n_thresholds):
-        precisions, recalls = [], []
-        for threshold in np.linspace(0, 1, n_thresholds):
-            pred = y >= threshold
-            t_bool = t.astype(bool)
-            tp = (t_bool & pred).sum()
-            fn = (t_bool & (~pred)).sum()
-            fp = ((~t_bool) & pred).sum()
-            precisions.append(tp / (tp + fp))
-            recalls.append(tp / (tp + fn))
-
-        # Compute auc
-        df = pd.DataFrame({"rc": recalls, "pr": precisions})
-        df = df.sort_values("rc")
-        df["base"] = (df["rc"] - df["rc"].shift(1)).fillna(0)
-        df["shifted pr"] = df["pr"].shift(1, fill_value=0)
-        df["higher height"] = df[["pr", "shifted pr"]].max(axis=1)
-        df["lower height"] = df[["pr", "shifted pr"]].min(axis=1)
-        auc = (
-            df["base"] * df["lower height"]
-            + 0.5 * (df["base"] * (df["higher height"] - df["lower height"]))
-        ).sum()
-        # If the recall doesn't start from 0, add the area of the rectangle from recall=0 to the first recall value
-        if df["rc"].min() > 0:
-            auc += (
-                df["rc"].min() * 1.0
-            )  # Assuming precision = 1 when recall < first recall point
-        # Finalize
-        recalls = df["rc"].tolist()
-        precisions = df["pr"].tolist()
-
-        return recalls, precisions, auc
-
-    raw_recalls, raw_precisions, raw_auc = _pr(y, t, n_thresholds)
+    # Thresholds to cover the whole range of y
+    thresholds = np.linspace(y.min() - 1e-8, y.max() + 1e-8, n_thresholds)
+    # PR curve
+    raw_recalls, raw_precisions, raw_auc = _pr(y, t, thresholds)
 
     # Compute confidence intervals by resampling
     if percentile:
         lower_p = (100 - percentile) / 2
         upper_p = 100 - lower_p
-        indexes = np.arange(0, n_items)
         boot_auc_list = []
-        for _ in range(n_resampling):
-            # Non-parametric bootstrapping
-            resampled_idx = np.random.choice(indexes, size=n_items, replace=True)
-            resampled_y = y[resampled_idx]
-            resampled_t = t[resampled_idx]
-            sorted_new_idx = resampled_y.argsort()
-            resampled_y = resampled_y[sorted_new_idx]
-            resampled_t = resampled_t[sorted_new_idx]
-            _, _, boot_auc = _pr(resampled_y, resampled_t, n_thresholds)
-            boot_auc_list.append(boot_auc)
+        with ProcessPoolExecutor(max_workers=max_workers) as executor:
+            futures = [
+                executor.submit(_boot_pr, y, t, thresholds) for _ in range(n_resampling)
+            ]
+            for future in tqdm(
+                as_completed(futures), desc="Bootstrapping PR", total=n_resampling
+            ):
+                boot_auc = future.result()
+                boot_auc_list.append(boot_auc)
         # Finalize results
         boot_aucs = np.array(boot_auc_list)
         auc_low = np.percentile(boot_aucs, lower_p)
@@ -491,6 +534,128 @@ def plot_prc(
     return ax
 
 
+def _compute_calib_bins(
+    y: np.ndarray,
+    t: np.ndarray,
+    bin_lower_lims: np.ndarray,
+    bin_center_vals: np.ndarray,
+    bin_upper_lims: np.ndarray,
+):
+    # Initialize
+    df = pd.DataFrame({"proba": y, "label": t})
+    df["label"] = df["label"].astype(int)
+    df["center"] = 0.0
+    n_bins = bin_center_vals.shape[0]
+    # Checking bins
+    for i in range(n_bins):
+        low = bin_lower_lims[i]
+        high = bin_upper_lims[i]
+        c = bin_center_vals[i]
+        mask = df["proba"].between(
+            low, high, inclusive="both" if i == n_bins - 1 else "left"
+        )
+        df.loc[mask, "center"] = c
+
+    # NOTE:center_and_mean is indexed by center values, and values are mean values.
+    center_and_mean = (
+        df.groupby("center")["label"].mean().reindex(bin_center_vals, fill_value=np.nan)
+    )
+
+    pred_proba = center_and_mean.index.to_numpy()
+    true_freq = center_and_mean.values
+
+    return pred_proba, true_freq
+
+
+def _quantify_calibration(y: np.ndarray, t: np.ndarray):
+    """Quantifies calibration metrics for a given set of predicted probabilities and observed outcomes.
+    Args:
+        y (np.ndarray): Predicted probabilities (values between 0 and 1).
+        t (np.ndarray): Observed binary outcomes (0 or 1).
+    Returns:
+        tuple: A tuple containing:
+            - o_e_ratio (float): O/E ratio.
+            - calibration_in_the_large (float): Calibration-in-the-large.
+            - slope (float): Calibration slope.
+            - intercept (float): Calibration intercept.
+    """
+    # Transform y to logit scale safely
+    eps = 1e-10
+    y_safe = np.clip(y, eps, 1 - eps)
+    y_logit = np.log(y_safe / (1 - y_safe))
+    try:
+        # Compute CITL
+        X = np.ones_like(t)
+        logit_model = sm.Logit(t, X, offset=y_logit)
+        result = logit_model.fit(disp=False)
+        calibration_in_the_large = result.params[0]
+        # Compute slope, intercept
+        X = sm.add_constant(y_logit)
+        logit_model = sm.Logit(t, X)
+        result = logit_model.fit(disp=False)
+    except Exception as e:
+        print(" ****************** ")
+        df = pd.DataFrame({"y_logit": y_logit, "t": t})
+        print(pd.crosstab(df["y_logit"], df["t"]))
+        print("Unique values in y_logit:", np.unique(y_logit))
+        print("Standard deviation of y_logit:", np.std(y_logit))
+        print("*********************")
+        print(e)
+        raise RuntimeError from e
+    intercept = result.params[0]
+    slope = result.params[1]
+    # Compute O/E
+    o_e_ratio = t.sum() / y.sum()
+    return o_e_ratio, calibration_in_the_large, slope, intercept
+
+
+def _boot_calib(
+    loess_xs: np.ndarray,
+    y: np.ndarray,
+    t: np.ndarray,
+    bin_center_vals: np.ndarray,
+    bin_lower_lims: np.ndarray,
+    bin_upper_lims: np.ndarray,
+    loess_kw: dict,
+):
+    n_items = y.shape[0]
+    indexes = np.arange(0, n_items)
+    # Non-parametric bootstrapping
+    resampled_idx = np.random.choice(indexes, size=n_items, replace=True)
+    resampled_y = y[resampled_idx]
+    resampled_t = t[resampled_idx]
+    sorted_new_idx = resampled_y.argsort()
+    resampled_y = resampled_y[sorted_new_idx]
+    resampled_t = resampled_t[sorted_new_idx]
+    # Apply extremely small values to y in order to keep the array increasing
+    resampled_y = resampled_y + np.linspace(0, 1e-10, n_items)
+    # Loess
+    if np.allclose(resampled_y, resampled_y[0]):
+        # loess_ys = np.full_like(loess_xs, np.nan)
+        loess_ys = np.full_like(loess_xs, resampled_t.mean())
+        print(
+            f"[Warning] Constant resampled_y = {resampled_y[0]:.4f}. Using prevalence = {resampled_t.mean():.4f}"
+        )
+    else:
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", RuntimeWarning)
+            loess_ys = lowess(endog=resampled_t, exog=resampled_y, **loess_kw)
+            if np.isnan(loess_ys).any():
+                print(
+                    "LOESS failed partially. Fraction of NaNs:",
+                    np.isnan(loess_ys).mean(),
+                )
+    # Supplementary bins
+    _, calib_y = _compute_calib_bins(
+        resampled_y, resampled_t, bin_lower_lims, bin_center_vals, bin_upper_lims
+    )
+    # Quantify
+    o_e_ratio, calibration_in_the_large, slope, intercept = _quantify_calibration(
+        resampled_y, resampled_t
+    )
+    return loess_ys, calib_y, o_e_ratio, calibration_in_the_large, slope, intercept
+
+
 def calib(
     y: np.ndarray,
     t: np.ndarray,
@@ -498,77 +663,9 @@ def calib(
     loess_frac: float = 0.5,
     percentile: int = 95,
     n_resampling: int = 100,
+    max_workers: int = 1,
 ):
     """Computes calibration curve"""
-
-    def _compute_calib_bins(y, t, bin_lower_lims, bin_center_vals, bin_upper_lims):
-        # Initialize
-        df = pd.DataFrame({"proba": y, "label": t})
-        df["label"] = df["label"].astype(int)
-        df["center"] = 0.0
-        n_bins = bin_center_vals.shape[0]
-        # Checking bins
-        for i in range(n_bins):
-            low = bin_lower_lims[i]
-            high = bin_upper_lims[i]
-            c = bin_center_vals[i]
-            mask = df["proba"].between(
-                low, high, inclusive="both" if i == n_bins - 1 else "left"
-            )
-            df.loc[mask, "center"] = c
-
-        # NOTE:center_and_mean is indexed by center values, and values are mean values.
-        center_and_mean = (
-            df.groupby("center")["label"]
-            .mean()
-            .reindex(bin_center_vals, fill_value=np.nan)
-        )
-
-        pred_proba = center_and_mean.index.to_numpy()
-        true_freq = center_and_mean.values
-
-        return pred_proba, true_freq
-
-    def _quantify_calibration(y, t):
-        """Quantifies calibration metrics for a given set of predicted probabilities and observed outcomes.
-        Args:
-            y (np.ndarray): Predicted probabilities (values between 0 and 1).
-            t (np.ndarray): Observed binary outcomes (0 or 1).
-        Returns:
-            tuple: A tuple containing:
-                - o_e_ratio (float): O/E ratio.
-                - calibration_in_the_large (float): Calibration-in-the-large.
-                - slope (float): Calibration slope.
-                - intercept (float): Calibration intercept.
-        """
-        # Transform y to logit scale safely
-        eps = 1e-10
-        y_safe = np.clip(y, eps, 1 - eps)
-        y_logit = np.log(y_safe / (1 - y_safe))
-        try:
-            # Compute CITL
-            X = np.ones_like(t)
-            logit_model = sm.Logit(t, X, offset=y_logit)
-            result = logit_model.fit(disp=False)
-            calibration_in_the_large = result.params[0]
-            # Compute slope, intercept
-            X = sm.add_constant(y_logit)
-            logit_model = sm.Logit(t, X)
-            result = logit_model.fit(disp=False)
-        except Exception as e:
-            print(" ****************** ")
-            df = pd.DataFrame({"y_logit": y_logit, "t": t})
-            print(pd.crosstab(df["y_logit"], df["t"]))
-            print("Unique values in y_logit:", np.unique(y_logit))
-            print("Standard deviation of y_logit:", np.std(y_logit))
-            print("*********************")
-            print(e)
-            raise RuntimeError from e
-        intercept = result.params[0]
-        slope = result.params[1]
-        # Compute O/E
-        o_e_ratio = t.sum() / y.sum()
-        return o_e_ratio, calibration_in_the_large, slope, intercept
 
     # Initialize
     if not isinstance(y, np.ndarray):
@@ -582,9 +679,11 @@ def calib(
     sorted_index = y.argsort()
     y = y[sorted_index]
     t = t[sorted_index]
-    n_items = y.shape[0]
-    indexes = np.arange(0, n_items)
-    loess_xs = np.arange(0, 1, 0.005)
+    # Remove NaNs and Infs
+    valid_mask = ~np.isnan(y) & ~np.isnan(t) & ~np.isinf(y) & ~np.isinf(t)
+    y_clean, t_clean = y[valid_mask], t[valid_mask]
+    # Count items
+    loess_xs = np.arange(y_clean.min(), y_clean.max(), 0.005)
     interval = 1 / n_bins
     bin_lower_lims = np.arange(0, 1, interval)
     bin_center_vals = bin_lower_lims + interval / 2
@@ -596,15 +695,22 @@ def calib(
     loess_kw = dict(frac=loess_frac, it=0, xvals=loess_xs)
     # Compute raw values
     raw_calib_xs, raw_calib_ys = _compute_calib_bins(
-        y, t, bin_lower_lims, bin_center_vals, bin_upper_lims
+        y_clean, t_clean, bin_lower_lims, bin_center_vals, bin_upper_lims
     )
-    # Remove NaNs and Infs
-    valid_mask = ~np.isnan(y) & ~np.isnan(t) & ~np.isinf(y) & ~np.isinf(t)
-    y_clean, t_clean = y[valid_mask], t[valid_mask]
-
     # Apply LOWESS safely
-    raw_loess_ys = lowess(endog=t_clean, exog=y_clean, **loess_kw)
-    o_e_ratio, calibration_in_the_large, slope, intercept = _quantify_calibration(y, t)
+    if np.allclose(y_clean, y_clean[0]):
+        # raw_loess_ys = np.full_like(loess_xs, np.nan)
+        raw_loess_ys = np.full_like(loess_xs, t_clean.mean())
+        print(
+            f"[Warning] Constant resampled_y = {y_clean[0]:.4f}. Using prevalence = {t_clean.mean():.4f}"
+        )
+    else:
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", RuntimeWarning)
+            raw_loess_ys = lowess(endog=t_clean, exog=y_clean, **loess_kw)
+    o_e_ratio, calibration_in_the_large, slope, intercept = _quantify_calibration(
+        y_clean, t_clean
+    )
     bins_df.loc[raw_calib_xs, "raw"] = raw_calib_ys
     loess_df.loc[loess_xs, "raw"] = raw_loess_ys
     quant_df.loc[quant_idx, "raw"] = [
@@ -618,31 +724,33 @@ def calib(
     loess_array = np.zeros((loess_xs.shape[0], n_resampling))
     calib_array = np.zeros((n_bins, n_resampling))
     quant_array = np.zeros((len(quant_idx), n_resampling))
-    for i in range(n_resampling):
-        # Non-parametric bootstrapping
-        resampled_idx = np.random.choice(indexes, size=n_items, replace=True)
-        resampled_y = y[resampled_idx]
-        resampled_t = t[resampled_idx]
-        sorted_new_idx = resampled_y.argsort()
-        resampled_y = resampled_y[sorted_new_idx]
-        resampled_t = resampled_t[sorted_new_idx]
-        # Apply extremely small values to y in order to keep the array increasing
-        resampled_y = resampled_y + np.linspace(0, 1e-10, n_items)
-        # Loess
-        loess_ys = lowess(endog=resampled_t, exog=resampled_y, **loess_kw)
-        loess_array[:, i] = loess_ys
-        # Supplementary bins
-        _, calib_y = _compute_calib_bins(
-            resampled_y, resampled_t, bin_lower_lims, bin_center_vals, bin_upper_lims
-        )
-        calib_array[:, i] = calib_y
-        # Quantify
-        o_e_ratio, calibration_in_the_large, slope, intercept = _quantify_calibration(
-            resampled_y, resampled_t
-        )
-        quant_array[:, i] = np.array(
-            [o_e_ratio, calibration_in_the_large, slope, intercept]
-        )
+    with ProcessPoolExecutor(max_workers=max_workers) as executor:
+        futures = [
+            executor.submit(
+                _boot_calib,
+                loess_xs,
+                y_clean,
+                t_clean,
+                bin_center_vals,
+                bin_lower_lims,
+                bin_upper_lims,
+                loess_kw,
+            )
+            for _ in range(n_resampling)
+        ]
+        for i, future in tqdm(
+            enumerate(as_completed(futures)),
+            desc="Bootstrapping calibration",
+            total=n_resampling,
+        ):
+            loess_ys, calib_y, o_e_ratio, calibration_in_the_large, slope, intercept = (
+                future.result()
+            )
+            loess_array[:, i] = loess_ys
+            calib_array[:, i] = calib_y
+            quant_array[:, i] = np.array(
+                [o_e_ratio, calibration_in_the_large, slope, intercept]
+            )
 
     # Stats
     lower_p = (100 - percentile) / 2
@@ -652,7 +760,7 @@ def calib(
     bins_df["low"] = np.nan
     bins_df["high"] = np.nan
     bin_boundaries = np.linspace(0, 1, n_bins + 1)
-    hist_counts, _ = np.histogram(y, bins=bin_boundaries)
+    hist_counts, _ = np.histogram(y_clean, bins=bin_boundaries)
     bin_centers = (bin_boundaries[:-1] + bin_boundaries[1:]) / 2
     bin_width = bin_boundaries[1] - bin_boundaries[0]
     bins_df["counts"] = hist_counts
@@ -834,6 +942,14 @@ def plot_one_calib(
     ax.set_ylim(0, 1)
     ax.set_xlim(0, 1)
     ax.spines[["right", "top"]].set_visible(False)
+    # Axis labels
+    if show_hist:
+        ax_hist.set_xlabel("Predicted probability")
+        ax_hist.set_ylabel("Count")
+        ax.set_xlabel(None)
+    else:
+        ax.set_xlabel("Predicted probability")
+    ax.set_ylabel("Observed frequency")
 
     return ax, ax_hist
 

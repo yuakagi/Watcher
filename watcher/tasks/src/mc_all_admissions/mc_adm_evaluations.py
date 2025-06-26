@@ -1,6 +1,7 @@
 import os
 import pickle
 import traceback
+import glob
 from typing import Callable
 from datetime import datetime, timedelta
 from tempfile import TemporaryDirectory
@@ -280,13 +281,10 @@ def _collect_pivot_tables_corr(
     df = df[df["code"].isin(selected_codes)].copy()
     df["numeric"] = extract_numeric_from_text(df["result"])
     df = df.dropna(subset=["numeric"])
-
     # Remove duplicates per (patient_id, age, code)
     df = df.drop_duplicates(subset=["patient_id", "age", "code"])
-
     # Pivot to wide format
     pv = df.pivot(index=["patient_id", "age"], columns="code", values="numeric")
-
     # Ensure all selected codes are present
     pv = pv.reindex(columns=selected_codes)
     pv = pv.values.astype(np.float32)
@@ -300,6 +298,9 @@ def _collect_pivot_tables_dist(
     """
     Extract a patient × lab matrix (values only) for selected lab codes.
     """
+    # NOTE: This function can cover _collect_pivot_tables_corr.
+    # Get all simulation no
+    all_sim_no = df["patient_id"].unique()
     # Filter and extract numeric values
     df = df[df["code"].isin(selected_codes)].copy()
     df["numeric"] = extract_numeric_from_text(df["result"])
@@ -310,12 +311,25 @@ def _collect_pivot_tables_dist(
     pv = df.pivot(index=["patient_id", "age"], columns="code", values="numeric")
     # Ensure all selected codes are present
     pv = pv.reindex(columns=selected_codes)
-    # Reset index
-    pv = pv.reset_index(drop=False)
-    # Make the values float32 for memory efficiency
-    # NOTE: float32 is sufficient for lab values
-    pv = pv.values.astype(np.float32)
-
+    # Reset index and sort columns
+    pv = pv.reset_index()
+    pv = pv[["patient_id"] + selected_codes]
+    # Ensure all patients (simulations) are included
+    missing_ids = set(all_sim_no) - set(pv["patient_id"].unique())
+    if missing_ids:
+        filler = pd.DataFrame(
+            {
+                "patient_id": list(missing_ids),
+                **{code: np.nan for code in selected_codes},
+            }
+        )
+        pv = pd.concat([pv, filler], ignore_index=True)
+    # Finalize
+    pv = pv.sort_values(by="patient_id")
+    pv[selected_codes] = pv[selected_codes].astype(
+        np.float32
+    )  # Convert to float32 for memory efficiency
+    # This returned pv has the columns of 'patient_id' + selected_codes
     return pv
 
 
@@ -1548,20 +1562,21 @@ def eval_mc_adm_corr(
 # ********
 # * Dist *
 # ********
-def _eval_mc_adm_dist(
+def _eval_mc_adm_lab_dist(
     patient_dir: str,
     selected_codes: list,
     time_of_eval_td: timedelta,
     max_horizon: timedelta,
     max_days: int,
+    temp_dir: str,
 ):
     # Load the full timelineand apply a custom function if indicated
     patient_no = patient_dir.split("/")[-1]
     total_stats = {}
     full_timeline = pd.read_pickle(os.path.join(patient_dir, "full_timeline.pkl"))
     admissions = [d for d in os.listdir(patient_dir) if d.startswith("admission")]
-    act_pivots = []
-    sim_pivots = []
+    act_pivots = {}
+    sim_pivots = {}
     for adm in admissions:
         # Load the time of admission and discharge
         with open(os.path.join(patient_dir, adm, "admission_info.pkl"), "rb") as f:
@@ -1593,10 +1608,10 @@ def _eval_mc_adm_dist(
                         horizon_dt = timedelta(days=horizon)
                         eval_end_time = eval_time + horizon_dt
                         # Slice out the real timeline
-                        horizon_masl_ac = (full_adm[config.COL_AGE] > eval_time) & (
+                        horizon_mask_ac = (full_adm[config.COL_AGE] > eval_time) & (
                             full_adm[config.COL_AGE] <= eval_end_time
                         )
-                        actual_result = full_adm.loc[horizon_masl_ac | dmg_mask_sim]
+                        actual_result = full_adm.loc[horizon_mask_ac | dmg_mask_sim]
                         # Slice out the simulation results
                         horizon_mask_sim = (sim_result[config.COL_AGE] > eval_time) & (
                             sim_result[config.COL_AGE] <= eval_end_time
@@ -1610,15 +1625,24 @@ def _eval_mc_adm_dist(
                             print("n-sim", n_sim)
                             print(sim_result_path)
                         # *************
-                        if n_sim > 0:
-                            # NOTE: Collect all lab values in the entire simulation
-                            sim_pv = _collect_pivot_tables_dist(
-                                sim_result, selected_codes=selected_codes
-                            )
-                            if sim_pv.size:
-                                sim_pivots.append(sim_pv)
-                        else:
-                            pass
+                        # NOTE: Here, sim_pv contains patient_id (simulation no) and selected_codes in the column
+                        #   sim_pv.shape = (n_total_labs, n_selected_codes + 1)
+                        #   You can slice lab results from a specific simulation by slicing using patient_id
+                        sim_pv = _collect_pivot_tables_dist(
+                            sim_result, selected_codes=selected_codes
+                        )
+                        # Collect actual pivot table
+                        act_pv = _collect_pivot_tables_dist(
+                            actual_result, selected_codes=selected_codes
+                        )
+                        # Add to the dictionary
+                        horizon_key = f"{horizon}_days"
+                        if horizon_key not in act_pivots:
+                            act_pivots[horizon_key] = []
+                        if horizon_key not in sim_pivots:
+                            sim_pivots[horizon_key] = []
+                        act_pivots[horizon_key].append(act_pv)
+                        sim_pivots[horizon_key].append(sim_pv)
 
                 except (FileNotFoundError, EOFError) as e:
                     print(f"Failed to open {sim_result_path}")
@@ -1628,21 +1652,37 @@ def _eval_mc_adm_dist(
                     print("*********************")
                     continue
 
-    if act_pivots:
-        act_pivots = np.concatenate(act_pivots, axis=0)
-    else:
-        act_pivots = np.array([])
-    if sim_pivots:
-        sim_pivots = np.concatenate(sim_pivots, axis=0)
-    else:
-        sim_pivots = np.array([])
+    # Because data can be very large, save data by patient and horizon
+    pid = os.getpid()
+    random_file_id = uuid4().hex
+    actual_temp_dir = os.path.join(temp_dir, "actual")
+    for horizon_key, act_pv_list in act_pivots.items():
+        # Create a child directory to prevent too many files in the temp directory
+        actual_child_dir = os.path.join(actual_temp_dir, horizon_key, str(pid))
+        os.makedirs(actual_child_dir, exist_ok=True)
+        if len(act_pv_list) > 0:
+            temp_file_name = os.path.join(
+                actual_child_dir, f"act_{horizon_key}_{random_file_id}.pkl"
+            )
+            with open(temp_file_name, "wb") as f:
+                pickle.dump(act_pv_list, f)
+    sim_temp_dir = os.path.join(temp_dir, "sim")
+    for horizon_key, sim_pv_list in sim_pivots.items():
+        sim_child_dir = os.path.join(sim_temp_dir, horizon_key, str(pid))
+        os.makedirs(sim_child_dir, exist_ok=True)
+        if len(sim_pv_list) > 0:
+            temp_file_name = os.path.join(
+                sim_child_dir, f"sim_{horizon_key}_{random_file_id}.pkl"
+            )
+            with open(temp_file_name, "wb") as f:
+                pickle.dump(sim_pv_list, f)
 
-    return patient_no, act_pivots, sim_pivots
 
-
-def eval_mc_adm_dist(
+def eval_mc_adm_lab_dist(
+    output_dir: str,
     result_dir: str,
     dataset_dir: str,
+    max_horizon: int = 7,
     code_percentile: int = 80,
     max_workers: int | None = None,
 ):
@@ -1683,28 +1723,55 @@ def eval_mc_adm_dist(
             debug_chunks = int(debug_chunks)
             patient_list = patient_list.iloc[:debug_chunks]
 
-        all_act_pivots = []
-        all_sim_pivots = []
-        with ProcessPoolExecutor(max_workers=max_workers) as executor:
-            futures = [
-                executor.submit(
-                    _eval_mc_adm_corr,
-                    patient_dir=patient_dir,
-                    selected_codes=selected_codes,
-                    time_of_eval_td=time_of_eval_td,
-                    max_horizon_td=max_horizon_td,
-                    max_days=max_days,
-                )
-                for patient_dir in patient_list["path"]
-            ]
-            for future in tqdm(as_completed(futures), total=len(patient_list["path"])):
-                patient_no, act_pivots, sim_pivots = future.result()
-                if act_pivots.size > 0:
-                    all_act_pivots.append(act_pivots)
-                if sim_pivots.size > 0:
-                    all_sim_pivots.append(sim_pivots)
+        with TemporaryDirectory(dir=output_dir) as temp_dir:
+            with ProcessPoolExecutor(max_workers=max_workers) as executor:
+                futures = [
+                    executor.submit(
+                        _eval_mc_adm_lab_dist,
+                        patient_dir=patient_dir,
+                        selected_codes=selected_codes,
+                        time_of_eval_td=time_of_eval_td,
+                        max_horizon=max_horizon,
+                        max_days=max_days,
+                        temp_dir=temp_dir,
+                    )
+                    for patient_dir in patient_list["path"]
+                ]
+                for future in tqdm(
+                    as_completed(futures), total=len(patient_list["path"])
+                ):
+                    _ = future.result()
 
-        return all_act_pivots, all_sim_pivots, selected_codes
+            # Aggregate results
+            print("Aggregating results...")
+            output_child_dir = os.path.join(output_dir, "lab_dist_results")
+            os.makedirs(output_child_dir, exist_ok=True)
+            # NOTE: Exit the pool once, to ensure all child proceses release memory
+            for sim_or_act in ["act", "sim"]:
+                for horizon in range(1, max_horizon + 1):
+                    # Collect all files
+                    temp_files = glob.glob(
+                        os.path.join(temp_dir, "**", f"{sim_or_act}_{horizon}_*.pkl"),
+                        recursive=True,
+                    )
+                    if len(temp_files) == 0:
+                        print(f"No {sim_or_act} files found for horizon {horizon}")
+                        continue
+                    # Load all files
+                    all_pivots = []
+                    for temp_file in temp_files:
+                        with open(temp_file, "rb") as f:
+                            pivots = pickle.load(f)
+                        all_pivots.extend(pivots)
+                    # Save the aggregated file
+                    output_file = os.path.join(
+                        output_child_dir, f"lab_dist_{sim_or_act}_{horizon}_days.pkl"
+                    )
+                    with open(output_file, "wb") as f:
+                        pickle.dump(all_pivots, f)
+                    # remove temporary files
+                    for temp_file in temp_files:
+                        os.remove(temp_file)
 
     finally:
         settings_manager.delete()
@@ -1718,6 +1785,9 @@ def _create_sampling_table_fn(
     hour_of_sampling: int | None = None,
     max_days: int = None,
     min_days: int = 0,
+    train_only: bool = True,
+    period_start: str | None = None,
+    period_end: str | None = None,
 ) -> pd.DataFrame:
     """Create sampling weights for sampling training data to generate baseline.
     Because data are saved in multiple files, this is needed.
@@ -1727,10 +1797,32 @@ def _create_sampling_table_fn(
         hour_of_sampling (int|None): Hour of sampling. If None, nothing is excluded.
         max_days (int): Maximum number of days from an admission.
         min_days (int): Minimum number of days from an admission.
+        train_only (bool): If True, only training data is considered.
+        period_start (str|None): Start of the period to consider in %Y/%m/%d format. If None, no start is applied.
+        period_end (str|None): End of the period to consider in %Y/%m/%d format. If None, no end is applied.
     """
     # Load
     df = pd.read_pickle(labelled_path)
-    df = df[["patient_id", "timedelta", "admitted", "original_value"]]
+    df = df[
+        [
+            "patient_id",
+            "timestamp",
+            "timedelta",
+            "admitted",
+            "original_value",
+            "train_period",
+        ]
+    ]
+    # Select valid rows
+    if train_only:
+        df = df.loc[df["train_period"] == 1]
+    if period_start is not None:
+        period_start = pd.to_datetime(period_start, format="%Y/%m/%d")
+        df = df.loc[df["timestamp"] >= period_start]
+    if period_end is not None:
+        period_end = pd.to_datetime(period_end, format="%Y/%m/%d")
+        df = df.loc[df["timestamp"] <= period_end]
+    # Select only rows with admission and discharge
     time_of_adm = df.loc[
         df["original_value"] == "[ADM]", ["patient_id", "timedelta"]
     ].copy()
@@ -1815,6 +1907,9 @@ def create_baseline_sampling_table(
     hour_of_sampling: int | None = None,
     max_days: int | None = None,
     min_days: int = 0,
+    train_only: bool = True,
+    period_start: str | None = None,
+    period_end: str | None = None,
 ):
     """Create sampling weights for sampling training data to generate baseline."""
     # Load
@@ -1826,6 +1921,9 @@ def create_baseline_sampling_table(
                 hour_of_sampling=hour_of_sampling,
                 max_days=max_days,
                 min_days=min_days,
+                train_only=train_only,
+                period_start=period_start,
+                period_end=period_end,
             )
             for f in os.listdir(tables_dir)
             if "train" in f
@@ -1854,24 +1952,43 @@ def create_baseline_sampling_table(
 
 def draw_baseline_samples(
     sampling_table_path: str,
-    n_samples: int,
+    n_samples: int = None,
+    replace: bool = False,
 ) -> pd.DataFrame:
-    """Draw baseline samples from the sampling weights."""
+    """Draw baseline samples from the sampling weights.
+
+    Args:
+        sampling_table_path (str): Path to the sampling table.
+        n_samples (int|None): Number of samples to draw. If None, all samples are drawn.
+        replace (bool): Whether to sample with replacement. Default is False.
+    Returns:
+        pd.DataFrame: Sampled dataframe with columns ['patient_id', 'sampling_dates', 'source_file'].
+    """
     # Load
     sampling_table_df = pd.read_pickle(sampling_table_path)
+    if n_samples is None:
+        n_samples = sampling_table_df.shape[0]
     # Draw samples
     if n_samples > sampling_table_df.shape[0]:
         raise ValueError(
             f"Requested {n_samples} samples, but only {sampling_table_df.shape[0]} available."
         )
-    sampled_df = sampling_table_df.sample(
-        n=n_samples,
-        replace=False,  # No replacement
-    )
+    sampled_df = sampling_table_df.sample(n=n_samples, replace=replace)
     # Reset index
     sampled_df = sampled_df.reset_index(drop=True)
     # Return
     return sampled_df
+
+
+def count_available_baseline_samples(
+    sampling_table_path: str,
+) -> int:
+    """Count available baseline samples from the sampling weights."""
+    # Load
+    sampling_table_df = pd.read_pickle(sampling_table_path)
+    # Count
+    n_samples = sampling_table_df.shape[0]
+    return n_samples
 
 
 def baseline_day_sampler(
@@ -1964,7 +2081,7 @@ def _get_baseline_distribution_helper(
 
 def get_baseline_distribution(
     sampling_table_path: str,
-    n_samples: int,
+    n_samples: int | None,
     max_workers: int,
     fn: Callable,
     output_dir: str,
