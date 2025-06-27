@@ -1603,6 +1603,7 @@ def _eval_mc_adm_lab_dist(
                     sim_result = pd.read_pickle(sim_result_path)
                     # Slice out the simulation results
                     dmg_mask_sim = sim_result[config.COL_TYPE] == 0
+                    dmg_mask_ac = full_adm[config.COL_TYPE] == 0
                     # Loop through horizons
                     for horizon in range(1, max_horizon + 1):
                         horizon_dt = timedelta(days=horizon)
@@ -1611,14 +1612,14 @@ def _eval_mc_adm_lab_dist(
                         horizon_mask_ac = (full_adm[config.COL_AGE] > eval_time) & (
                             full_adm[config.COL_AGE] <= eval_end_time
                         )
-                        actual_result = full_adm.loc[horizon_mask_ac | dmg_mask_sim]
+                        act = full_adm.loc[horizon_mask_ac | dmg_mask_ac]
                         # Slice out the simulation results
                         horizon_mask_sim = (sim_result[config.COL_AGE] > eval_time) & (
                             sim_result[config.COL_AGE] <= eval_end_time
                         )
-                        sim_result = sim_result.loc[horizon_mask_sim | dmg_mask_sim]
+                        sim = sim_result.loc[horizon_mask_sim | dmg_mask_sim]
                         # Collect stats
-                        n_sim = sim_result[config.COL_PID].nunique()
+                        n_sim = sim[config.COL_PID].nunique()
                         # *** DEBUG ***
                         if n_sim != 256:
                             print("Irregular n-sim encountered")
@@ -1629,11 +1630,11 @@ def _eval_mc_adm_lab_dist(
                         #   sim_pv.shape = (n_total_labs, n_selected_codes + 1)
                         #   You can slice lab results from a specific simulation by slicing using patient_id
                         sim_pv = _collect_pivot_tables_dist(
-                            sim_result, selected_codes=selected_codes
+                            sim, selected_codes=selected_codes
                         )
                         # Collect actual pivot table
                         act_pv = _collect_pivot_tables_dist(
-                            actual_result, selected_codes=selected_codes
+                            act, selected_codes=selected_codes
                         )
                         # Add to the dictionary
                         horizon_key = f"{horizon}_days"
@@ -1712,10 +1713,8 @@ def eval_mc_adm_lab_dist(
             metadata = pickle.load(f)
 
         time_of_eval = metadata["time_of_eval"]
-        max_horizon = metadata["time_horizon"]
         max_days = metadata["max_days"]
         time_of_eval_td = timedelta(hours=time_of_eval)
-        max_horizon_td = timedelta(days=max_horizon)
 
         # Debug handling
         if os.environ.get("DEBUG_MODE") == "1":
@@ -2123,7 +2122,7 @@ def get_baseline_distribution(
             horizon_files = [
                 os.path.join(temp_dir, tempfname)
                 for tempfname in os.listdir(temp_dir)
-                if f"{horizon_key}" in tempfname
+                if horizon_key in tempfname
             ]
             horizon_level_stats = []
             for horizon_file in horizon_files:
