@@ -264,6 +264,7 @@ def _cooccurrence_lab_codes(
     return cooc_matrix
 
 
+# LEGACY: The correlation metrics can be computed using data obtainded from _collect_pivot_tables_dist
 def _collect_pivot_tables_corr(
     df: pd.DataFrame, selected_codes: list[str]
 ) -> np.ndarray:
@@ -331,6 +332,50 @@ def _collect_pivot_tables_dist(
     )  # Convert to float32 for memory efficiency
     # This returned pv has the columns of 'patient_id' + selected_codes
     return pv
+
+
+# Count length
+def _count_tokens(df):
+    """Count timeline length."""
+    # Number of tokens
+    non_demog = df.loc[df["type"] != 0]  # Exclude demographic data
+    n_temp = int(non_demog["age"].nunique())
+    n_code_or_token = int(non_demog["code"].replace("", pd.NA).notna().sum())
+    n_results = int(non_demog["result"].replace("", pd.NA).notna().sum())
+    n_tokens = n_temp + n_code_or_token + n_results
+
+    return n_tokens
+
+
+def _compute_length_calibration(
+    df: pd.DataFrame, n_bins: int
+) -> tuple[np.ndarray, np.ndarray]:
+    """
+    Args:
+        df (pd.DataFrame): DataFrame with columns 'patient_id', 'age', 'code', 'result'.
+            Must contain patient_id and age columns.
+        n_bins (int): Number of bins to create for length calibration.
+            NOTE: If you want 20 spaces (0, 5, 10, ..., 100), then you need to set n_bins=21, not 20!.
+
+    Returns:
+        tuple: Lower and upper bounds of the bins for length calibration.
+            Each is a 1D numpy array of shape (n_bins,).
+            The lower bounds are percentiles from 0 to 50, and upper bounds from 100 to 50.
+            The length of each array is n_bins.
+    """
+    # Set percentiles.
+    lower_percentiles = np.linspace(50, 0, n_bins)
+    upper_percentiles = np.linspace(50, 100, n_bins)
+    # Get all simulated lengths
+    all_lengths = df.groupby("patient_id").apply(_count_tokens).values
+    # Create bins
+    lower_bounds = np.percentile(all_lengths, lower_percentiles)
+    upper_bounds = np.percentile(all_lengths, upper_percentiles)
+    upper_bounds[
+        0
+    ] -= 0.01  # By subtracting this noise, it ensures the first bin (0% CI) does not include anything.
+
+    return lower_bounds, upper_bounds
 
 
 def _extract_lab_values(df: pd.DataFrame, target_code: str, unit: str) -> pd.DataFrame:
@@ -1400,6 +1445,8 @@ def eval_mc_adm_lab_cooc(
 # ********
 # * Corr *
 # ********
+# NOTE: LEGACY: This paret is legacy. Correlations can be computed with the data obtained from the `eval_mc_adm_lab_dist' function.
+#       Use that function instead of this.
 def _eval_mc_adm_corr(
     patient_dir: str,
     selected_codes: list,
@@ -1587,6 +1634,7 @@ def _eval_mc_adm_lab_dist(
         n_days = (date_dsc - date_adm).days
         n_days = min(max_days, n_days)
         # Slice full real timeline with decent pad
+        # NOTE: Demographic rows are excluded here from the actual df.
         full_adm_mask = (full_timeline[config.COL_AGE] > time_adm) & (
             full_timeline[config.COL_AGE] <= (time_dsc + timedelta(days=max_horizon))
         )
@@ -1603,7 +1651,6 @@ def _eval_mc_adm_lab_dist(
                     sim_result = pd.read_pickle(sim_result_path)
                     # Slice out the simulation results
                     dmg_mask_sim = sim_result[config.COL_TYPE] == 0
-                    dmg_mask_ac = full_adm[config.COL_TYPE] == 0
                     # Loop through horizons
                     for horizon in range(1, max_horizon + 1):
                         horizon_dt = timedelta(days=horizon)
@@ -1612,7 +1659,7 @@ def _eval_mc_adm_lab_dist(
                         horizon_mask_ac = (full_adm[config.COL_AGE] > eval_time) & (
                             full_adm[config.COL_AGE] <= eval_end_time
                         )
-                        act = full_adm.loc[horizon_mask_ac | dmg_mask_ac]
+                        act = full_adm.loc[horizon_mask_ac]  # <- no demographic rows
                         # Slice out the simulation results
                         horizon_mask_sim = (sim_result[config.COL_AGE] > eval_time) & (
                             sim_result[config.COL_AGE] <= eval_end_time
@@ -1771,6 +1818,178 @@ def eval_mc_adm_lab_dist(
                     # remove temporary files
                     for temp_file in temp_files:
                         os.remove(temp_file)
+
+    finally:
+        settings_manager.delete()
+
+
+# **********
+# * Length *
+# **********
+
+
+def _eval_mc_adm_length_calib(
+    patient_dir: str,
+    time_of_eval_td: timedelta,
+    max_horizon: timedelta,
+    max_days: int,
+    n_bins: int,
+):
+    # Load the full timelineand apply a custom function if indicated
+    patient_no = patient_dir.split("/")[-1]
+    total_stats = {}
+    full_timeline = pd.read_pickle(os.path.join(patient_dir, "full_timeline.pkl"))
+    admissions = [d for d in os.listdir(patient_dir) if d.startswith("admission")]
+    for adm in admissions:
+        # Load the time of admission and discharge
+        with open(os.path.join(patient_dir, adm, "admission_info.pkl"), "rb") as f:
+            info_data = pickle.load(f)
+        time_adm, time_dsc, timestamp_adm, dept_adm = info_data
+        date_adm = timedelta(days=time_adm.days)
+        date_dsc = timedelta(days=time_dsc.days)
+        n_days = (date_dsc - date_adm).days
+        n_days = min(max_days, n_days)
+        # Slice full real timeline with decent pad
+        # NOTE: At this time, demographics are removed! Be careful!
+        full_adm_mask = (full_timeline[config.COL_AGE] > time_adm) & (
+            full_timeline[config.COL_AGE] <= (time_dsc + timedelta(days=max_horizon))
+        )
+        full_adm = full_timeline.loc[full_adm_mask].copy()
+
+        # Read through the simulation results per day
+        for day in range(0, n_days + 1):
+            eval_time = date_adm + timedelta(days=day) + time_of_eval_td
+            if (time_adm <= eval_time) & (eval_time <= time_dsc):
+                try:
+                    # Open a simulation result
+                    sim_result_path = os.path.join(patient_dir, adm, f"day{day}.pkl")
+                    sim_result = pd.read_pickle(sim_result_path)
+                    # Slice out the simulation results
+                    dmg_mask_sim = sim_result[config.COL_TYPE] == 0
+                    # Loop through horizons
+                    for horizon in range(1, max_horizon + 1):
+                        horizon_dt = timedelta(days=horizon)
+                        eval_end_time = eval_time + horizon_dt
+                        # Slice out the real timeline
+                        horizon_mask_ac = (full_adm[config.COL_AGE] > eval_time) & (
+                            full_adm[config.COL_AGE] <= eval_end_time
+                        )
+                        act = full_adm.loc[
+                            horizon_mask_ac
+                        ]  # <- this already does not contain demographics!
+                        # Slice out the simulation results
+                        horizon_mask_sim = (sim_result[config.COL_AGE] > eval_time) & (
+                            sim_result[config.COL_AGE] <= eval_end_time
+                        )
+                        sim = sim_result.loc[
+                            horizon_mask_sim | dmg_mask_sim
+                        ]  # <- You need to preserve demographics to count number of simulations.
+                        # Collect stats
+                        n_sim = sim[config.COL_PID].nunique()
+                        # *** DEBUG ***
+                        if n_sim != 256:
+                            print("Irregular n-sim encountered")
+                            print("n-sim", n_sim)
+                            print(sim_result_path)
+                        # *************
+                        # Compute upper and lower bounds of estimated length percents
+                        lower_bounds, upper_bounds = _compute_length_calibration(
+                            sim, n_bins=n_bins
+                        )
+                        # Compute actual length
+                        actual_length = _count_tokens(act)
+                        # Compute rates the actual length is within the bounds
+                        within_lower = actual_length >= lower_bounds
+                        within_upper = actual_length <= upper_bounds
+                        within_range = within_lower & within_upper
+                        # Finalize
+                        within_range = within_range.astype(
+                            int
+                        )  # <- 0 or 1, shape is (n_bins,)
+                        # Add to the dictionary
+                        horizon_key = f"{horizon}_days"
+                        if horizon_key not in total_stats:
+                            total_stats[horizon_key] = []
+                        total_stats[horizon_key].append(within_range)
+
+                except (FileNotFoundError, EOFError) as e:
+                    print(f"Failed to open {sim_result_path}")
+                    print("ERROR:", e)
+                    print("*****TRACEBACK*******")
+                    traceback.print_exc()
+                    print("*********************")
+                    continue
+
+    # Finalize the stats
+    for k in total_stats.keys():
+        if total_stats[k]:
+            total_stats[k] = np.stack(total_stats[k])  # (n_days, n_bins)
+        else:
+            total_stats[k] = None
+
+    return total_stats
+
+
+def eval_mc_adm_length_calib(
+    result_dir: str,
+    dataset_dir: str,
+    n_bins: str = 21,  # '21' for 20 equal-width bins, like 0, 5, 10, ..., 100.
+    max_horizon: int = 7,
+    max_workers: int | None = None,
+) -> dict:
+    # Select target codes
+    settings_manager = BaseSettingsManager(
+        dataset_dir=dataset_dir,
+        debug=os.environ.get("DEBUG_MODE") == "1",
+        debug_chunks=int(os.environ.get("DEBUG_CHUNKS", "10")),
+    )
+    settings_manager.write()
+    try:
+        if max_workers is None:
+            max_workers = psutil.cpu_count(logical=False) - 1
+        patient_list = pd.read_pickle(os.path.join(result_dir, "patient_list.pkl"))
+        if not result_dir.endswith("/"):
+            result_dir = result_dir + "/"
+        patient_list["path"] = result_dir + patient_list["path"]
+        with open(os.path.join(result_dir, "metadata.pkl"), "rb") as f:
+            metadata = pickle.load(f)
+
+        time_of_eval = metadata["time_of_eval"]
+        max_days = metadata["max_days"]
+        time_of_eval_td = timedelta(hours=time_of_eval)
+
+        # Debug handling
+        if os.environ.get("DEBUG_MODE") == "1":
+            debug_chunks = os.environ.get("DEBUG_CHUNKS", str(max_workers * 10))
+            debug_chunks = int(debug_chunks)
+            patient_list = patient_list.iloc[:debug_chunks]
+
+        result = {}
+        with ProcessPoolExecutor(max_workers=max_workers) as executor:
+            futures = [
+                executor.submit(
+                    _eval_mc_adm_length_calib,
+                    patient_dir=patient_dir,
+                    n_bins=n_bins,
+                    time_of_eval_td=time_of_eval_td,
+                    max_horizon=max_horizon,
+                    max_days=max_days,
+                )
+                for patient_dir in patient_list["path"]
+            ]
+            for future in tqdm(as_completed(futures), total=len(patient_list["path"])):
+                sub_result = future.result()
+                for k, v in sub_result.items():
+                    if k not in result:
+                        result[k] = []
+                    if v is not None:
+                        result[k].append(v)
+
+        # Finalize the result
+        for k in result.keys():
+            result[k] = np.concatenate(result[k], axis=0)  # (n_total_days, n_bins)
+
+        return result
 
     finally:
         settings_manager.delete()
