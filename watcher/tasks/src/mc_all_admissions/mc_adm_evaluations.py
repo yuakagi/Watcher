@@ -135,7 +135,7 @@ NEUTROPENIA_SETS = {
     "wbc_code": "2A9900000019---52",  # CBC (complete blood count), whole blood(with additive), white blood cell count
     "neutrophil_code": [
         "2A1600000019---51",  # whole blood result, unit = %
-        "2A1600000034---51",  # blood smear result, unit = %. This one is less frequent.
+        "2A1600000034---51",  # blood smear result, unit = %. This one is much less frequent.
     ],
     "wbc_unit": "×10^3/μL",
     "wbc_const": 1000,
