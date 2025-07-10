@@ -8,6 +8,7 @@ from .src import (
     monte_carlo,
     queued_monte_carlo,
     WatcherOrchestrator,
+    generate_from_batch,
 )
 
 __all__ = ["Simulator"]

@@ -772,7 +772,7 @@ class Watcher(nn.Module):
                 # Apply additional filters for syntax compliance
                 # TODO (Yu Akagi): Enhance this process (discharge dispositions, prohhibit successive timedelta, etc...)
                 # Rule No.1: First actual timedelta change must be within 24 hours
-                is_first_td = pos == (self.n_demographic_rows - 1)
+                is_first_td = pos == 0
                 if is_first_td:
                     filtered_indexes = self.logits_filters["timedelta_within_24hr"]
                     logits[:, filtered_indexes] = float("-inf")
