@@ -179,9 +179,8 @@ def generate_from_batch(
         # Concatenate
         prompt_ts = torch.cat(prompt_ts, dim=0)
         ts = torch.cat(ts, dim=0)
-        prompt_cs = prompt_cs  # Keep it as list
-        cs = cs  # Keep it as list
-
+        prompt_cs = torch.tensor(prompt_cs, dtype=torch.long)
+        cs = torch.tensor(cs, dtype=torch.long)
         current_time = np.array(latest_times, dtype="timedelta64[m]")
         if return_generated_parts_only:
             init_td_cat_idxs = torch.tensor(init_td_cat_idxs)
@@ -195,7 +194,7 @@ def generate_from_batch(
         pos = torch.tensor(ts.size(1) - 1)
         input_tensor = torch.zeros(bs, model.max_sequence_length, ts.size(2)).float()
         input_tensor[:, : ts.size(1), :] = ts  # padded to max sequence length
-        last_ids = torch.tensor(cs).long()[:, -1].clone().long()
+        last_ids = cs[:, -1].clone().long()
         # Prepare other objects
         actives = torch.arange(0, bs)
         gen_timelines = torch.empty((bs, 0, ts.size(2))).float()
@@ -330,7 +329,7 @@ def generate_from_batch(
                         fin_tl = gen_timelines[i].unsqueeze(0)
                         fin_id = gen_catalog_ids[i].tolist()
                         prompt_t = prompt_ts[i].unsqueeze(0)  # 3D Tensor
-                        prompt_c = prompt_cs[i]  # 1D List
+                        prompt_c = prompt_cs[i].tolist()  # 1D List
                         # Case 1. Returning the generated products only (without prompts)
                         # NOTE: Even in this case, the demographic rows from the prompts are prepended.
                         if return_generated_parts_only:
@@ -406,6 +405,10 @@ def generate_from_batch(
                     if isinstance(period_end, np.ndarray):
                         # NOTE: This only happens if horizon_start is None but time_horizon is used.
                         period_end = period_end[unfinished]
+
+                    # Prompts
+                    prompt_ts = prompt_ts[unfinished]
+                    prompt_cs = prompt_cs[unfinished]
 
                 # *****************
                 # * Progress bar *

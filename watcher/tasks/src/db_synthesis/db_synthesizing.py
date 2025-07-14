@@ -158,6 +158,8 @@ def _produce(
                         age = max(
                             timedelta(seconds=0), age + timedelta(days=noise * 365.25)
                         )
+                    # Round ages to days
+                    age = timedelta(days=round(age.total_seconds() // (24 * 60 * 60)))
                     sampled_ages.append(age)
                 # Create a DataFrame
                 df = preprocess_timedelta_series(pd.Series(sampled_ages))

@@ -217,6 +217,9 @@ class Watcher(nn.Module):
         full_index_set = set(self.interpreter.catalog_index_lists["full"])
         logits_filters = {}
         logits_filters["default"] = [0]
+        logits_filters["sex_tokens"] = full_index_set - set(
+            self.interpreter.catalog_index_lists["sex_tokens"]
+        )
         logits_filters["diagnoses"] = full_index_set - set(
             self.interpreter.catalog_index_lists[config.DX_CODE]
         )
@@ -769,10 +772,16 @@ class Watcher(nn.Module):
                 # Apply minimum filter
                 filtered_indexes = self.logits_filters[logits_filter]
                 logits[:, filtered_indexes] = float("-inf")
+
                 # Apply additional filters for syntax compliance
+                # Rule No.0: Patient sex generation
+                generate_patient_sex = pos == 0
+                if generate_patient_sex:
+                    filtered_indexes = self.logits_filters["sex_tokens"]
+                    logits[:, filtered_indexes] = float("-inf")
                 # TODO (Yu Akagi): Enhance this process (discharge dispositions, prohhibit successive timedelta, etc...)
                 # Rule No.1: First actual timedelta change must be within 24 hours
-                is_first_td = pos == 0
+                is_first_td = pos == (config.DEMOGRAPHIC_ROWS - 1)
                 if is_first_td:
                     filtered_indexes = self.logits_filters["timedelta_within_24hr"]
                     logits[:, filtered_indexes] = float("-inf")
