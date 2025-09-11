@@ -1,0 +1,120 @@
+Source:
+https://iris.who.int/bitstream/handle/10665/373322/9789240081093-eng.pdf
+
+General IVDs (In Vitro Diagnostics) recommended for use in clinical laboratories
+NOTE: Which specimen to be included? blood only? Urine ?
+- Anatomical
+    x Histopathology
+    x Cytology
+    x Immuno-histochemistory
+    x Post-mortem exam
+- Blood typing
+    < ABO blood groups and Rh factors typing
+- Clinical microbiology
+    x Staining
+    x Culture
+    x Blood culture
+    x Genus, species identification (bacteria, fungi)
+    x Antimicrobial susceptibility testing
+- clinical chemistry
+    (NOTE: Usually, serum (23) sample is far more commonly used over plasma (22))
+    o ALT, serum/plasma 3B0450000023---01, 3B0450000022---01,
+    o AST, serum/plasma 3B0350000023---01, 3B0350000022---01
+    o Albumin, serum/plasma/urine 3A0150000023---01,3A0150000022---01,3A0150000001---01
+    o ALP, serum/plasma 3B0700000023---01, 3B0700000022---01
+    o gamma-glutamyl transferase, serum/plasma 3B0900000023---01, 3B0900000022---01
+    x Globulin, N/A
+    o Total protein, serum/plasma/body fluid 3A0100000023---01, 3A0100000022---01
+    o Total Bilirubin, serum/plasma/ 3J0100000023---01, 3J0100000022---01
+    o Direct/indirect bilirubin, serum/plasma/ 3J0150000023---01, 3J0150000022---01
+    o BUN, serum/plasma 3C0250000023---01
+    o Total calcium, serum/plasma 3H0300000023---01, 3H0300000022---01
+    o Ionized calcium, arterial/venous/capillary whole blood 3H0800000020---84 ***** *****
+    o Creatinine, urine, serum 3C0150000001---1, 3C0150000023---01
+    o Electrolytes (Na, K, Cl, HCO3-), serum/plasma
+        - Na 3H0100000023---01, 3H0100000022---01
+        - K 3H0150000023---01, 3H0150000022---01
+        - Cl 3H0200000023---01, 3H0200000022---01
+        - HC03- 3H0800000020---54, 3H0800000020---93 (standard), 3H0800000019---54 (few)
+    o Magnesium, serum/plasma 3H0250000023---01, 3H0250000022---01
+    o Phosphate, serum/plasma 3H0400000023---01, 3H0400000022---01
+    o Blood pH and gas, arterial whole blood
+        - pH 3H0800000020---90
+        - HCO3 3H0800000020---54
+        - Base excess 3H0800000020---55
+        - Total co2 3H0800000020---57
+        - Hematocrit 3H0800000020---59
+        - Total oxygen content 3H0800000020---60
+        - Temperature 3H0800000020---80
+        - Ionized sodium 3H0800000020---81
+        - Ionized potassium 3H0800000020---82
+        - Ionized chloride 3H0800000020---83
+        - Ionized calcium 3H0800000020---84
+        - Glucose 3H0800000020---85
+        - Lactate 3H0800000020---86
+        - pCO2 3H0800000020---91
+        - pO2 3H0800000020---92
+        - HCO3- standard 3H0800000020---93 
+        - Base excess (extra cellular) 3H0800000020---94
+    o CRP, venous whole blood/serum/plasma 5C0700000023---01
+    x Whole blood lactate, venous whole blood
+    o Glucose, serum/plasma, 3D0100000023---01, 3D0100000022---01 (23 is more frequent !)
+    x G6PD, venous whole blood 
+    o Lipase, serum/plasma 3B1800000023---01
+    o Amylase, serum/plasma/peritoneal fluid　3B1600000023---01, 3B1600000022---01
+    o Procalcitonin, serum/plasma/venous whole blood 5C2150000023---01
+    o Uric acid, serum/plasma 3C0200000023---01, serum/plasma 3C0200000022---01
+    o Urine chemistry (details not specified), urine
+        # NOTE: Too general ! 1A990 is 'urinanalysis"
+        - protein 1A0150000001---01
+        - glucose 1A0250000001---01
+        - myoglobin 5C0900000001---01
+        ...
+        urinanalysis:
+            - pH 1A9900000001---52
+            - specific gravity 1A9900000001---51
+            ...
+
+- Hematology
+    x Blood cross matching
+    o CBC (with differentials), whole blood 
+        - WBC 2A9900000019---52
+        - RBC 2A9900000019---51
+        - PLT 2A9900000019---55
+        - Hb 2A9900000019---53
+        - Hct 2A9900000019---54
+        - MCV 2A9900000019---56
+        - MCH 2A9900000019---57
+        - MCHC 2A9900000019---58
+        - RDW 
+        - MPV 
+        - differentials
+            - 
+    < Basic CSF profile, CSF
+    o D-Dimer, citrate plasma 2B1400000022---01
+    x Direct antiglobulin test (DAT)/direct Coombs test, whole blood
+    x Indirect antiglobulin test (DAT)/indirect Coombs test/red cell antibody screening, whole blood
+    o Fibrinogen, citrate plasma　2B1000000022---01
+    o Haematocrit, whole blood 2A9900000019---54
+    o Hb, whole blood 2A9900000019---53
+    - Iron studies (iron, TIBC, ferritin, transferrin, transferrin saturation), serum/plasma
+        - iron 3I0100000023---01
+        - TIBC 3I0150000023---01
+        - ferritin 5C0950000023---01
+        - transferrin 5C0600000023---01
+    x Kleihauer-Betke acid-elution test, whole blood
+    o PTT & APTT, citrate plasma
+        - PT sec 2B0300000022---51
+        - PT activity 2B0300000022---53
+        - PT ratio 2B0300000022---55
+        - APTT 2B0200000022---00 <Ends with 00 !!!>
+    o Peripheral blood film, whole blood 
+        - Differentials
+    o PT-INR, citrate plasma 2B0300000022---57
+    x Sickle cell testing, whole blood
+- Clinical pathology
+    x Urine microscopy, urine
+    x Body fluid microscopy, body fluid
+- Pregnancy test
+    o hCG, serum 4F0800000023---01
+

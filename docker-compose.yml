@@ -1,0 +1,69 @@
+services:
+  # =================
+  # PostgreSQL server
+  # =================
+  db:
+    image: postgres:17.4
+    container_name: watcher-db
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "${POSTGRES_PORT_EXPOSED}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # =================
+  # Redis server
+  # =================
+  # NOTE: Port is not exposed outside container
+  redis:
+    container_name: watcher-redis
+    image: redis:7.4.2
+    command: ["redis-server", "--port", "6379"]
+
+  # =================
+  # AI container
+  # =================
+  pytorch:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        DEVELOPMENT: false
+    container_name: watcher-pytorch
+    env_file:
+      - .env
+    environment:
+      MOUNTED_DIR: ${MOUNTED_DIR}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - ${MOUNTED_DIR}:/code/watcher/mnt
+    ports:
+      - "${SIMULATOR_API_PORT}:${SIMULATOR_API_PORT}" # Simulator API port
+      - "6006:6006" # Tensorboard
+    depends_on:
+      - db
+      - redis
+
+    # Allow GPU access.
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: ["${GPU_IDS}"]
+              capabilities: [gpu]
+
+    # Shared memory config (necessary for multiprocessing, something like 'shm-size: 10GB' is another option.)
+    ipc: host
+
+    tty: true
+
+volumes:
+  postgres_data:

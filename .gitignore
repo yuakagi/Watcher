@@ -1,0 +1,30 @@
+# Dev files 
+*_mc_adm.py
+init_db.py
+api_launcher_dev.py
+
+# Dev dirs
+**/notebooks/dev/
+**/mnt/
+
+# Common directories & files
+**/.env
+**/.env.development
+**/docker-compose.override.yml
+**/core
+**/nohup.out
+**/.DS_Store
+**/__pycache__/
+**/.hypothesis/
+**/.devcontainer/
+**/.ipynb_checkpoints/
+**/dask-worker-space/
+**/.vscode/
+**/.venv/
+**/venv/
+**/.env/
+**/env/
+*_exec.py
+*.egg-info/
+docs/build/**
+docs/source/generated/**

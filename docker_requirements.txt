@@ -1,0 +1,54 @@
+# ==============================================================================
+# docker_requirements.txt
+#
+# Additional Python dependencies for the Watcher simulation platform,
+# intended for use in a Docker environment based on NVIDIA PyTorch containers
+# (e.g., nvcr.io/nvidia/pytorch:24.05-py3).
+#
+# Note:
+#   Core libraries like PyTorch, NumPy, and pandas are preinstalled in the base image.
+#   Do NOT include them here to avoid dependency conflicts.
+# ==============================================================================
+
+
+# ----------------------
+# Database & ORM Support
+# ----------------------
+psycopg==3.2.6               # PostgreSQL client (psycopg3)
+SQLAlchemy==2.0.40           # SQL ORM
+psutil==7.0.0                # Process and system monitoring
+tqdm==4.67.1
+
+# -----------------
+# Data & Statistics
+# -----------------
+statsmodels==0.14.4          # Statistical modeling and tests
+seaborn==0.13.2              # Statistical plotting
+
+# ----------------------------
+# Visualization & Notebooks
+# ----------------------------
+tensorboard==2.9.0           # TensorBoard for visualization
+jupyterlab==4.4.0            # JupyterLab interface
+ipywidgets==8.1.5            # Interactive widgets
+ipython==8.21.0              # Enhanced interactive shell
+
+# --------------------------
+# Web App / API Dependencies
+# --------------------------
+Flask==3.1.0                 # Flask web framework
+Flask-Limiter==3.12          # Rate limiting for Flask
+limits[redis]==4.7.1         # Storage backend for rate limiting (compatible version)
+redis==5.2.1                 # Redis client for Python
+gunicorn==23.0.0             # WSGI server for Flask
+
+# -------
+# General
+# -------
+requests==2.31.0             # HTTP requests
+
+# --------
+# Optional
+# --------
+torch-tb-profiler==0.4.3     # Torch TensorBoard Profiler
+Faker==37.1.0                # Synthetic data generator
