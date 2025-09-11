@@ -1,0 +1,286 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>watcher.training package &mdash; watcher 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/color_theme.css?v=e98e66a4" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.svg"/>
+    <link rel="canonical" href="https://yuakagi.github.io/Watcher/generated/watcher.training.html" />
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="watcher.watcher_api package" href="watcher.watcher_api.html" />
+    <link rel="prev" title="watcher.preprocess package" href="watcher.preprocess.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../table_definitions/tables.html">Table Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Watcher API</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="watcher.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="watcher.db.html">watcher.db package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="watcher.models.html">watcher.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="watcher.preprocess.html">watcher.preprocess package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">watcher.training package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="watcher.watcher_api.html">watcher.watcher_api package</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">watcher</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="watcher.html">watcher package</a></li>
+      <li class="breadcrumb-item active">watcher.training package</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-watcher.training">
+<span id="watcher-training-package"></span><h1>watcher.training package<a class="headerlink" href="#module-watcher.training" title="Link to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="watcher.training.train_watcher">
+<span class="sig-prename descclassname"><span class="pre">watcher.training.</span></span><span class="sig-name descname"><span class="pre">train_watcher</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_gpus</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embedding_dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1024</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_heads</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ff_hidden_dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3072</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dropout_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_epochs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_decay</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_lr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_lr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lr_scheduler_enabled</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lr_warmup</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lr_decay</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size_step_scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size_active_phase</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.03</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_batch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_batch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_schedule_enabled</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataloader_workers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint_interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validation_interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">early_stopping_epochs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snapshot_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_weight_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precision</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'float32'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'float16'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'bfloat16'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'bfloat16'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">restart_limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug_chunks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trainer_class</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/watcher/training/src/training_main.html#train_watcher"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#watcher.training.train_watcher" title="Link to this definition"></a></dt>
+<dd><p>Train a Watcher model.</p>
+<p>This function initiates training and stops either when the maximum number of epochs is reached,
+or when early stopping is triggered due to no improvement in validation loss.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<ul class="simple">
+<li><p>Training requires GPU devices with large memory capacity. We recommend using NVIDIA A100 or newer GPUs.</p></li>
+<li><p>If training fails, it may be due to an OutOfMemoryError. In that case, consider reducing the batch size or using a smaller model configuration.</p></li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>Training may take from several hours to several days, depending on dataset size and hardware specifications.</p></li>
+<li><p>For reference, in an experiment with approximately 370,000 patients using four NVIDIA A100 80GB GPUs, training completed in about 48 hours.</p></li>
+</ul>
+</div>
+<p class="rubric">Example</p>
+<p><strong>Pretraining</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">watcher.training</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_watcher</span>
+
+<span class="n">best_weights_path</span> <span class="o">=</span> <span class="n">train_watcher</span><span class="p">(</span>
+    <span class="n">dataset_dir</span><span class="o">=</span><span class="s2">&quot;/path/to/prepared_dataset&quot;</span><span class="p">,</span>
+    <span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;/path/to/save_training_outputs&quot;</span><span class="p">,</span>
+    <span class="n">max_gpus</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+    <span class="n">embedding_dim</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
+    <span class="n">num_layers</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+    <span class="n">num_heads</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+    <span class="n">ff_hidden_dim</span><span class="o">=</span><span class="mi">3072</span><span class="p">,</span>
+    <span class="n">dropout_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">total_epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">weight_decay</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+    <span class="n">max_lr</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
+    <span class="n">min_lr</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span>
+    <span class="n">lr_scheduler_enabled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">lr_warmup</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+    <span class="n">lr_decay</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span>
+    <span class="n">batch_size_step_scale</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">batch_size_active_phase</span><span class="o">=</span><span class="mf">0.03</span><span class="p">,</span>
+    <span class="n">max_batch_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
+    <span class="n">min_batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+    <span class="n">batch_schedule_enabled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">dataloader_workers</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">checkpoint_interval</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">validation_interval</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">early_stopping_epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">snapshot_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">initial_weight_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">precision</span><span class="o">=</span><span class="s2">&quot;bfloat16&quot;</span><span class="p">,</span>
+    <span class="n">restart_limit</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Best model weights saved at: </span><span class="si">{</span><span class="n">best_weights_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Fine tuning</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">watcher.training</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_watcher</span>
+
+<span class="n">best_weights_path</span> <span class="o">=</span> <span class="n">train_watcher</span><span class="p">(</span>
+    <span class="n">dataset_dir</span><span class="o">=</span><span class="s2">&quot;/path/to/prepared_dataset&quot;</span><span class="p">,</span>  <span class="c1"># Use the same dataset as pretraining</span>
+    <span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;/path/to/save_finetuning_outputs&quot;</span><span class="p">,</span>
+    <span class="n">max_gpus</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+    <span class="n">embedding_dim</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>  <span class="c1"># Use the same model hyperparameters as pretraining</span>
+    <span class="n">num_layers</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>       <span class="c1"># Must match pretraining</span>
+    <span class="n">num_heads</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>        <span class="c1"># Must match pretraining</span>
+    <span class="n">ff_hidden_dim</span><span class="o">=</span><span class="mi">3072</span><span class="p">,</span>  <span class="c1"># Must match pretraining</span>
+    <span class="n">dropout_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">total_epochs</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+    <span class="n">weight_decay</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+    <span class="n">max_lr</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span>
+    <span class="n">min_lr</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span>
+    <span class="n">lr_scheduler_enabled</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># Constant LR = min_lr</span>
+    <span class="n">batch_schedule_enabled</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># Constant batch size</span>
+    <span class="n">max_batch_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
+    <span class="n">min_batch_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
+    <span class="n">dataloader_workers</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">checkpoint_interval</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">validation_interval</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">early_stopping_epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">initial_weight_path</span><span class="o">=</span><span class="s2">&quot;/path/to/pretrained_model.pt&quot;</span><span class="p">,</span>  <span class="c1"># Set pretrained weight path</span>
+    <span class="n">precision</span><span class="o">=</span><span class="s2">&quot;bfloat16&quot;</span><span class="p">,</span>
+    <span class="n">update</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># Flag to use fine-tuning dataset</span>
+    <span class="n">restart_limit</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Best model weights saved at: </span><span class="si">{</span><span class="n">best_weights_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The following directory structure is created during training:</p>
+<blockquote>
+<div><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>output_dir
+├── main_training_report.json     # Training summary
+├── profiling/
+│   └── ...
+├── snapshots/
+│   ├── epoch_0/
+│   │   ├── training_state.pt
+│   │   ├── tensorboard_logs/
+│   │   └── watcher_blueprint/
+│   │       ├── catalogs/         # CSV files containing model vocabulary
+│   │       ├── laboratory_stats/ # CSV files of lab test stats
+│   │       ├── model_state.pt    # Model weights
+│   │       └── training_report.json
+│   └── ...
+└── tensorboard_active/
+    └── ... (TensorBoard logs)
+</pre></div>
+</div>
+</div></blockquote>
+<p>The <cite>watcher_blueprint</cite> directory is the main product of training. Each blueprint contains
+everything needed to re-instantiate the Watcher model.
+To monitor training progress with TensorBoard, set the <cite>tensorboard_active</cite> directory as the logdir.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset_dir</strong> (<em>str</em>) – Path to the dataset created by <a class="reference internal" href="watcher.preprocess.html#watcher.preprocess.create_dataset" title="watcher.preprocess.create_dataset"><code class="xref py py-meth docutils literal notranslate"><span class="pre">watcher.preprocess.create_dataset()</span></code></a>.</p></li>
+<li><p><strong>output_dir</strong> (<em>str</em>) – Directory where training results are saved.</p></li>
+<li><p><strong>max_gpus</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum number of GPUs to use for training.</p></li>
+<li><p><strong>embedding_dim</strong> (<em>int</em><em>, </em><em>optional</em>) – Dimensionality of the model embeddings (<cite>d_model</cite>).</p></li>
+<li><p><strong>num_layers</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of transformer blocks in the model.</p></li>
+<li><p><strong>num_heads</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of attention heads per transformer layer.</p></li>
+<li><p><strong>ff_hidden_dim</strong> (<em>int</em><em>, </em><em>optional</em>) – Hidden layer size of the feedforward network (<cite>d_ff</cite>).</p></li>
+<li><p><strong>dropout_rate</strong> (<em>float</em><em>, </em><em>optional</em>) – Dropout rate applied during training.</p></li>
+<li><p><strong>total_epochs</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum number of training epochs.</p></li>
+<li><p><strong>weight_decay</strong> (<em>float</em><em>, </em><em>optional</em>) – Weight decay for regularization.</p></li>
+<li><p><strong>max_lr</strong> (<em>float</em><em>, </em><em>optional</em>) – Peak learning rate.</p></li>
+<li><p><strong>min_lr</strong> (<em>float</em><em>, </em><em>optional</em>) – Minimum learning rate.</p></li>
+<li><p><strong>lr_scheduler_enabled</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to use a learning rate scheduler. If False, <cite>min_lr</cite> is used throughout training.</p></li>
+<li><p><strong>lr_warmup</strong> (<em>float</em><em>, </em><em>optional</em>) – Warm-up duration as a fraction of total training data.</p></li>
+<li><p><strong>lr_decay</strong> (<em>float</em><em>, </em><em>optional</em>) – Learning rate decay duration after warm-up.</p></li>
+<li><p><strong>batch_size_step_scale</strong> (<em>int</em><em>, </em><em>optional</em>) – Scaling factor for batch size scheduling.</p></li>
+<li><p><strong>batch_size_active_phase</strong> (<em>float</em><em>, </em><em>optional</em>) – Fraction of data (0 to 1.0) during which the batch size increases.</p></li>
+<li><p><strong>max_batch_size</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum batch size.</p></li>
+<li><p><strong>min_batch_size</strong> (<em>int</em><em>, </em><em>optional</em>) – Initial batch size.</p></li>
+<li><p><strong>batch_schedule_enabled</strong> (<em>bool</em><em>, </em><em>optional</em>) – If False, batch size is fixed to <cite>max_batch_size</cite> throughout training.</p></li>
+<li><p><strong>dataloader_workers</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of worker processes for data loading.</p></li>
+<li><p><strong>checkpoint_interval</strong> (<em>int</em><em>, </em><em>optional</em>) – Epoch interval at which training snapshots are saved.</p></li>
+<li><p><strong>validation_interval</strong> (<em>int</em><em>, </em><em>optional</em>) – Epoch interval at which validation is performed.</p></li>
+<li><p><strong>early_stopping_epochs</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of consecutive epochs without validation loss improvement required to stop training early.</p></li>
+<li><p><strong>snapshot_path</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to a training snapshot to resume from. Ensure that all training parameters match the previous run.</p></li>
+<li><p><strong>initial_weight_path</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to pretrained weights for model initialization. Required if <cite>update=True</cite>.</p></li>
+<li><p><strong>precision</strong> (<em>Literal</em><em>[</em><em>&quot;float32&quot;</em><em>, </em><em>&quot;float16&quot;</em><em>, </em><em>&quot;bfloat16&quot;</em><em>]</em><em>, </em><em>optional</em>) – Floating point precision for training.</p></li>
+<li><p><strong>update</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, fine-tunes the model using the current dataset.</p></li>
+<li><p><strong>restart_limit</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum number of automatic training restarts after runtime errors.</p></li>
+<li><p><strong>debug</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, enables debug mode. Dataloaders will yield only <cite>debug_chunks</cite> number of samples.</p></li>
+<li><p><strong>debug_chunks</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of samples yielded per loader in debug mode.</p></li>
+<li><p><strong>trainer_class</strong> (<em>object</em><em>, </em><em>optional</em>) – [Deprecated] Custom trainer class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path to the best-performing model weights.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>best_weights (str)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="watcher.preprocess.html" class="btn btn-neutral float-left" title="watcher.preprocess package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="watcher.watcher_api.html" class="btn btn-neutral float-right" title="watcher.watcher_api package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Yu Akagi, MD.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

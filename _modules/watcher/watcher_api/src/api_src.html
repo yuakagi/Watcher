@@ -1,0 +1,631 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>watcher.watcher_api.src.api_src &mdash; watcher 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/color_theme.css?v=e98e66a4" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.svg"/>
+    <link rel="canonical" href="https://yuakagi.github.io/Watcher/_modules/watcher/watcher_api/src/api_src.html" />
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html">
+            
+              <img src="../../../../_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../table_definitions/tables.html">Table Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorial.html">Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Watcher API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../generated/watcher.html">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../generated/watcher.db.html">watcher.db package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../generated/watcher.models.html">watcher.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../generated/watcher.preprocess.html">watcher.preprocess package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../generated/watcher.training.html">watcher.training package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../generated/watcher.watcher_api.html">watcher.watcher_api package</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">watcher</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">watcher.watcher_api.src.api_src</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for watcher.watcher_api.src.api_src</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">signal</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">atexit</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">multiprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Process</span><span class="p">,</span> <span class="n">JoinableQueue</span><span class="p">,</span> <span class="n">Manager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">multiprocessing.managers</span><span class="w"> </span><span class="kn">import</span> <span class="n">DictProxy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">flask</span><span class="w"> </span><span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">make_response</span><span class="p">,</span> <span class="n">request</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">flask_limiter</span><span class="w"> </span><span class="kn">import</span> <span class="n">Limiter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">flask_limiter.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_remote_address</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">flask_limiter.errors</span><span class="w"> </span><span class="kn">import</span> <span class="n">RateLimitExceeded</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...models</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">build_watcher</span><span class="p">,</span>
+    <span class="n">Watcher</span><span class="p">,</span>
+    <span class="n">WatcherOrchestrator</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...preprocess</span><span class="w"> </span><span class="kn">import</span> <span class="n">preprocess_for_inference</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...general_params</span><span class="w"> </span><span class="kn">import</span> <span class="n">watcher_config</span> <span class="k">as</span> <span class="n">config</span>
+
+<span class="n">TIMEOUT</span> <span class="o">=</span> <span class="mi">60</span>
+<span class="n">EXPIRES_AFTER</span> <span class="o">=</span> <span class="mi">600</span>
+<span class="n">STATE_204</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="mi">204</span><span class="p">,</span>
+    <span class="s2">&quot;progress&quot;</span><span class="p">:</span> <span class="s2">&quot;Empty&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;errors&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Request not found&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;updated&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+<span class="p">}</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">atexit</span>
+
+
+<span class="nd">@atexit</span><span class="o">.</span><span class="n">register</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">cleanup_all</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shutting down on exit.&quot;</span><span class="p">)</span>
+    <span class="n">_graceful_shutdown</span><span class="p">(</span><span class="s2">&quot;atexit&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+
+<span class="c1"># ==================</span>
+<span class="c1"># Flask app setup</span>
+<span class="c1"># ==================</span>
+<span class="c1"># region: Flask apps</span>
+<span class="c1"># Initialize Flask app</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">limiter</span> <span class="o">=</span> <span class="n">Limiter</span><span class="p">(</span>
+    <span class="n">key_func</span><span class="o">=</span><span class="n">get_remote_address</span><span class="p">,</span>
+    <span class="n">storage_uri</span><span class="o">=</span><span class="s2">&quot;redis://redis:6379&quot;</span><span class="p">,</span>  <span class="c1"># container name used as hostname</span>
+    <span class="n">app</span><span class="o">=</span><span class="n">app</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">limiter</span><span class="o">.</span><span class="n">init_app</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+
+
+<span class="c1"># Rate-limit handler for Flask-limiter</span>
+<span class="nd">@app</span><span class="o">.</span><span class="n">errorhandler</span><span class="p">(</span><span class="n">RateLimitExceeded</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">ratelimit_handler</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Handles rate limits.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">make_response</span><span class="p">(</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="mi">429</span><span class="p">,</span>
+                <span class="s2">&quot;errors&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Rate limit exceeded.&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;retry_after_seconds&quot;</span><span class="p">:</span> <span class="n">e</span><span class="o">.</span><span class="n">retry_after</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">),</span>
+        <span class="mi">429</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="c1"># API to add a request in the queue</span>
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/watcher_api/monte_carlo&quot;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;POST&quot;</span><span class="p">])</span>
+<span class="nd">@limiter</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="s2">&quot;1 per 5 seconds&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">submit_monte_carlo_request</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;API to perform Monte Carlo simulation.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Variables</span>
+        <span class="n">request_queue</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;REQUEST_QUEUE&quot;</span><span class="p">]</span>
+        <span class="n">status_board</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;STATUS_BOARD&quot;</span><span class="p">]</span>
+
+        <span class="c1"># Generate simulation id (UUID)</span>
+        <span class="n">simulation_id</span> <span class="o">=</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span><span class="o">.</span><span class="n">hex</span>
+
+        <span class="c1"># Get data</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="n">patient_id</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;patient_id&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">n_iter_str</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;n_iter&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">time_horizon_str</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;time_horizon&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">sim_start_str</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sim_start&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="c1"># Put the request in the queue</span>
+        <span class="c1"># NOTE: Any unexpected data is put as &#39;None&#39;</span>
+        <span class="n">request_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">patient_id</span><span class="p">,</span> <span class="n">sim_start_str</span><span class="p">,</span> <span class="n">time_horizon_str</span><span class="p">,</span> <span class="n">n_iter_str</span><span class="p">,</span> <span class="n">simulation_id</span><span class="p">),</span>
+            <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Write the request status</span>
+        <span class="n">status_board</span><span class="p">[</span><span class="n">simulation_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="mi">202</span><span class="p">,</span>
+            <span class="s2">&quot;progress&quot;</span><span class="p">:</span> <span class="s2">&quot;Waiting for data preprocessing&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;errors&quot;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s2">&quot;updated&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+        <span class="p">}</span>
+
+        <span class="c1"># Return the simulation id</span>
+        <span class="c1"># NOTE: The task status is &#39;202&#39;, but the json response is returned with 200</span>
+        <span class="c1"># because submission was successful</span>
+        <span class="k">return</span> <span class="n">make_response</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">&quot;simulation_id&quot;</span><span class="p">:</span> <span class="n">simulation_id</span><span class="p">}),</span> <span class="mi">200</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="c1"># Error handling</span>
+        <span class="n">error_response</span> <span class="o">=</span> <span class="n">make_response</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">&quot;errors&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)}),</span> <span class="mi">500</span><span class="p">)</span>
+        <span class="n">error_response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;application/json&quot;</span>
+        <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">error_response</span>
+
+
+<span class="c1"># API to recieve the product</span>
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/watcher_api/result/&lt;simulation_id&gt;&quot;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;GET&quot;</span><span class="p">])</span>
+<span class="nd">@limiter</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="s2">&quot;1 per 1 seconds&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_result</span><span class="p">(</span><span class="n">simulation_id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fetches products if ready.&quot;&quot;&quot;</span>
+    <span class="c1"># Check request status</span>
+    <span class="n">status_board</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;STATUS_BOARD&quot;</span><span class="p">]</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">status_board</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">simulation_id</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">status</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">200</span><span class="p">,</span> <span class="mi">400</span><span class="p">]:</span>
+            <span class="c1"># Pop out the final status</span>
+            <span class="n">final_state</span> <span class="o">=</span> <span class="n">status_board</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">simulation_id</span><span class="p">,</span> <span class="n">STATE_204</span><span class="p">)</span>
+            <span class="c1"># Successful response</span>
+            <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+                <span class="c1"># Get products</span>
+                <span class="n">product_store</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;PRODUCT_STORE&quot;</span><span class="p">]</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">product_store</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">simulation_id</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">make_response</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># Products not found (e.g., expired)</span>
+                    <span class="k">return</span> <span class="n">make_response</span><span class="p">(</span><span class="n">STATE_204</span><span class="p">,</span> <span class="mi">204</span><span class="p">)</span>
+            <span class="c1"># Invalid request (400)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">make_response</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">final_state</span><span class="p">),</span> <span class="mi">400</span><span class="p">)</span>
+
+        <span class="c1"># Pending response (202)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">make_response</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">status_board</span><span class="p">[</span><span class="n">simulation_id</span><span class="p">]),</span> <span class="mi">202</span><span class="p">)</span>
+
+    <span class="c1"># simulation id not found (e.g., expired)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">make_response</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">STATE_204</span><span class="p">),</span> <span class="mi">204</span><span class="p">)</span>
+
+
+<span class="c1"># endregion</span>
+
+
+<span class="c1"># ==========================</span>
+<span class="c1"># Simulator background utils</span>
+<span class="c1"># ==========================</span>
+<span class="c1"># region: Simulator utils</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_graceful_shutdown</span><span class="p">(</span><span class="n">signum</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Received signal </span><span class="si">{</span><span class="n">signum</span><span class="si">}</span><span class="s2">. Terminating simulator processes...&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 1. Terminate child processes</span>
+    <span class="n">started_processes</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;STARTED_PROC&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">started_processes</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">proc</span> <span class="ow">in</span> <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;STARTED_PROC&quot;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">proc</span><span class="o">.</span><span class="n">is_alive</span><span class="p">():</span>
+                <span class="n">proc</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
+                <span class="n">proc</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>  <span class="c1"># force shutdown if not clean</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;All simulator processes terminated.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 2. Terminate orchestrator</span>
+    <span class="n">active_orch</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ORCH&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">active_orch</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Terminating WatcherOrchestrator...&quot;</span><span class="p">)</span>
+            <span class="n">active_orch</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to terminate orchestrator cleanly: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_setup_signal_handlers</span><span class="p">():</span>
+    <span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGTERM</span><span class="p">,</span> <span class="n">_graceful_shutdown</span><span class="p">)</span>
+    <span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">,</span> <span class="n">_graceful_shutdown</span><span class="p">)</span>
+    <span class="n">atexit</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">_graceful_shutdown</span><span class="p">(</span><span class="n">signum</span><span class="o">=</span><span class="s2">&quot;atexit&quot;</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="kc">None</span><span class="p">))</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_preprocess_requests</span><span class="p">(</span>
+    <span class="n">request_queue</span><span class="p">:</span> <span class="n">JoinableQueue</span><span class="p">,</span>
+    <span class="n">temp_queue</span><span class="p">:</span> <span class="n">JoinableQueue</span><span class="p">,</span>
+    <span class="n">status_board</span><span class="p">:</span> <span class="n">DictProxy</span><span class="p">,</span>
+    <span class="n">max_n_iter</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">Watcher</span><span class="p">,</span>
+    <span class="n">db_schema</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Monitors completed requests and stores simulation output in a shared product store.&quot;&quot;&quot;</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">set_num_threads</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="c1"># Get one request</span>
+            <span class="n">req</span> <span class="o">=</span> <span class="n">request_queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="n">patient_id</span><span class="p">,</span> <span class="n">sim_start_str</span><span class="p">,</span> <span class="n">time_horizon_str</span><span class="p">,</span> <span class="n">n_iter_str</span><span class="p">,</span> <span class="n">simulation_id</span> <span class="o">=</span> <span class="n">req</span>
+            <span class="c1"># ==========================</span>
+            <span class="c1"># Input validation</span>
+            <span class="c1"># ==========================</span>
+            <span class="c1"># Validate patient ID</span>
+            <span class="c1"># NOTE: If the patient ID is not in the database, currently, ValueError is raised by `preprocess_for_inference()`</span>
+            <span class="k">if</span> <span class="n">patient_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Patient ID not in data.&quot;</span><span class="p">)</span>
+            <span class="c1"># Validate sim_start</span>
+            <span class="k">if</span> <span class="n">sim_start_str</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Time of simulation start not in data.&quot;</span><span class="p">)</span>
+                <span class="n">sim_start</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">sim_start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">sim_start_str</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">DATETIME_FORMAT</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                    <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Time of simulation has an irregular format&quot;</span><span class="p">)</span>
+                    <span class="n">sim_start</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="c1"># Validate time horizon</span>
+            <span class="k">if</span> <span class="n">time_horizon_str</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Time horizon not in data.&quot;</span><span class="p">)</span>
+                <span class="n">time_horizon</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">time_horizon</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time_horizon_str</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">time_horizon</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Time horizon must be a positive integer.&quot;</span><span class="p">)</span>
+                <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+                    <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Time horizon must be a positive integer.&quot;</span><span class="p">)</span>
+                    <span class="n">time_horizon</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="c1"># Validate n_iter</span>
+            <span class="k">if</span> <span class="n">n_iter_str</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Number of iterations not in data.&quot;</span><span class="p">)</span>
+                <span class="n">n_iter</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">n_iter</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_iter_str</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">n_iter</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">n_iter</span> <span class="o">&gt;</span> <span class="n">max_n_iter</span><span class="p">):</span>
+                        <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of iterations must be 1 ~ </span><span class="si">{</span><span class="n">max_n_iter</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+                <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+                    <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Time horizon must be a positive integer.&quot;</span><span class="p">)</span>
+                    <span class="n">n_iter</span> <span class="o">=</span> <span class="kc">None</span>
+
+            <span class="c1"># Do not proceed if obvious request errors are detected</span>
+            <span class="k">if</span> <span class="n">errors</span><span class="p">:</span>
+                <span class="n">status</span> <span class="o">=</span> <span class="mi">400</span>
+                <span class="n">progress</span> <span class="o">=</span> <span class="s2">&quot;Aborted.&quot;</span>
+
+            <span class="c1"># ===================================</span>
+            <span class="c1"># Try to download and preprocess data</span>
+            <span class="c1"># ===================================</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">timeline</span><span class="p">,</span> <span class="n">catalog_ids</span><span class="p">,</span> <span class="n">dob</span> <span class="o">=</span> <span class="n">preprocess_for_inference</span><span class="p">(</span>
+                        <span class="n">patient_id</span><span class="o">=</span><span class="n">patient_id</span><span class="p">,</span>
+                        <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                        <span class="n">start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">end</span><span class="o">=</span><span class="n">sim_start_str</span><span class="p">,</span>  <span class="c1"># This arg expects strings,</span>
+                        <span class="n">db_schema</span><span class="o">=</span><span class="n">db_schema</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="n">preprocess_success</span> <span class="o">=</span> <span class="kc">True</span>
+
+                <span class="c1"># NOTE: If patient_id is not found, `preprocess_for_inference()` raises ValueError</span>
+                <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+                    <span class="n">status</span> <span class="o">=</span> <span class="mi">400</span>
+                    <span class="n">progress</span> <span class="o">=</span> <span class="s2">&quot;Aborted.&quot;</span>
+                    <span class="n">preprocess_success</span> <span class="o">=</span> <span class="kc">False</span>
+
+                <span class="c1"># Put in the queue</span>
+                <span class="k">if</span> <span class="n">preprocess_success</span><span class="p">:</span>
+                    <span class="n">horizon_start</span> <span class="o">=</span> <span class="n">sim_start</span> <span class="o">-</span> <span class="n">dob</span>
+                    <span class="n">temp_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span>
+                        <span class="p">(</span>
+                            <span class="n">timeline</span><span class="p">,</span>
+                            <span class="n">catalog_ids</span><span class="p">,</span>
+                            <span class="n">n_iter</span><span class="p">,</span>
+                            <span class="n">horizon_start</span><span class="p">,</span>
+                            <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">time_horizon</span><span class="p">),</span>
+                            <span class="n">simulation_id</span><span class="p">,</span>
+                        <span class="p">),</span>
+                        <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="n">status</span> <span class="o">=</span> <span class="mi">202</span>
+                    <span class="n">progress</span> <span class="o">=</span> <span class="s2">&quot;Data preprocessing completed.&quot;</span>
+
+            <span class="c1"># ===================================</span>
+            <span class="c1"># Update the request status</span>
+            <span class="c1"># ===================================</span>
+            <span class="n">status_board</span><span class="p">[</span><span class="n">simulation_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="n">status</span><span class="p">,</span>
+                <span class="s2">&quot;progress&quot;</span><span class="p">:</span> <span class="n">progress</span><span class="p">,</span>
+                <span class="s2">&quot;errors&quot;</span><span class="p">:</span> <span class="n">errors</span><span class="p">,</span>
+                <span class="s2">&quot;updated&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+            <span class="p">}</span>
+            <span class="n">request_queue</span><span class="o">.</span><span class="n">task_done</span><span class="p">()</span>
+
+        <span class="c1"># Catch all other errors</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Error during request process&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_watch_products</span><span class="p">(</span>
+    <span class="n">orch</span><span class="p">:</span> <span class="n">WatcherOrchestrator</span><span class="p">,</span>
+    <span class="n">status_board</span><span class="p">:</span> <span class="n">DictProxy</span><span class="p">,</span>
+    <span class="n">product_store</span><span class="p">:</span> <span class="n">DictProxy</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Gets products and put them in a dict.&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">prod</span> <span class="ow">in</span> <span class="n">orch</span><span class="p">:</span>
+        <span class="n">df</span><span class="p">,</span> <span class="n">simulation_id</span> <span class="o">=</span> <span class="n">prod</span>
+        <span class="c1"># NOTE:</span>
+        <span class="c1">#   product_store must be updated first, otherwise, the status_board may be read first while the</span>
+        <span class="c1">#   product has not yet been saved.</span>
+        <span class="c1"># Make everyhting to strings for consistency</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+        <span class="c1"># Add the product to the store</span>
+        <span class="n">product_store</span><span class="p">[</span><span class="n">simulation_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s2">&quot;records&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Update status</span>
+        <span class="c1"># NOTE: As mentioned above, this must follow the product_store update</span>
+        <span class="n">status_board</span><span class="p">[</span><span class="n">simulation_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+            <span class="s2">&quot;progress&quot;</span><span class="p">:</span> <span class="s2">&quot;Simulation completed&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;errors&quot;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s2">&quot;updated&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+        <span class="p">}</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_watch_expired</span><span class="p">(</span>
+    <span class="n">status_board</span><span class="p">:</span> <span class="n">DictProxy</span><span class="p">,</span>
+    <span class="n">product_store</span><span class="p">:</span> <span class="n">DictProxy</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Removes expired requests from memory store.&quot;&quot;&quot;</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="c1"># DictProxy -&gt; Dict (make a copy)</span>
+        <span class="n">status_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">status_board</span><span class="p">)</span>
+        <span class="c1"># Check expired</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">status_dict</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s2">&quot;simulation_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="n">df</span><span class="p">[</span><span class="s2">&quot;updated&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;updated&quot;</span><span class="p">])</span>
+            <span class="n">expired</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="mi">200</span><span class="p">,</span> <span class="mi">400</span><span class="p">])</span> <span class="o">&amp;</span> <span class="p">(</span>
+                <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;updated&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">EXPIRES_AFTER</span>
+            <span class="p">)</span>
+            <span class="n">expired_ids</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">expired</span><span class="p">,</span> <span class="s2">&quot;simulation_id&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+            <span class="c1"># Remove expired requests</span>
+            <span class="k">for</span> <span class="n">req</span> <span class="ow">in</span> <span class="n">expired_ids</span><span class="p">:</span>
+                <span class="n">_</span> <span class="o">=</span> <span class="n">status_board</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                <span class="n">_</span> <span class="o">=</span> <span class="n">product_store</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">json_data</span> <span class="o">=</span> <span class="s2">&quot;[]&quot;</span>
+        <span class="c1"># Wait for the next round</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">EXPIRES_AFTER</span><span class="p">)</span>
+
+
+<span class="c1"># endregion</span>
+
+
+<span class="c1"># ===========================</span>
+<span class="c1"># Main functions to be called</span>
+<span class="c1"># ===========================</span>
+<span class="c1"># region: Main functions</span>
+<div class="viewcode-block" id="start_simulators">
+<a class="viewcode-back" href="../../../../generated/watcher.watcher_api.html#watcher.watcher_api.start_simulators">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">start_simulators</span><span class="p">(</span>
+    <span class="n">blueprint</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">log_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">gpu_ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">n_preprocess_workers</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">db_schema</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;public&quot;</span><span class="p">,</span>
+    <span class="n">max_batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">256</span><span class="p">,</span>
+    <span class="n">max_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">,</span>
+    <span class="n">return_generated_parts_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">return_unfinished</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Flask</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Starts all background simulator processes including:</span>
+<span class="sd">      - Preprocessing workers</span>
+<span class="sd">      - WatcherOrchestrator</span>
+<span class="sd">      - Expiration manager</span>
+
+<span class="sd">    This function should be called separately from the Flask app,</span>
+<span class="sd">    typically before launching Gunicorn or from a separate process.</span>
+
+
+<span class="sd">    **Example Usage**</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            from watcher.watcher_api import start_simulators</span>
+
+<span class="sd">            start_simulators(...)</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        blueprint (str): Model blueprint name.</span>
+<span class="sd">        log_dir (str): Path to directory for saving logs.</span>
+<span class="sd">        gpu_ids (list[str]): List of GPU device IDs to assign for simulation.</span>
+<span class="sd">        n_preprocess_workers (int): Number of multiprocessing workers for data preprocessing.</span>
+<span class="sd">        db_schema (str, optional): PostgreSQL schema name. Defaults to &quot;public&quot;.</span>
+<span class="sd">        max_batch_size (int, optional): Max batch size for simulation. Defaults to 256.</span>
+<span class="sd">        max_length (int, optional): Max sequence length for simulation input. Defaults to 10000.</span>
+<span class="sd">        return_generated_parts_only (bool, optional): If True, returns only generated output. Defaults to True.</span>
+<span class="sd">        return_unfinished (bool, optional): If True, includes unfinished trajectories. Defaults to False.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="s2">&quot;_simulators_started&quot;</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please wait for API initialization...&quot;</span><span class="p">)</span>
+        <span class="c1"># Setup objects</span>
+        <span class="n">manager</span> <span class="o">=</span> <span class="n">Manager</span><span class="p">()</span>
+        <span class="n">status_board</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">dict</span><span class="p">()</span>
+        <span class="n">product_store</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">dict</span><span class="p">()</span>
+        <span class="n">temp_queue</span> <span class="o">=</span> <span class="n">JoinableQueue</span><span class="p">()</span>
+        <span class="n">request_queue</span> <span class="o">=</span> <span class="n">JoinableQueue</span><span class="p">()</span>
+
+        <span class="c1"># Generator -&gt; orchestrator</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">_gen_task</span><span class="p">(</span><span class="n">temp_queue</span><span class="p">):</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">temp_queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+        <span class="n">task_gen</span> <span class="o">=</span> <span class="n">_gen_task</span><span class="p">(</span><span class="n">temp_queue</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Building watcher orchestrator...&quot;</span><span class="p">)</span>
+        <span class="n">orch</span> <span class="o">=</span> <span class="n">WatcherOrchestrator</span><span class="p">(</span>
+            <span class="n">task_generator</span><span class="o">=</span><span class="n">task_gen</span><span class="p">,</span>
+            <span class="n">log_dir</span><span class="o">=</span><span class="n">log_dir</span><span class="p">,</span>
+            <span class="n">blueprint</span><span class="o">=</span><span class="n">blueprint</span><span class="p">,</span>
+            <span class="n">gpu_ids</span><span class="o">=</span><span class="n">gpu_ids</span><span class="p">,</span>
+            <span class="n">max_batch_size</span><span class="o">=</span><span class="n">max_batch_size</span><span class="p">,</span>
+            <span class="n">max_length</span><span class="o">=</span><span class="n">max_length</span><span class="p">,</span>
+            <span class="n">return_generated_parts_only</span><span class="o">=</span><span class="n">return_generated_parts_only</span><span class="p">,</span>
+            <span class="n">return_unfinished</span><span class="o">=</span><span class="n">return_unfinished</span><span class="p">,</span>
+            <span class="n">compile_model</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">temperature</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">orch</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Orchestrator started&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Store in app config (Flask will pick these up when app starts)</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;MAX_N_ITER&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">max_batch_size</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;DB_SCHEMA&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">db_schema</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;REQUEST_QUEUE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">request_queue</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;PRODUCT_STORE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">product_store</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;STATUS_BOARD&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">status_board</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;STARTED_PROC&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># Start preprocessors</span>
+        <span class="n">dummy_model</span> <span class="o">=</span> <span class="n">build_watcher</span><span class="p">(</span><span class="n">blueprint</span><span class="o">=</span><span class="n">blueprint</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_preprocess_workers</span><span class="p">):</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">Process</span><span class="p">(</span>
+                <span class="n">target</span><span class="o">=</span><span class="n">_preprocess_requests</span><span class="p">,</span>
+                <span class="n">kwargs</span><span class="o">=</span><span class="p">{</span>
+                    <span class="s2">&quot;request_queue&quot;</span><span class="p">:</span> <span class="n">request_queue</span><span class="p">,</span>
+                    <span class="s2">&quot;temp_queue&quot;</span><span class="p">:</span> <span class="n">temp_queue</span><span class="p">,</span>
+                    <span class="s2">&quot;status_board&quot;</span><span class="p">:</span> <span class="n">status_board</span><span class="p">,</span>
+                    <span class="s2">&quot;max_n_iter&quot;</span><span class="p">:</span> <span class="n">max_batch_size</span><span class="p">,</span>
+                    <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="n">dummy_model</span><span class="p">,</span>
+                    <span class="s2">&quot;db_schema&quot;</span><span class="p">:</span> <span class="n">db_schema</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="n">daemon</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+            <span class="c1"># Add to the list of started processes</span>
+            <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;STARTED_PROC&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+        <span class="c1"># Setup orchestrator</span>
+
+        <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;ORCH&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">orch</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Orch done&quot;</span><span class="p">)</span>
+
+        <span class="n">p_prod</span> <span class="o">=</span> <span class="n">Process</span><span class="p">(</span>
+            <span class="n">target</span><span class="o">=</span><span class="n">_watch_products</span><span class="p">,</span>
+            <span class="n">kwargs</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;orch&quot;</span><span class="p">:</span> <span class="n">orch</span><span class="p">,</span>
+                <span class="s2">&quot;status_board&quot;</span><span class="p">:</span> <span class="n">status_board</span><span class="p">,</span>
+                <span class="s2">&quot;product_store&quot;</span><span class="p">:</span> <span class="n">product_store</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="n">daemon</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">p_prod</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Prodoct watcher started&quot;</span><span class="p">)</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;STARTED_PROC&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p_prod</span><span class="p">)</span>
+
+        <span class="n">p_exp</span> <span class="o">=</span> <span class="n">Process</span><span class="p">(</span>
+            <span class="n">target</span><span class="o">=</span><span class="n">_watch_expired</span><span class="p">,</span>
+            <span class="n">kwargs</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;status_board&quot;</span><span class="p">:</span> <span class="n">status_board</span><span class="p">,</span>
+                <span class="s2">&quot;product_store&quot;</span><span class="p">:</span> <span class="n">product_store</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="n">daemon</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">p_exp</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Expiration watcher started&quot;</span><span class="p">)</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;STARTED_PROC&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p_exp</span><span class="p">)</span>
+
+        <span class="c1"># Falg for simulators started</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">_simulators_started</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="c1"># Final message</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;API is ready.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Register handlers</span>
+    <span class="c1"># _setup_signal_handlers()</span>
+
+    <span class="k">return</span> <span class="n">app</span></div>
+
+
+
+<span class="c1"># endregion</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Yu Akagi, MD.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

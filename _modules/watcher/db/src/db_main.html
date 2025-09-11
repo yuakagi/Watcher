@@ -1,0 +1,473 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>watcher.db.src.db_main &mdash; watcher 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/color_theme.css?v=e98e66a4" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.svg"/>
+    <link rel="canonical" href="https://yuakagi.github.io/Watcher/_modules/watcher/db/src/db_main.html" />
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html">
+            
+              <img src="../../../../_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../table_definitions/tables.html">Table Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorial.html">Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Watcher API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../generated/watcher.html">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../generated/watcher.db.html">watcher.db package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../generated/watcher.models.html">watcher.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../generated/watcher.preprocess.html">watcher.preprocess package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../generated/watcher.training.html">watcher.training package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../generated/watcher.watcher_api.html">watcher.watcher_api package</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">watcher</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">watcher.db.src.db_main</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for watcher.db.src.db_main</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Module for the postgresql database.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">glob</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">date</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">concurrent.futures</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProcessPoolExecutor</span><span class="p">,</span> <span class="n">as_completed</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.exc</span><span class="w"> </span><span class="kn">import</span> <span class="n">SQLAlchemyError</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">psycopg</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">psycopg</span><span class="w"> </span><span class="kn">import</span> <span class="n">ServerCursor</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...general_params</span><span class="w"> </span><span class="kn">import</span> <span class="n">watcher_config</span> <span class="k">as</span> <span class="n">config</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_db_engine</span><span class="p">,</span> <span class="n">load_psycopg_params</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_generate_create_table_query</span><span class="p">(</span>
+    <span class="n">table_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">table_params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">schema</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;public&quot;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a CREATE TABLE SQL query from a dictionary definition.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">columns_definitions</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Generate IDs</span>
+    <span class="k">if</span> <span class="n">table_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id_prefix&quot;</span><span class="p">):</span>
+        <span class="n">id_prefix</span> <span class="o">=</span> <span class="n">table_params</span><span class="p">[</span><span class="s2">&quot;id_prefix&quot;</span><span class="p">]</span>
+        <span class="n">columns_definitions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;dummy_id SERIAL NOT NULL&quot;</span><span class="p">)</span>
+        <span class="n">columns_definitions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">COL_RECORD_ID</span><span class="si">}</span><span class="s2"> TEXT GENERATED ALWAYS AS (&#39;</span><span class="si">{</span><span class="n">id_prefix</span><span class="si">}</span><span class="s2">&#39; || dummy_id) STORED UNIQUE&quot;</span>
+        <span class="p">)</span>
+
+    <span class="c1"># Generate column definitions</span>
+    <span class="k">for</span> <span class="n">col_name</span><span class="p">,</span> <span class="n">col_props</span> <span class="ow">in</span> <span class="n">table_params</span><span class="p">[</span><span class="s2">&quot;columns&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">col_definition</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">col_name</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">col_props</span><span class="p">[</span><span class="s1">&#39;sql_ops&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">columns_definitions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col_definition</span><span class="p">)</span>
+
+    <span class="c1"># Add primary key constraint</span>
+    <span class="k">if</span> <span class="s2">&quot;primary_key&quot;</span> <span class="ow">in</span> <span class="n">table_params</span> <span class="ow">and</span> <span class="n">table_params</span><span class="p">[</span><span class="s2">&quot;primary_key&quot;</span><span class="p">]:</span>
+        <span class="n">columns_definitions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PRIMARY KEY (</span><span class="si">{</span><span class="n">table_params</span><span class="p">[</span><span class="s1">&#39;primary_key&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Add foreign key constraint if exists</span>
+    <span class="k">if</span> <span class="s2">&quot;foreign_key&quot;</span> <span class="ow">in</span> <span class="n">table_params</span> <span class="ow">and</span> <span class="n">table_params</span><span class="p">[</span><span class="s2">&quot;foreign_key&quot;</span><span class="p">]:</span>
+        <span class="n">fk_col</span><span class="p">,</span> <span class="n">fk_table</span> <span class="o">=</span> <span class="n">table_params</span><span class="p">[</span><span class="s2">&quot;foreign_key&quot;</span><span class="p">]</span>  <span class="c1"># Tuple</span>
+        <span class="n">fk_def</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;FOREIGN KEY (</span><span class="si">{</span><span class="n">fk_col</span><span class="si">}</span><span class="s2">) REFERENCES </span><span class="si">{</span><span class="n">fk_table</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">fk_col</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="n">columns_definitions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fk_def</span><span class="p">)</span>
+
+    <span class="c1"># Format the final SQL query</span>
+    <span class="n">joind_defs</span> <span class="o">=</span> <span class="s2">&quot;,</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">columns_definitions</span><span class="p">)</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    CREATE TABLE IF NOT EXISTS </span><span class="si">{</span><span class="n">schema</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">table_name</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">joind_defs</span><span class="si">}</span><span class="s2">);</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+    <span class="k">return</span> <span class="n">query</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">create_schema</span><span class="p">(</span><span class="n">schema</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;public&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates the given schema if it doesn&#39;t already exist.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">connection_params</span> <span class="o">=</span> <span class="n">load_psycopg_params</span><span class="p">()</span>
+    <span class="k">with</span> <span class="n">psycopg</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">connection_params</span><span class="p">)</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">cur</span><span class="p">:</span>
+            <span class="c1"># Check if schema exists</span>
+            <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">                SELECT schema_name</span>
+<span class="sd">                FROM information_schema.schemata</span>
+<span class="sd">                WHERE schema_name = %s;</span>
+<span class="sd">            &quot;&quot;&quot;</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">schema</span><span class="p">,),</span>
+            <span class="p">)</span>
+            <span class="n">exists</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">:</span>
+                <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CREATE SCHEMA </span><span class="si">{</span><span class="n">schema</span><span class="si">}</span><span class="s2">;&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Schema &#39;</span><span class="si">{</span><span class="n">schema</span><span class="si">}</span><span class="s2">&#39; created.&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Schema &#39;</span><span class="si">{</span><span class="n">schema</span><span class="si">}</span><span class="s2">&#39; already exists.&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">create_indexes</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">table</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">index_fields</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">schema</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;public&quot;</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">index_fields</span><span class="p">:</span>
+        <span class="n">index_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;idx_</span><span class="si">{</span><span class="n">table</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        CREATE INDEX IF NOT EXISTS </span><span class="si">{</span><span class="n">index_name</span><span class="si">}</span>
+<span class="s2">        ON </span><span class="si">{</span><span class="n">schema</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">table</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">);</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Index &#39;</span><span class="si">{</span><span class="n">index_name</span><span class="si">}</span><span class="s2">&#39; created.&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">table_exists</span><span class="p">(</span><span class="n">cur</span><span class="p">:</span> <span class="n">ServerCursor</span><span class="p">,</span> <span class="n">table</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">schema</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;public&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Examine if a table already exists.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        SELECT table_name from information_schema.tables</span>
+<span class="s2">        WHERE table_name = </span><span class="si">%s</span><span class="s2"> AND table_schema = </span><span class="si">%s</span><span class="s2">;</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">schema</span><span class="p">))</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+    <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">create_empty_tables</span><span class="p">(</span><span class="n">schema</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;public&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates empty tables to initialize the database.&quot;&quot;&quot;</span>
+    <span class="c1"># Set up</span>
+    <span class="n">connection_params</span> <span class="o">=</span> <span class="n">load_psycopg_params</span><span class="p">()</span>
+    <span class="c1"># Connect to db pylint: disable=not-context-manager</span>
+    <span class="k">with</span> <span class="n">psycopg</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">connection_params</span><span class="p">)</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">cur</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">param_dict</span> <span class="ow">in</span> <span class="p">[</span><span class="n">config</span><span class="o">.</span><span class="n">MAP_PARAMS</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">RECORD_PARAMS</span><span class="p">]:</span>
+                <span class="k">for</span> <span class="n">table</span><span class="p">,</span> <span class="n">table_params</span> <span class="ow">in</span> <span class="n">param_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="n">table_existing</span> <span class="o">=</span> <span class="n">table_exists</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="n">table</span><span class="p">,</span> <span class="n">schema</span><span class="o">=</span><span class="n">schema</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">table_existing</span><span class="p">:</span>
+                        <span class="c1"># Create query</span>
+                        <span class="n">query</span> <span class="o">=</span> <span class="n">_generate_create_table_query</span><span class="p">(</span>
+                            <span class="n">table_name</span><span class="o">=</span><span class="n">table</span><span class="p">,</span> <span class="n">table_params</span><span class="o">=</span><span class="n">table_params</span><span class="p">,</span> <span class="n">schema</span><span class="o">=</span><span class="n">schema</span>
+                        <span class="p">)</span>
+                        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Table &#39;</span><span class="si">{</span><span class="n">table</span><span class="si">}</span><span class="s2">&#39; was created.&quot;</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;table &#39;</span><span class="si">{</span><span class="n">table</span><span class="si">}</span><span class="s2">&#39; already exists.&quot;</span><span class="p">)</span>
+
+                    <span class="c1"># Create indexes if specified</span>
+                    <span class="k">if</span> <span class="s2">&quot;index_fields&quot;</span> <span class="ow">in</span> <span class="n">table_params</span><span class="p">:</span>
+                        <span class="n">create_indexes</span><span class="p">(</span>
+                            <span class="n">cur</span><span class="p">,</span> <span class="n">table</span><span class="p">,</span> <span class="n">table_params</span><span class="p">[</span><span class="s2">&quot;index_fields&quot;</span><span class="p">],</span> <span class="n">schema</span><span class="o">=</span><span class="n">schema</span>
+                        <span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tables created&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">delete_all_tables</span><span class="p">(</span><span class="n">schema</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;public&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Deletes all tables in the database.</span>
+<span class="sd">    CAUTION: The deletion is permanent. DO NOT USE outside experimental settings.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">connection_params</span> <span class="o">=</span> <span class="n">load_psycopg_params</span><span class="p">()</span>
+
+    <span class="c1"># Connect to db pylint: disable=not-context-manager</span>
+    <span class="k">with</span> <span class="n">psycopg</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">connection_params</span><span class="p">)</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">cur</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">param_dict</span> <span class="ow">in</span> <span class="p">[</span><span class="n">config</span><span class="o">.</span><span class="n">MAP_PARAMS</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">RECORD_PARAMS</span><span class="p">]:</span>
+                <span class="k">for</span> <span class="n">table</span> <span class="ow">in</span> <span class="n">param_dict</span><span class="p">:</span>
+                    <span class="n">table_existing</span> <span class="o">=</span> <span class="n">table_exists</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="n">table</span><span class="p">,</span> <span class="n">schema</span><span class="o">=</span><span class="n">schema</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">table_existing</span><span class="p">:</span>
+                        <span class="n">query</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;DROP TABLE </span><span class="si">{</span><span class="n">schema</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">table</span><span class="si">}</span><span class="s2"> CASCADE;&quot;</span>
+                        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Table &#39;</span><span class="si">{</span><span class="n">table</span><span class="si">}</span><span class="s2">&#39; was deleted.&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Existing tables deleted.&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_upload_single_csv</span><span class="p">(</span>
+    <span class="n">csv_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">table</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">check_list</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="n">schema</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;public&quot;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Uploads a CSV.&quot;&quot;&quot;</span>
+    <span class="c1"># Read csv first</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+        <span class="n">csv_path</span><span class="p">,</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="c1"># Replace empty strigns with null</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">NA</span><span class="p">)</span>
+
+    <span class="c1"># Check</span>
+    <span class="k">for</span> <span class="n">col</span><span class="p">,</span> <span class="n">params</span> <span class="ow">in</span> <span class="n">check_list</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="p">:</span>
+            <span class="c1"># Missing values</span>
+            <span class="n">non_null</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;non_null&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">non_null</span> <span class="ow">and</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Column &#39;</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">&#39; contains null values in </span><span class="si">{</span><span class="n">csv_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Data type conversion</span>
+            <span class="n">dtype</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;dtype&quot;</span><span class="p">]</span>
+            <span class="n">null_mask</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">dtype</span> <span class="o">==</span> <span class="n">datetime</span><span class="p">:</span>
+                <span class="n">df</span><span class="p">[</span><span class="s2">&quot;new_col&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">NaT</span>
+                <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">null_mask</span><span class="p">,</span> <span class="s2">&quot;new_col&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span>
+                    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">null_mask</span><span class="p">,</span> <span class="n">col</span><span class="p">],</span>
+                    <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;%Y/%m/</span><span class="si">%d</span><span class="s2"> %H:%M&quot;</span><span class="p">,</span>
+                    <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;raise&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="k">elif</span> <span class="n">dtype</span> <span class="o">==</span> <span class="n">date</span><span class="p">:</span>
+                <span class="n">df</span><span class="p">[</span><span class="s2">&quot;new_col&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">NaT</span>
+                <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">null_mask</span><span class="p">,</span> <span class="s2">&quot;new_col&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span>
+                    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">null_mask</span><span class="p">,</span> <span class="n">col</span><span class="p">],</span>
+                    <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;%Y/%m/</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span>
+                    <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;raise&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="k">elif</span> <span class="n">dtype</span> <span class="o">==</span> <span class="nb">float</span><span class="p">:</span>
+                <span class="n">df</span><span class="p">[</span><span class="s2">&quot;new_col&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">dtype</span> <span class="o">==</span> <span class="nb">int</span><span class="p">:</span>
+                <span class="n">df</span><span class="p">[</span><span class="s2">&quot;new_col&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;Int64&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">df</span><span class="p">[</span><span class="s2">&quot;new_col&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">NA</span>
+                <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">null_mask</span><span class="p">,</span> <span class="s2">&quot;new_col&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">null_mask</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
+            <span class="c1"># Assign</span>
+            <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;new_col&quot;</span><span class="p">]</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;new_col&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Missing col</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Raise if the column is required</span>
+            <span class="k">if</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;col_required&quot;</span><span class="p">]:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Column &#39;</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">&#39; is missing in </span><span class="si">{</span><span class="n">csv_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="c1"># Otherwise, create an empty column</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Initialize missing optional columns</span>
+                <span class="n">dtype</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;dtype&quot;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">dtype</span> <span class="o">==</span> <span class="n">datetime</span> <span class="ow">or</span> <span class="n">dtype</span> <span class="o">==</span> <span class="n">date</span><span class="p">:</span>
+                    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="n">pd</span><span class="o">.</span><span class="n">NaT</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">dtype</span> <span class="ow">in</span> <span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="s2">&quot;int&quot;</span><span class="p">,</span> <span class="s2">&quot;int32&quot;</span><span class="p">,</span> <span class="s2">&quot;int64&quot;</span><span class="p">]:</span>
+                    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+                        <span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">NA</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;Int64&quot;</span>
+                    <span class="p">)</span>
+                <span class="k">elif</span> <span class="n">dtype</span> <span class="ow">in</span> <span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;float32&quot;</span><span class="p">,</span> <span class="s2">&quot;float64&quot;</span><span class="p">]:</span>
+                    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+                        <span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">NA</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;Float64&quot;</span>
+                    <span class="p">)</span>
+                <span class="k">elif</span> <span class="n">dtype</span> <span class="ow">in</span> <span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;str&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">]:</span>
+                    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+                        <span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">NA</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;string&quot;</span>
+                    <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># fallback</span>
+                    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="n">pd</span><span class="o">.</span><span class="n">NA</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+
+    <span class="c1"># Eliminate unnecessary columns</span>
+    <span class="n">valid_cols</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">check_list</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">valid_cols</span><span class="p">]</span>
+
+    <span class="c1"># Write</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">engine</span> <span class="o">=</span> <span class="n">load_db_engine</span><span class="p">()</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">to_sql</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">engine</span><span class="p">,</span> <span class="n">schema</span><span class="o">=</span><span class="n">schema</span><span class="p">,</span> <span class="n">if_exists</span><span class="o">=</span><span class="s2">&quot;append&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">SQLAlchemyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="c1"># This will show you the underlying INSERT or COPY error</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;to_sql failed:&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+        <span class="k">raise</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">upload_csv</span><span class="p">(</span>
+    <span class="n">data_source</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">schema</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;public&quot;</span><span class="p">,</span>
+    <span class="n">max_workers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Upload CSV files to the database.</span>
+
+<span class="sd">    Scans the given data source directory for matching CSV files</span>
+<span class="sd">    (using wildcards if necessary), validates and casts columns</span>
+<span class="sd">    based on provided configuration, and uploads them into the</span>
+<span class="sd">    specified database schema and tables.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data_source (str): Path to the directory or base file pattern.</span>
+<span class="sd">        schema (str, optional): Database schema. Defaults to &quot;public&quot;.</span>
+<span class="sd">        max_workers (int, optional): Number of parallel workers. Defaults to 1.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If required columns are missing or invalid values are found.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Upload clinical records</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="p">[</span><span class="n">config</span><span class="o">.</span><span class="n">MAP_PARAMS</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">RECORD_PARAMS</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">table</span><span class="p">,</span> <span class="n">params</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1"># Find files</span>
+            <span class="n">source_csv</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_source</span><span class="p">,</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;source_csv&quot;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="s2">&quot;*&quot;</span> <span class="ow">in</span> <span class="n">source_csv</span><span class="p">:</span>
+                <span class="n">src_files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">source_csv</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">src_files</span> <span class="o">=</span> <span class="p">[</span><span class="n">source_csv</span><span class="p">]</span>
+            <span class="c1"># Data type checks</span>
+            <span class="n">check_list</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">col</span><span class="p">,</span> <span class="n">tp</span> <span class="ow">in</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;columns&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">check_list</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">&quot;dtype&quot;</span><span class="p">:</span> <span class="n">tp</span><span class="p">[</span><span class="s2">&quot;pandas_dtype&quot;</span><span class="p">],</span>
+                    <span class="s2">&quot;col_required&quot;</span><span class="p">:</span> <span class="n">tp</span><span class="p">[</span><span class="s2">&quot;col_required&quot;</span><span class="p">],</span>
+                    <span class="s2">&quot;non_null&quot;</span><span class="p">:</span> <span class="s2">&quot;NON NULL&quot;</span> <span class="ow">in</span> <span class="n">tp</span><span class="p">[</span><span class="s2">&quot;sql_ops&quot;</span><span class="p">],</span>
+                <span class="p">}</span>
+
+            <span class="k">with</span> <span class="n">ProcessPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="n">max_workers</span><span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
+                <span class="n">futures</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span>
+                        <span class="n">_upload_single_csv</span><span class="p">,</span>
+                        <span class="n">csv_path</span><span class="o">=</span><span class="n">f</span><span class="p">,</span>
+                        <span class="n">table</span><span class="o">=</span><span class="n">table</span><span class="p">,</span>
+                        <span class="n">schema</span><span class="o">=</span><span class="n">schema</span><span class="p">,</span>
+                        <span class="n">check_list</span><span class="o">=</span><span class="n">check_list</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">src_files</span>
+                <span class="p">]</span>
+                <span class="k">for</span> <span class="n">future</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span>
+                    <span class="n">as_completed</span><span class="p">(</span><span class="n">futures</span><span class="p">),</span> <span class="n">desc</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Uploading files to &#39;</span><span class="si">{</span><span class="n">table</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+                <span class="p">):</span>
+                    <span class="n">_</span> <span class="o">=</span> <span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="init_db_with_csv">
+<a class="viewcode-back" href="../../../../generated/watcher.db.html#watcher.db.init_db_with_csv">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">init_db_with_csv</span><span class="p">(</span>
+    <span class="n">data_source</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">max_workers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">schema</span><span class="o">=</span><span class="s2">&quot;public&quot;</span><span class="p">,</span> <span class="n">delete_existing</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Initialize a PostgreSQL database using CSV files.</span>
+
+<span class="sd">    This function sets up a PostgreSQL schema and populates it with tables</span>
+<span class="sd">    from the specified CSV directory. It can optionally drop all existing tables before import.</span>
+
+<span class="sd">    Warnings:</span>
+<span class="sd">        - If `delete_existing` is True, all tables in the schema will be dropped. This action is irreversible.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        - Prepare source clinical records as separated CSV files in accordance with :ref:`clinical_records`.</span>
+
+
+<span class="sd">    Example:</span>
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            from watcher.db import init_db_with_csv</span>
+
+<span class="sd">            init_db_with_csv(</span>
+<span class="sd">                data_source=&quot;path/to/csv_files&quot;,</span>
+<span class="sd">                max_workers=4,</span>
+<span class="sd">                schema=&quot;public,</span>
+<span class="sd">                delete_existing=True,</span>
+<span class="sd">            )</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data_source (str): Absolute path to the directory containing source CSV files.</span>
+<span class="sd">        max_workers (int): Number of parallel workers for uploading. Defaults to 1.</span>
+<span class="sd">        schema (str): Target PostgreSQL schema. Defaults to &quot;public&quot;.</span>
+<span class="sd">        delete_existing (bool): Whether to drop all existing tables before creation.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Delete old data</span>
+    <span class="k">if</span> <span class="n">delete_existing</span><span class="p">:</span>
+        <span class="n">delete_all_tables</span><span class="p">(</span><span class="n">schema</span><span class="o">=</span><span class="n">schema</span><span class="p">)</span>
+
+    <span class="c1"># Initialize tables (if not exists)</span>
+    <span class="n">create_schema</span><span class="p">(</span><span class="n">schema</span><span class="o">=</span><span class="n">schema</span><span class="p">)</span>
+    <span class="n">delete_all_tables</span><span class="p">(</span><span class="n">schema</span><span class="o">=</span><span class="n">schema</span><span class="p">)</span>
+    <span class="n">create_empty_tables</span><span class="p">(</span><span class="n">schema</span><span class="o">=</span><span class="n">schema</span><span class="p">)</span>
+
+    <span class="c1"># Upload</span>
+    <span class="n">upload_csv</span><span class="p">(</span>
+        <span class="n">data_source</span><span class="o">=</span><span class="n">data_source</span><span class="p">,</span>
+        <span class="n">max_workers</span><span class="o">=</span><span class="n">max_workers</span><span class="p">,</span>
+        <span class="n">schema</span><span class="o">=</span><span class="n">schema</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Yu Akagi, MD.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+watcher.training package
+========================
+
+.. automodule:: watcher.training
+   :members:
+   :undoc-members:
+   :show-inheritance:

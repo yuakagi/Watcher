@@ -1,0 +1,299 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial &mdash; watcher 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/color_theme.css?v=e98e66a4" />
+
+  
+    <link rel="shortcut icon" href="_static/favicon.svg"/>
+    <link rel="canonical" href="https://yuakagi.github.io/Watcher/tutorial.html" />
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="watcher package" href="generated/watcher.html" />
+    <link rel="prev" title="Table definitions" href="table_definitions/tables.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="table_definitions/tables.html">Table Definitions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Watcher API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="generated/watcher.html">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="generated/watcher.db.html">watcher.db package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/watcher.models.html">watcher.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/watcher.preprocess.html">watcher.preprocess package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/watcher.training.html">watcher.training package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/watcher.watcher_api.html">watcher.watcher_api package</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">watcher</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Tutorial</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="tutorial">
+<h1>Tutorial<a class="headerlink" href="#tutorial" title="Link to this heading"></a></h1>
+<nav class="contents local" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#prepare-devices" id="id1">1. Prepare devices</a></p></li>
+<li><p><a class="reference internal" href="#clone-repository-and-run-docker-containers" id="id2">2. Clone repository and run Docker containers</a></p></li>
+<li><p><a class="reference internal" href="#upload-clinical-records-to-database" id="id3">3. Upload clinical records to database</a></p></li>
+<li><p><a class="reference internal" href="#create-dataset" id="id4">4. Create dataset</a></p></li>
+<li><p><a class="reference internal" href="#pretrain-models" id="id5">5. Pretrain models</a></p></li>
+<li><p><a class="reference internal" href="#perform-simulations" id="id6">6. Perform simulations</a></p></li>
+<li><p><a class="reference internal" href="#optional-fine-tune-models" id="id7">7. [OPTIONAL] Fine-tune models</a></p></li>
+<li><p><a class="reference internal" href="#optional-simulator-demo-with-gui" id="id8">8. [OPTIONAL] Simulator demo with GUI</a></p></li>
+<li><p><a class="reference internal" href="#optional-use-simulation-api" id="id9">9. [OPTIONAL] Use Simulation API</a></p></li>
+</ul>
+</nav>
+<section id="prepare-devices">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">1. Prepare devices</a><a class="headerlink" href="#prepare-devices" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line">You need a server machine with at leaset one GPU.</div>
+<div class="line">We recommend using NVIDIA GPU with Ampere or newer architecture (A100, H100, etc.).</div>
+</div>
+</section>
+<section id="clone-repository-and-run-docker-containers">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">2. Clone repository and run Docker containers</a><a class="headerlink" href="#clone-repository-and-run-docker-containers" title="Link to this heading"></a></h2>
+<section id="clone-repository">
+<h3>2-1. Clone repository<a class="headerlink" href="#clone-repository" title="Link to this heading"></a></h3>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/path/to/your/working_dir
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/yuakagi/Watcher.git
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+<section id="configure-settings">
+<h3>2-2. Configure settings<a class="headerlink" href="#configure-settings" title="Link to this heading"></a></h3>
+<div class="line-block">
+<div class="line">There is a file named <cite>.env.example</cite> in the root directory.</div>
+<div class="line">Please <strong>rename this file to .env</strong> and configure the parameters in it.</div>
+<div class="line">Open the <cite>.env</cite> file and set the required environment variables.</div>
+</div>
+</section>
+<section id="run-docker-containers">
+<h3>2-3. Run Docker containers<a class="headerlink" href="#run-docker-containers" title="Link to this heading"></a></h3>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>Watcher
+docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
+</pre></div>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line">Now, you can run scripts inside the container as follows:</div>
+</div>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>watcher-pytorch<span class="w"> </span>python3<span class="w"> </span>/code/mnt/path/to/script.py
+</pre></div>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line">For time-consuming jobs (i.e., model training), consider using <cite>-d`</cite> option, instead of <cite>-it</cite>.</div>
+<div class="line">This package, <cite>watcher</cite> is installed in the container, therefore you can import and use it in your scripts:</div>
+</div>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">watcher</span>
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+</section>
+<section id="upload-clinical-records-to-database">
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">3. Upload clinical records to database</a><a class="headerlink" href="#upload-clinical-records-to-database" title="Link to this heading"></a></h2>
+<blockquote>
+<div><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<ul class="simple">
+<li><p>Please note that this Python package performs only minimal data cleaning on preprocessing (e.g., dropping records with missing critical fields, removing duplicates).</p></li>
+<li><p>Therefore, <strong>it is important to pre-clean your data before uploading</strong> (e.g., normalizing laboratory test results and units, mapping medical codes, etc.).</p></li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>You can use <strong>any medical coding system</strong> (e.g., ICD-10, LOINC, ATC, or custom codes like sequential numbers). What matters is the consistency of coding.</p></li>
+<li><p>The database is exposed on the port <cite>${POSTGRES_PORT}</cite>, which you configure in the <cite>.env</cite> file.</p></li>
+<li><p>You can connect directly to this database using external SQL clients for inspection or manual queries if needed.</p></li>
+</ul>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line">Prepare your clinical dataset by referring to <a class="reference internal" href="table_definitions/tables.html#clinical-records"><span class="std std-ref">Clinical Records</span></a>.</div>
+<div class="line">The <cite>docker-compose.yml</cite> automatically launches a PostgreSQL server container.</div>
+<div class="line">Upload your clinical records into this database using <a class="reference internal" href="generated/watcher.db.html#watcher.db.init_db_with_csv" title="watcher.db.init_db_with_csv"><code class="xref py py-meth docutils literal notranslate"><span class="pre">watcher.db.init_db_with_csv()</span></code></a>.</div>
+<div class="line">This database will serve as the source for both model training and evaluation.</div>
+</div>
+</section>
+<section id="create-dataset">
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">4. Create dataset</a><a class="headerlink" href="#create-dataset" title="Link to this heading"></a></h2>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>If you plan to fine-tune the model later using an <cite>update</cite> dataset, please set the argument <cite>update_period</cite> appropriately when creating the dataset.</p></li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<ul class="simple">
+<li><p>Some parameters of <a class="reference internal" href="generated/watcher.preprocess.html#watcher.preprocess.create_dataset" title="watcher.preprocess.create_dataset"><code class="xref py py-meth docutils literal notranslate"><span class="pre">watcher.preprocess.create_dataset()</span></code></a> (e.g., <cite>max_sequence_length</cite>, etc.) determines the model’s hyperparameters.</p></li>
+<li><p>Please pay attention to these settings.</p></li>
+</ul>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line">Train the model dataset using <a class="reference internal" href="generated/watcher.preprocess.html#watcher.preprocess.create_dataset" title="watcher.preprocess.create_dataset"><code class="xref py py-meth docutils literal notranslate"><span class="pre">watcher.preprocess.create_dataset()</span></code></a>.</div>
+<div class="line">Once the dataset is created, it can be used for model training.</div>
+<div class="line">You can also retrieve patient IDs used in the dataset (for training, validation, or testing) using <a class="reference internal" href="generated/watcher.preprocess.html#watcher.preprocess.get_patient_ids" title="watcher.preprocess.get_patient_ids"><code class="xref py py-meth docutils literal notranslate"><span class="pre">watcher.preprocess.get_patient_ids()</span></code></a>.</div>
+</div>
+</section>
+<section id="pretrain-models">
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">5. Pretrain models</a><a class="headerlink" href="#pretrain-models" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line">Train the model using <a class="reference internal" href="generated/watcher.training.html#watcher.training.train_watcher" title="watcher.training.train_watcher"><code class="xref py py-meth docutils literal notranslate"><span class="pre">watcher.training.train_watcher()</span></code></a>.</div>
+<div class="line">Training saves snapshots (model checkpoints) periodically. Inside the snapshots you can find directories named <cite>watcher_blueprint</cite>.</div>
+<div class="line">A <cite>blueprint</cite> is a bunlde of files that contains model weigths and related files needed to instantiate the model.</div>
+<div class="line">Therefore, <cite>watcher_blueprint</cite> is the main product of model training. Please use them for inference and simulations.</div>
+<div class="line">The status of training is recorded in <cite>main_training_report.json</cite>. Once the training is complete, the best epoch is recorded in this JSON file.</div>
+<div class="line">Please consider using the <cite>watcher_blueprint</cite> recorded at the best epoch as the final model.</div>
+</div>
+</section>
+<section id="perform-simulations">
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">6. Perform simulations</a><a class="headerlink" href="#perform-simulations" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line">Perform simulations using <a class="reference internal" href="generated/watcher.models.html#watcher.models.Simulator.simulate" title="watcher.models.Simulator.simulate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">watcher.models.Simulator.simulate()</span></code></a>.</div>
+<div class="line">The details of the simulation results (pandas DataFrame) are available at <a class="reference internal" href="table_definitions/tables.html#simulation-result-table"><span class="std std-ref">Simulation Results</span></a>.</div>
+<div class="line">You can list up test patient IDs using <a class="reference internal" href="generated/watcher.preprocess.html#watcher.preprocess.get_patient_ids" title="watcher.preprocess.get_patient_ids"><code class="xref py py-meth docutils literal notranslate"><span class="pre">watcher.preprocess.get_patient_ids()</span></code></a> for model evaluation if you need them.</div>
+<div class="line">If needed, you may also directly connect to the PostgreSQL database and perform SQL queries to extract patient subsets of interest.</div>
+</div>
+</section>
+<section id="optional-fine-tune-models">
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">7. [OPTIONAL] Fine-tune models</a><a class="headerlink" href="#optional-fine-tune-models" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line">The model learns from all training data without weighting. Such training may be suboptimal because medical practices shift over time.</div>
+<div class="line">Therefore, this package allows fine-tuning the model using only the latest data.</div>
+<div class="line">Fine-tune the model using <a class="reference internal" href="generated/watcher.training.html#watcher.training.train_watcher" title="watcher.training.train_watcher"><code class="xref py py-meth docutils literal notranslate"><span class="pre">watcher.training.train_watcher()</span></code></a>.</div>
+</div>
+</section>
+<section id="optional-simulator-demo-with-gui">
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">8. [OPTIONAL] Simulator demo with GUI</a><a class="headerlink" href="#optional-simulator-demo-with-gui" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line">You can explore the pretrained model’s inference capabilities using our interactive demo GUI.</div>
+<div class="line">To run the demo, open the notebook at <cite>watcher/notebooks/demo_gui.ipynb</cite>.</div>
+</div>
+</section>
+<section id="optional-use-simulation-api">
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">9. [OPTIONAL] Use Simulation API</a><a class="headerlink" href="#optional-use-simulation-api" title="Link to this heading"></a></h2>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>This API is designed to be used as the simulator backend in our digital-twin EHR system (<a class="reference external" href="https://github.com/yuakagi/TwinEHR">https://github.com/yuakagi/TwinEHR</a>)</p></li>
+<li><p>Please use this API in combination with digital-twin EHR together with this AI</p></li>
+</ul>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><strong>Launching the API Server</strong></div>
+<div class="line">First, please open api_launcher.py, and set the argumets (blueprint, gpu_ids, log_dir, etc.) in the script.</div>
+<div class="line">Then, run the API server using the following command:</div>
+</div>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>watcher-pytorch<span class="w"> </span>gunicorn<span class="w"> </span>api_launcher:app<span class="w"> </span>--bind<span class="w"> </span><span class="m">0</span>.0.0.0:63425<span class="w"> </span>--workers<span class="w"> </span><span class="m">1</span>
+</pre></div>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line">currently, we do not support multiple gunicorn workers. <strong>Ensure that the number of workers is set to 1 ( –workers 1)</strong>.</div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="table_definitions/tables.html" class="btn btn-neutral float-left" title="Table definitions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="generated/watcher.html" class="btn btn-neutral float-right" title="watcher package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Yu Akagi, MD.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

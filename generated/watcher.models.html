@@ -1,0 +1,234 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>watcher.models package &mdash; watcher 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/color_theme.css?v=e98e66a4" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.svg"/>
+    <link rel="canonical" href="https://yuakagi.github.io/Watcher/generated/watcher.models.html" />
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="watcher.preprocess package" href="watcher.preprocess.html" />
+    <link rel="prev" title="watcher.db package" href="watcher.db.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../table_definitions/tables.html">Table Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Watcher API</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="watcher.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="watcher.db.html">watcher.db package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">watcher.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="watcher.preprocess.html">watcher.preprocess package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="watcher.training.html">watcher.training package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="watcher.watcher_api.html">watcher.watcher_api package</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">watcher</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="watcher.html">watcher package</a></li>
+      <li class="breadcrumb-item active">watcher.models package</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-watcher.models">
+<span id="watcher-models-package"></span><h1>watcher.models package<a class="headerlink" href="#module-watcher.models" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="watcher.models.Simulator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">watcher.models.</span></span><span class="sig-name descname"><span class="pre">Simulator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">blueprint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/watcher/models/src/simulator.html#Simulator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#watcher.models.Simulator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>High-level interface for running patient trajectory simulations.</p>
+<p>This class wraps a Watcher model and provides a convenient interface for
+generating multiple simulated patient timelines given initial patient information.</p>
+<p class="rubric">Example</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">watcher.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Simulator</span>
+
+<span class="n">simulator</span> <span class="o">=</span> <span class="n">Simulator</span><span class="p">(</span>
+    <span class="n">blueprint</span><span class="o">=</span><span class="s2">&quot;path/to/blueprint&quot;</span><span class="p">,</span>
+    <span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;cuda:0&quot;</span><span class="p">,</span> <span class="c1"># Your GPU ID)</span>
+</pre></div>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="watcher.models.Simulator.blueprint">
+<span class="sig-name descname"><span class="pre">blueprint</span></span><a class="headerlink" href="#watcher.models.Simulator.blueprint" title="Link to this definition"></a></dt>
+<dd><p>Path to the model blueprint directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="watcher.models.Simulator.device">
+<span class="sig-name descname"><span class="pre">device</span></span><a class="headerlink" href="#watcher.models.Simulator.device" title="Link to this definition"></a></dt>
+<dd><p>GPU device ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="watcher.models.Simulator.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#watcher.models.Simulator.model" title="Link to this definition"></a></dt>
+<dd><p>Instantiated Watcher model ready for inference.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Watcher</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="watcher.models.Simulator.simulate">
+<span class="sig-name descname"><span class="pre">simulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_schema</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patient_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_iter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeline_start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">simulation_start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_horizon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">age_as_timestamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stride</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="../_modules/watcher/models/src/simulator.html#Simulator.simulate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#watcher.models.Simulator.simulate" title="Link to this definition"></a></dt>
+<dd><p>Run Monte Carlo simulations for a single patient.</p>
+<p>This function performs preprocessing, generates multiple simulated timelines,
+and returns the results as a pandas DataFrame.</p>
+<p class="rubric">Example</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">watcher.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Simulator</span>
+
+<span class="n">simulator</span> <span class="o">=</span> <span class="n">Simulator</span><span class="p">(</span>
+        <span class="n">blueprint</span><span class="o">=</span><span class="s2">&quot;path/to/blueprint&quot;</span><span class="p">,</span>   <span class="c1"># Path to the model blueprint</span>
+        <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cuda:0&quot;</span><span class="p">,</span>                 <span class="c1"># Your GPU ID</span>
+    <span class="p">)</span>
+<span class="n">simulations</span> <span class="o">=</span> <span class="n">simulator</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
+    <span class="n">db_schema</span><span class="o">=</span><span class="s2">&quot;public&quot;</span><span class="p">,</span>
+    <span class="n">patient_id</span><span class="o">=</span><span class="s2">&quot;0001UT&quot;</span><span class="p">,</span>
+    <span class="n">n_iter</span><span class="o">=</span> <span class="mi">256</span><span class="p">,</span>                         <span class="c1"># Run 256 simulations</span>
+    <span class="n">timeline_start</span><span class="o">=</span><span class="s2">&quot;2011/01/01 00:00&quot;</span><span class="p">,</span>   <span class="c1"># Patient history start time</span>
+    <span class="n">simulation_start</span><span class="o">=</span><span class="s2">&quot;2025/04/26 14:57&quot;</span><span class="p">,</span> <span class="c1"># Simulation start time</span>
+    <span class="n">time_horizon</span> <span class="o">=</span> <span class="mi">7</span><span class="p">,</span>                    <span class="c1"># Simulation time horizon in days (7 days)</span>
+    <span class="n">max_length</span><span class="o">=</span> <span class="mi">2000</span><span class="p">,</span>                    <span class="c1"># Maximum sequence length for each simulation</span>
+    <span class="n">temperature</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+</pre></div>
+</div>
+<p>The details of the simulation results are available at <a class="reference internal" href="../table_definitions/tables.html#simulation-result-table"><span class="std std-ref">Simulation Results</span></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>db_schema</strong> (<em>str</em>) – PostgreSQL schema name containing patient records.
+(If you have not specified a schema, the schema name is expected to be ‘public’.)</p></li>
+<li><p><strong>patient_id</strong> (<em>str</em>) – Patient ID in the database.</p></li>
+<li><p><strong>n_iter</strong> (<em>int</em>) – Number of simulation trajectories to generate.
+If you only want one simulation, set this to 1.
+If you are performing the Monte Carlo simulation, set this to a large number (e.g., 256).</p></li>
+<li><p><strong>timeline_start</strong> (<em>str</em>) – Start date for retrieving patient history (format: ‘%Y/%m/%d %H:%M’).</p></li>
+<li><p><strong>simulation_start</strong> (<em>str</em>) – Simulation start time (format: ‘%Y/%m/%d %H:%M’).</p></li>
+<li><p><strong>time_horizon</strong> (<em>int</em>) – Length of simulation in days. Simulation is completed once the time horizon is reached.</p></li>
+<li><p><strong>max_length</strong> (<em>int</em>) – Maximum allowed sequence length for each simulation.
+If the simulation exceeds this length, the simulation result is discarded.</p></li>
+<li><p><strong>age_as_timestamp</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, timestamps are placed in the <cite>age</cite> column instead of patient age.</p></li>
+<li><p><strong>stride</strong> (<em>int</em><em>, </em><em>optional</em>) – Stride size for sliding window decoding. Defaults to 64.</p></li>
+<li><p><strong>temperature</strong> (<em>float</em><em>, </em><em>optional</em>) – Sampling temperature for stochasticity. Defaults to 1.0.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A DataFrame containing simulated timelines.</dt><dd><ul class="simple">
+<li><p>Each simulation is labeled by ‘patient_id’ (e.g., ‘simulation0’, ‘simulation1’, etc.).</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="watcher.db.html" class="btn btn-neutral float-left" title="watcher.db package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="watcher.preprocess.html" class="btn btn-neutral float-right" title="watcher.preprocess package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Yu Akagi, MD.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

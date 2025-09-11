@@ -1,0 +1,246 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>watcher.preprocess package &mdash; watcher 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/color_theme.css?v=e98e66a4" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.svg"/>
+    <link rel="canonical" href="https://yuakagi.github.io/Watcher/generated/watcher.preprocess.html" />
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="watcher.training package" href="watcher.training.html" />
+    <link rel="prev" title="watcher.models package" href="watcher.models.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../table_definitions/tables.html">Table Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Watcher API</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="watcher.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="watcher.db.html">watcher.db package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="watcher.models.html">watcher.models package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">watcher.preprocess package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="watcher.training.html">watcher.training package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="watcher.watcher_api.html">watcher.watcher_api package</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">watcher</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="watcher.html">watcher package</a></li>
+      <li class="breadcrumb-item active">watcher.preprocess package</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-watcher.preprocess">
+<span id="watcher-preprocess-package"></span><h1>watcher.preprocess package<a class="headerlink" href="#module-watcher.preprocess" title="Link to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="watcher.preprocess.create_dataset">
+<span class="sig-prename descclassname"><span class="pre">watcher.preprocess.</span></span><span class="sig-name descname"><span class="pre">create_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_period</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_period</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_sequence_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">db_schema</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'public'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_timeline_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patients_per_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_period</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dx_code_segments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">med_code_segments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lab_code_segments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_numeric_bins</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">501</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">td_small_step</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">td_large_step</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">60</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_workers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/watcher/preprocess/src/preprocess_main.html#create_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#watcher.preprocess.create_dataset" title="Link to this definition"></a></dt>
+<dd><p>Create a full dataset for model training and evaluation.</p>
+<p>This function performs data cleaning, temporal alignment, tokenization, aggregation,
+label generation, and matrix construction to train the Watcher model.</p>
+<p>Preprocessing parameters are inherited by the trained model and therefore become part of its
+effective hyperparameters.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<ul class="simple">
+<li><p>Some parameters of <a class="reference internal" href="#watcher.preprocess.create_dataset" title="watcher.preprocess.create_dataset"><code class="xref py py-meth docutils literal notranslate"><span class="pre">watcher.preprocess.create_dataset()</span></code></a> determines the model’s hyperparameters.</p></li>
+<li><p>Especially <cite>max_sequence_length</cite> determines the model’s maximum sequence length.</p></li>
+<li><p>Please pay attention to these settings.</p></li>
+</ul>
+</div>
+<p class="rubric">Example</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">watcher.preprocess</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_dataset</span>
+
+<span class="n">create_dataset</span><span class="p">(</span>
+    <span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;/code/pretraining_data&quot;</span><span class="p">,</span>
+    <span class="n">train_size</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+    <span class="n">val_size</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">train_period</span><span class="o">=</span><span class="s2">&quot;2011/01/01-2022/12/31&quot;</span><span class="p">,</span>
+    <span class="n">test_period</span><span class="o">=</span><span class="s2">&quot;2023/01/01-2023/12/31&quot;</span><span class="p">,</span>
+    <span class="n">uodate_period</span><span class="o">=</span><span class="s2">&quot;2022/01/01-2022/12/31&quot;</span><span class="p">,</span>
+    <span class="n">db_schema</span><span class="o">=</span><span class="s2">&quot;public&quot;</span><span class="p">,</span>
+    <span class="n">max_sequence_length</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span>
+    <span class="n">max_workers</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">log_dir</span><span class="o">=</span><span class="s2">&quot;/path/to/log_dir&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<dl>
+<dt>Train-Test Split:</dt><dd><p>The dataset is split using a temporal strategy:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Patients whose records fall exclusively within the <cite>test_period</cite> are assigned to the test set.</p></li>
+<li><p>Remaining patients are sorted by their first visit date. The most recent patients are added to the test set until the desired test size fraction (<cite>1 - train_size - val_size</cite>) is reached.</p></li>
+<li><p>Clinical records in the training or validation set but outside the <cite>train_period</cite> are assigned <cite>id = -1</cite> and excluded from model training (i.e., ignored during loss computation).</p></li>
+</ul>
+</div></blockquote>
+</dd>
+<dt>Medical Code Tokenization:</dt><dd><p>You can control how medical codes are tokenized using the <cite>dx_code_segments</cite>, <cite>med_code_segments</cite>,
+and <cite>lab_code_segments</cite> arguments.</p>
+<p>By default, if these are set to <cite>None</cite>, each unique code is treated as a single token. However, for coding systems
+with hierarchical structure (e.g., ICD-10 or ATC), splitting codes into subtokens may improve training efficiency.</p>
+<p>For example, setting <cite>dx_code_segments=”1-2-1-1”</cite> tokenizes the ICD-10 code <cite>‘J156’</cite> into:</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">['J****',</span> <span class="pre">'*15**',</span> <span class="pre">'***6*',</span> <span class="pre">'[PAD]']</span></code></p>
+</div></blockquote>
+<p>Each token masks the non-selected characters with <cite>*</cite>, and unused segments are padded.
+If <cite>dx_code_segments=None</cite>, the same code is tokenized as:</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">['J156']</span></code></p>
+</div></blockquote>
+<p>This segmentation affects only the tokenization/embedding step; the original codes are still assigned
+unique vocabulary entries for modeling.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>output_dir</strong> (<em>str</em>) – Directory where the dataset will be saved.</p></li>
+<li><p><strong>train_size</strong> (<em>float</em>) – Fraction of patients assigned to the training set.</p></li>
+<li><p><strong>val_size</strong> (<em>float</em>) – Fraction of patients assigned to the validation set.</p></li>
+<li><p><strong>train_period</strong> (<em>str</em>) – Date range for training data (e.g., “2011/01/01-2022/12/31”).</p></li>
+<li><p><strong>test_period</strong> (<em>str</em>) – Date range for test data (e.g., “2023/01/01-2023/12/31”).</p></li>
+<li><p><strong>max_sequence_length</strong> (<em>int</em>) – Maximum tokenized sequence length per patient.</p></li>
+<li><p><strong>db_schema</strong> (<em>str</em>) – PostgreSQL schema name to read from.</p></li>
+<li><p><strong>min_timeline_length</strong> (<em>int</em><em>, </em><em>optional</em>) – Minimum number of visits required to include a patient.
+Defaults to None, which includes all patients with at least one valid clinical event.</p></li>
+<li><p><strong>patients_per_file</strong> (<em>int</em>) – Number of patients per intermediate file. Defaults to 5000.</p></li>
+<li><p><strong>update_period</strong> (<em>str</em><em>, </em><em>optional</em>) – Date range used to create a fine-tuning dataset for adapting the model to recent medical practice (e.g., “2022/01/01-2022/12/31”).</p></li>
+<li><p><strong>dx_code_segments</strong> (<em>str</em><em>, </em><em>optional</em>) – Segmentation pattern for diagnosis codes (e.g., “1-2-1-1”).</p></li>
+<li><p><strong>med_code_segments</strong> (<em>str</em><em>, </em><em>optional</em>) – Segmentation pattern for medication codes (e.g., “1-2-1-1-2”).</p></li>
+<li><p><strong>lab_code_segments</strong> (<em>str</em><em>, </em><em>optional</em>) – Segmentation pattern for laboratory test codes.</p></li>
+<li><p><strong>n_numeric_bins</strong> (<em>int</em>) – Number of bins for discretizing numeric values. Defaults to 601.</p></li>
+<li><p><strong>td_small_step</strong> (<em>int</em>) – Step size (in minutes) to discretize time progression from +0 to +1440 min (1 day).</p></li>
+<li><p><strong>td_large_step</strong> (<em>int</em>) – Step size in minutes to discretize a 24-hour day from 00:00 to 23:59 based on clock time.</p></li>
+<li><p><strong>max_workers</strong> (<em>int</em>) – Maximum number of parallel workers. Defaults to 1.</p></li>
+<li><p><strong>log_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to store preprocessing logs.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="watcher.preprocess.get_patient_ids">
+<span class="sig-prename descclassname"><span class="pre">watcher.preprocess.</span></span><span class="sig-name descname"><span class="pre">get_patient_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'train'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'validation'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'test'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'all'</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/watcher/preprocess/src/preprocess_main.html#get_patient_ids"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#watcher.preprocess.get_patient_ids" title="Link to this definition"></a></dt>
+<dd><p>Loads patient IDs used for training, validation, testing, or all patient IDs.</p>
+<p class="rubric">Example</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">watcher.preprocess</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_patient_ids</span>
+
+<span class="n">patient_ids</span> <span class="o">=</span> <span class="n">get_patient_ids</span><span class="p">(</span><span class="n">dataset_dir</span><span class="o">=</span><span class="s2">&quot;/path/to/dataset&quot;</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">patient_ids</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset_dir</strong> (<em>str</em>) – Path to the dataset directory.</p></li>
+<li><p><strong>group</strong> (<em>Literal</em><em>[</em><em>&quot;train&quot;</em><em>, </em><em>&quot;validation&quot;</em><em>, </em><em>&quot;test&quot;</em><em>, </em><em>&quot;all&quot;</em><em>]</em>) – Group to load patient IDs from.
+- “train”: Training set only.
+- “validation”: Validation set only.
+- “test”: Test set only.
+- “all”: Combine training, validation, and test sets.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of patient IDs corresponding to the specified group.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="watcher.models.html" class="btn btn-neutral float-left" title="watcher.models package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="watcher.training.html" class="btn btn-neutral float-right" title="watcher.training package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Yu Akagi, MD.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

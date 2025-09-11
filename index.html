@@ -1,0 +1,240 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Watcher Documentation &mdash; watcher 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/color_theme.css?v=e98e66a4" />
+
+  
+    <link rel="shortcut icon" href="_static/favicon.svg"/>
+    <link rel="canonical" href="https://yuakagi.github.io/Watcher/index.html" />
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Table definitions" href="table_definitions/tables.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#">
+            
+              <img src="_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="table_definitions/tables.html">Table Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Watcher API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="generated/watcher.html">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="generated/watcher.db.html">watcher.db package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/watcher.models.html">watcher.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/watcher.preprocess.html">watcher.preprocess package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/watcher.training.html">watcher.training package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/watcher.watcher_api.html">watcher.watcher_api package</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">watcher</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Watcher Documentation</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="watcher-documentation">
+<h1>Watcher Documentation<a class="headerlink" href="#watcher-documentation" title="Link to this heading"></a></h1>
+<div class="line-block">
+<div class="line">Watcher is a generative AI model that simulates patient timelines. The AI takes a patient timeline as input and generates future clinical timeline.</div>
+<div class="line">It enables computational modeling of patient trajectories, and synthesizing large-scale patient records.</div>
+<div class="line">Potential applications include personalized medicine, in-silico clinical trials, and counterfactual simulations.</div>
+</div>
+<a class="center reference internal image-reference" href="_images/generation_video.gif"><img alt="How the model generates patient timelines" class="center" src="_images/generation_video.gif" style="width: 800px;" />
+</a>
+<div class="line-block">
+<div class="line">Start with 👉 <a class="reference internal" href="tutorial.html"><span class="doc">Tutorial</span></a></div>
+<div class="line">GitHub 👉 <a class="reference external" href="https://github.com/yuakagi/Watcher">https://github.com/yuakagi/Watcher</a></div>
+</div>
+</section>
+<section id="model-overview">
+<h1>Model Overview<a class="headerlink" href="#model-overview" title="Link to this heading"></a></h1>
+<a class="center reference internal image-reference" href="_images/model_overview.png"><img alt="Watcher model architecture" class="center" src="_images/model_overview.png" style="width: 800px;" />
+</a>
+<div class="line-block">
+<div class="line">It encodes categorical, numeric, and temporal entries into vectors, which are processed by decoder-only transformer layers.</div>
+<div class="line">The model autoregressively generates future clinical events, one event at a time.</div>
+<div class="line">At each step, the model outputs a probability distribution over its entire vocabulary.</div>
+</div>
+</section>
+<section id="digital-twin-ehr-system">
+<h1>Digital-Twin EHR System<a class="headerlink" href="#digital-twin-ehr-system" title="Link to this heading"></a></h1>
+<div class="line-block">
+<div class="line">This is our proof-of-concept digital-twin product, and our vision for the future of AI in healthcare.</div>
+<div class="line">Watcher serves as the backend simulator in the system (Figure):</div>
+</div>
+<a class="center reference internal image-reference" href="_images/digital_twin_system.png"><img alt="Watcher model architecture" class="center" src="_images/digital_twin_system.png" style="width: 800px;" />
+</a>
+<div class="line-block">
+<div class="line">This system enables the simulation and real-time feedback through an interactive web application.</div>
+<div class="line">It consists of three components:</div>
+</div>
+<ol class="arabic simple">
+<li><p><strong>AI model</strong> <a class="reference external" href="https://github.com/yuakagi/Watcher">[GitHub]</a>: A generative model that simulates patient timelines.  (👈 This package you are currently reading.)</p></li>
+<li><p><strong>Digital-twin EHR</strong> <a class="reference external" href="https://github.com/yuakagi/TwinEHR">[GitHub]</a>: A web-based, AI-powered EHR that interacts with the model and visualizes simulation results.</p></li>
+<li><p><strong>Data pipeline</strong>: A data pipeline that supplies real-world clinical data to the data server.</p></li>
+</ol>
+<p>To try the full digital-twin system, please follow these steps:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>Step 1: Prepare your clinical data</dt><dd><ul class="simple">
+<li><p>Required clinical data are defined in <a class="reference internal" href="table_definitions/tables.html#clinical-records"><span class="std std-ref">Clinical Records</span></a></p></li>
+<li><p>You can use your own clinical data or publicly available datasets.</p></li>
+</ul>
+</dd>
+<dt>Step 2: Upload clinical data to database</dt><dd><ul class="simple">
+<li><p>Watcher package provides a docker container for PostgreSQL database.</p></li>
+<li><p>You can upload your clinical data to the database using the package.</p></li>
+</ul>
+</dd>
+<dt>Step 3: Train the AI model</dt><dd><ul class="simple">
+<li><p>Train (pretrain &amp; fine-tune) the AI model using the Watcher package following the <a class="reference internal" href="tutorial.html"><span class="doc">tutorial</span></a>.</p></li>
+</ul>
+</dd>
+<dt>Step 4: Launch the simulation API server</dt><dd><ul class="simple">
+<li><p>The Watcher package provides a simulation API server that runs the AI model (gunicorn + Flask).</p></li>
+<li><p>This will be the API server that the digital-twin EHR system will communicate with.</p></li>
+<li><p>Launch the server following the <a class="reference internal" href="tutorial.html"><span class="doc">tutorial</span></a>.</p></li>
+</ul>
+</dd>
+<dt>Step 5: Launch the digital-twin EHR system</dt><dd><ul class="simple">
+<li><p>TwinEHR is a web application that provides a user interface for the simulation API.</p></li>
+<li><p>Clone the repository and set proper environment variables to connect to the simulation API server.</p></li>
+<li><p>Run the web application server</p></li>
+</ul>
+</dd>
+</dl>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>For Japanese users, <a class="reference external" href="https://github.com/yuakagi/ssmixtools">our data pipeline</a> is available to conveniently collect and clean clinical data, but its use is not mandatory.</p></li>
+<li><p>Users outside Japan can also use the system with your own clinical data or publicly available datasets.</p></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="table_definitions/tables.html">Table Definitions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="table_definitions/tables.html#simulation-results">Simulation Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="table_definitions/tables.html#clinical-records">Clinical Records</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="table_definitions/tables.html#dx-codes-csv">dx_codes.csv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="table_definitions/tables.html#med-codes-csv">med_codes.csv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="table_definitions/tables.html#lab-codes-csv">lab_codes.csv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="table_definitions/tables.html#patients-csv">patients.csv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="table_definitions/tables.html#admission-records-csv">admission_records*.csv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="table_definitions/tables.html#discharge-records-csv">discharge_records*.csv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="table_definitions/tables.html#diagnosis-records-csv">diagnosis_records*.csv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="table_definitions/tables.html#prescription-order-records-csv">prescription_order_records*.csv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="table_definitions/tables.html#injection-order-records-csv">injection_order_records*.csv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="table_definitions/tables.html#laboratory-test-results-csv">laboratory_test_results*.csv</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#prepare-devices">1. Prepare devices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#clone-repository-and-run-docker-containers">2. Clone repository and run Docker containers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorial.html#clone-repository">2-1. Clone repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial.html#configure-settings">2-2. Configure settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial.html#run-docker-containers">2-3. Run Docker containers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#upload-clinical-records-to-database">3. Upload clinical records to database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#create-dataset">4. Create dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#pretrain-models">5. Pretrain models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#perform-simulations">6. Perform simulations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#optional-fine-tune-models">7. [OPTIONAL] Fine-tune models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#optional-simulator-demo-with-gui">8. [OPTIONAL] Simulator demo with GUI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#optional-use-simulation-api">9. [OPTIONAL] Use Simulation API</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="table_definitions/tables.html" class="btn btn-neutral float-right" title="Table definitions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Yu Akagi, MD.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

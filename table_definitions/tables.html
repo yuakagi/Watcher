@@ -1,0 +1,557 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Table definitions &mdash; watcher 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/color_theme.css?v=e98e66a4" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.svg"/>
+    <link rel="canonical" href="https://yuakagi.github.io/Watcher/table_definitions/tables.html" />
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tutorial" href="../tutorial.html" />
+    <link rel="prev" title="Watcher Documentation" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Table Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Watcher API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../generated/watcher.html">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../generated/watcher.db.html">watcher.db package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/watcher.models.html">watcher.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/watcher.preprocess.html">watcher.preprocess package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/watcher.training.html">watcher.training package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/watcher.watcher_api.html">watcher.watcher_api package</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">watcher</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Table definitions</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="table-definitions">
+<h1>Table definitions<a class="headerlink" href="#table-definitions" title="Link to this heading"></a></h1>
+<nav class="contents local" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#simulation-results" id="id3">Simulation Results</a></p></li>
+<li><p><a class="reference internal" href="#clinical-records" id="id4">Clinical Records</a></p>
+<ul>
+<li><p><a class="reference internal" href="#dx-codes-csv" id="id5">dx_codes.csv</a></p></li>
+<li><p><a class="reference internal" href="#med-codes-csv" id="id6">med_codes.csv</a></p></li>
+<li><p><a class="reference internal" href="#lab-codes-csv" id="id7">lab_codes.csv</a></p></li>
+<li><p><a class="reference internal" href="#patients-csv" id="id8">patients.csv</a></p></li>
+<li><p><a class="reference internal" href="#admission-records-csv" id="id9">admission_records*.csv</a></p></li>
+<li><p><a class="reference internal" href="#discharge-records-csv" id="id10">discharge_records*.csv</a></p></li>
+<li><p><a class="reference internal" href="#diagnosis-records-csv" id="id11">diagnosis_records*.csv</a></p></li>
+<li><p><a class="reference internal" href="#prescription-order-records-csv" id="id12">prescription_order_records*.csv</a></p></li>
+<li><p><a class="reference internal" href="#injection-order-records-csv" id="id13">injection_order_records*.csv</a></p></li>
+<li><p><a class="reference internal" href="#laboratory-test-results-csv" id="id14">laboratory_test_results*.csv</a></p></li>
+</ul>
+</li>
+</ul>
+</nav>
+<section id="simulation-results">
+<span id="simulation-result-table"></span><h2><a class="toc-backref" href="#id3" role="doc-backlink">Simulation Results</a><a class="headerlink" href="#simulation-results" title="Link to this heading"></a></h2>
+<p>The simulator models (e.g., <a class="reference internal" href="../generated/watcher.models.html#watcher.models.Simulator.simulate" title="watcher.models.Simulator.simulate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">watcher.models.Simulator.simulate()</span></code></a>) return a <cite>pandas.DataFrame</cite> containing the simulation results.
+The DataFrame has the following columns:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>By default, The <cite>age</cite> column represents patient age in minutes, relative to the date of birth (assumed to be 00:00). Thus, the hours and minutes of <cite>age</cite> match the event’s clock time.</p></li>
+<li><p>By setting <cite>watcher.models.Simulator.simulate(age_as_timestamp=True)</cite>, the <cite>age</cite> column will represent the timestamp of the event instead of age.</p></li>
+<li><p>The simulations are <strong>sorted by timeline length</strong>, from shortest to longest (patient_id=’simulation0’ is the shortest).</p></li>
+</ul>
+</div>
+<table class="docutils align-default" id="id2">
+<caption><span class="caption-text">pd.DataFrame generated by watcher.models.Simulator</span><a class="headerlink" href="#id2" title="Link to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Column Name</p></th>
+<th class="head"><p>Data Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>patient_id</p></td>
+<td><p>str</p></td>
+<td><p>pseudo-ID like: simulation0, simulation1, …, simulation255</p></td>
+</tr>
+<tr class="row-odd"><td><p>type</p></td>
+<td><p>int</p></td>
+<td><p>0: demographic, 1: admission, 2: discharge, 3: diagnosis, 4: prescription/injection order, 6: laboratory test result</p></td>
+</tr>
+<tr class="row-even"><td><p>age</p></td>
+<td><p>str</p></td>
+<td><p>Patient age as timedelta from date-of-birth or timestamp at event</p></td>
+</tr>
+<tr class="row-odd"><td><p>code</p></td>
+<td><p>str</p></td>
+<td><p>Medical code or token (e.g., [DSC] for discharge, [ADM] for admission)</p></td>
+</tr>
+<tr class="row-even"><td><p>text</p></td>
+<td><p>str</p></td>
+<td><p>Human-readable label for the event (e.g., ‘discharge’ for [DSC], or disease name for ICD-10 code)</p></td>
+</tr>
+<tr class="row-odd"><td><p>result</p></td>
+<td><p>str</p></td>
+<td><p>Associated value (e.g., lab result, discharge outcome)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="clinical-records">
+<span id="id1"></span><h2><a class="toc-backref" href="#id4" role="doc-backlink">Clinical Records</a><a class="headerlink" href="#clinical-records" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line">Please prepare all the CSV files listed below.</div>
+<div class="line">These are uploaded into the PostgreSQL database using <a class="reference internal" href="../generated/watcher.db.html#watcher.db.init_db_with_csv" title="watcher.db.init_db_with_csv"><code class="xref py py-meth docutils literal notranslate"><span class="pre">watcher.db.init_db_with_csv()</span></code></a>.</div>
+<div class="line">Place all the CSV files in a single directory and provide the directory path to the function as <cite>data_source</cite>.</div>
+<div class="line">If the csv name contains a wildcard (*), it indicats that files can be split into multiple files. <cite>*</cite> can be replaced with any string (e.g., admission_records_1.csv, admission_records_2.csv, etc.).</div>
+</div>
+<nav class="contents local" id="neccessary-csv-files">
+<p class="topic-title">Neccessary CSV files</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#dx-codes-csv" id="id15">dx_codes.csv</a></p></li>
+<li><p><a class="reference internal" href="#med-codes-csv" id="id16">med_codes.csv</a></p></li>
+<li><p><a class="reference internal" href="#lab-codes-csv" id="id17">lab_codes.csv</a></p></li>
+<li><p><a class="reference internal" href="#patients-csv" id="id18">patients.csv</a></p></li>
+<li><p><a class="reference internal" href="#admission-records-csv" id="id19">admission_records*.csv</a></p></li>
+<li><p><a class="reference internal" href="#discharge-records-csv" id="id20">discharge_records*.csv</a></p></li>
+<li><p><a class="reference internal" href="#diagnosis-records-csv" id="id21">diagnosis_records*.csv</a></p></li>
+<li><p><a class="reference internal" href="#prescription-order-records-csv" id="id22">prescription_order_records*.csv</a></p></li>
+<li><p><a class="reference internal" href="#injection-order-records-csv" id="id23">injection_order_records*.csv</a></p></li>
+<li><p><a class="reference internal" href="#laboratory-test-results-csv" id="id24">laboratory_test_results*.csv</a></p></li>
+</ul>
+</nav>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>Ideally, the CSV files for medical codes (<cite>dx_codes.csv</cite>, <cite>med_codes.csv</cite>, <cite>lab_codes.csv</cite>) should cover all codes in your dataset. The model can still work with partial code lists, but the readability of inference results may be reduced (some codes may remain untranslated).</p></li>
+<li><p>If you cannot separate medication orders into prescription and injection categories, you may place all records into either of the two CSV files. (Internally, these will be aggregated.)</p></li>
+</ul>
+</div>
+<section id="dx-codes-csv">
+<h3><a class="toc-backref" href="#id15" role="doc-backlink">dx_codes.csv</a><a class="headerlink" href="#dx-codes-csv" title="Link to this heading"></a></h3>
+<p>A list of diagnosis codes in your clinical dataset.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Column Name</p></th>
+<th class="head"><p>Data Type</p></th>
+<th class="head"><p>Non-null</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>item_code</p></td>
+<td><p>str</p></td>
+<td><p>✓</p></td>
+<td><p>Diagnosis code (e.g., ICD-10)</p></td>
+</tr>
+<tr class="row-odd"><td><p>item_name</p></td>
+<td><p>str</p></td>
+<td><p>✓</p></td>
+<td><p>Human-readable label for the code (e.g., disease name)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="med-codes-csv">
+<h3><a class="toc-backref" href="#id16" role="doc-backlink">med_codes.csv</a><a class="headerlink" href="#med-codes-csv" title="Link to this heading"></a></h3>
+<p>A list of medication codes in your clinical dataset.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Column Name</p></th>
+<th class="head"><p>Data Type</p></th>
+<th class="head"><p>Non-null</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>item_code</p></td>
+<td><p>str</p></td>
+<td><p>✓</p></td>
+<td><p>Medication code (e.g., ATC)</p></td>
+</tr>
+<tr class="row-odd"><td><p>item_name</p></td>
+<td><p>str</p></td>
+<td><p>✓</p></td>
+<td><p>Human-readable label for the code (e.g., drug name)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="lab-codes-csv">
+<h3><a class="toc-backref" href="#id17" role="doc-backlink">lab_codes.csv</a><a class="headerlink" href="#lab-codes-csv" title="Link to this heading"></a></h3>
+<p>A list of laboratory test codes in your clinical dataset.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Column Name</p></th>
+<th class="head"><p>Data Type</p></th>
+<th class="head"><p>Non-null</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>item_code</p></td>
+<td><p>str</p></td>
+<td><p>✓</p></td>
+<td><p>Laboratory test code (e.g., LOINC, JLAC10)</p></td>
+</tr>
+<tr class="row-odd"><td><p>item_name</p></td>
+<td><p>str</p></td>
+<td><p>✓</p></td>
+<td><p>Human-readable label for the code (e.g., disease name)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="patients-csv">
+<h3><a class="toc-backref" href="#id18" role="doc-backlink">patients.csv</a><a class="headerlink" href="#patients-csv" title="Link to this heading"></a></h3>
+<p>Basic demographic information for each patient</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>First and last names are not used by the Watcher AI model. <strong>The model does not learn or memorize patient names</strong>.</p></li>
+<li><p>Patient name columns exist only for display in the <a class="reference external" href="https://github.com/yuakagi/TwinEHR">digital-twin EHR app</a>.</p></li>
+<li><p>Therefore, <strong>patient names can be deidentified, random, or left empty</strong>.</p></li>
+<li><p>Dates of birth are used only to compute patient age at each event. <strong>The model does not learn or memorize DOBs</strong>.</p></li>
+</ul>
+</div>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Column Name</p></th>
+<th class="head"><p>Data Type</p></th>
+<th class="head"><p>Non-null</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>patient_id</p></td>
+<td><p>str</p></td>
+<td><p>✓</p></td>
+<td><p>Unique identifier for each patient</p></td>
+</tr>
+<tr class="row-odd"><td><p>sex</p></td>
+<td><p>str</p></td>
+<td><p>✓</p></td>
+<td><p>One of ‘M’ (male), ‘F’ (female), ‘O’ (other), ‘U’ (unknown), ‘A’ (ambiguous), ‘N’ (not applicable)</p></td>
+</tr>
+<tr class="row-even"><td><p>first_name</p></td>
+<td><p>str</p></td>
+<td></td>
+<td><p>First name (Not used for training)</p></td>
+</tr>
+<tr class="row-odd"><td><p>last_name</p></td>
+<td><p>str</p></td>
+<td></td>
+<td><p>Last name (Not used for training)</p></td>
+</tr>
+<tr class="row-even"><td><p>date_of_birth</p></td>
+<td><p>datetime</p></td>
+<td><p>✓</p></td>
+<td><p>Date of birth (expected format: %Y/%m/%d)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="admission-records-csv">
+<h3><a class="toc-backref" href="#id19" role="doc-backlink">admission_records*.csv</a><a class="headerlink" href="#admission-records-csv" title="Link to this heading"></a></h3>
+<p>Hospital admissions</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Column Name</p></th>
+<th class="head"><p>Data Type</p></th>
+<th class="head"><p>Non-null</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>patient_id</p></td>
+<td><p>str</p></td>
+<td><p>✓</p></td>
+<td><p>Unique identifier for each patient</p></td>
+</tr>
+<tr class="row-odd"><td><p>timestamp</p></td>
+<td><p>datetime</p></td>
+<td><p>✓</p></td>
+<td><p>Admission timestamp (format: %Y/%m/%d %H:%M)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="discharge-records-csv">
+<h3><a class="toc-backref" href="#id20" role="doc-backlink">discharge_records*.csv</a><a class="headerlink" href="#discharge-records-csv" title="Link to this heading"></a></h3>
+<p>Hospital discharge events</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Column Name</p></th>
+<th class="head"><p>Data Type</p></th>
+<th class="head"><p>Non-null</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>patient_id</p></td>
+<td><p>str</p></td>
+<td><p>✓</p></td>
+<td><p>Unique identifier for each patient</p></td>
+</tr>
+<tr class="row-odd"><td><p>timestamp</p></td>
+<td><p>datetime</p></td>
+<td><p>✓</p></td>
+<td><p>Discharge timestamp (format: %Y/%m/%d %H:%M)</p></td>
+</tr>
+<tr class="row-even"><td><p>disposition</p></td>
+<td><p>int</p></td>
+<td><p>✓</p></td>
+<td><p>Survival status: 1 (survived), 0 (died)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="diagnosis-records-csv">
+<h3><a class="toc-backref" href="#id21" role="doc-backlink">diagnosis_records*.csv</a><a class="headerlink" href="#diagnosis-records-csv" title="Link to this heading"></a></h3>
+<p>Diagnosis events with codes and provisional flags</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Column Name</p></th>
+<th class="head"><p>Data Type</p></th>
+<th class="head"><p>Non-null</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>patient_id</p></td>
+<td><p>str</p></td>
+<td><p>✓</p></td>
+<td><p>Unique identifier for each patient</p></td>
+</tr>
+<tr class="row-odd"><td><p>timestamp</p></td>
+<td><p>datetime</p></td>
+<td><p>✓</p></td>
+<td><p>Diagnosis timestamp (format: %Y/%m/%d %H:%M)</p></td>
+</tr>
+<tr class="row-even"><td><p>item_code</p></td>
+<td><p>str</p></td>
+<td><p>✓</p></td>
+<td><p>Diagnosis code (e.g., ICD-10)</p></td>
+</tr>
+<tr class="row-odd"><td><p>provisional</p></td>
+<td><p>int</p></td>
+<td><p>✓</p></td>
+<td><p>Provisional flag: 1 if provisional, 0 otherwise</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="prescription-order-records-csv">
+<h3><a class="toc-backref" href="#id22" role="doc-backlink">prescription_order_records*.csv</a><a class="headerlink" href="#prescription-order-records-csv" title="Link to this heading"></a></h3>
+<p>Medication orders</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Column Name</p></th>
+<th class="head"><p>Data Type</p></th>
+<th class="head"><p>Non-null</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>patient_id</p></td>
+<td><p>str</p></td>
+<td><p>✓</p></td>
+<td><p>Unique identifier for each patient</p></td>
+</tr>
+<tr class="row-odd"><td><p>timestamp</p></td>
+<td><p>datetime</p></td>
+<td><p>✓</p></td>
+<td><p>Prescription order timestamp (format: %Y/%m/%d %H:%M)</p></td>
+</tr>
+<tr class="row-even"><td><p>item_code</p></td>
+<td><p>str</p></td>
+<td><p>✓</p></td>
+<td><p>Medication code (e.g., ATC)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="injection-order-records-csv">
+<h3><a class="toc-backref" href="#id23" role="doc-backlink">injection_order_records*.csv</a><a class="headerlink" href="#injection-order-records-csv" title="Link to this heading"></a></h3>
+<p>Injectable medication orders</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Column Name</p></th>
+<th class="head"><p>Data Type</p></th>
+<th class="head"><p>Non-null</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>patient_id</p></td>
+<td><p>str</p></td>
+<td><p>✓</p></td>
+<td><p>Unique identifier for each patient</p></td>
+</tr>
+<tr class="row-odd"><td><p>timestamp</p></td>
+<td><p>datetime</p></td>
+<td><p>✓</p></td>
+<td><p>Prescription order timestamp (format: %Y/%m/%d %H:%M)</p></td>
+</tr>
+<tr class="row-even"><td><p>item_code</p></td>
+<td><p>str</p></td>
+<td><p>✓</p></td>
+<td><p>Medication code (e.g., ATC)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="laboratory-test-results-csv">
+<h3><a class="toc-backref" href="#id24" role="doc-backlink">laboratory_test_results*.csv</a><a class="headerlink" href="#laboratory-test-results-csv" title="Link to this heading"></a></h3>
+<p>Laboratory test results including numeric and categorical values</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<ul class="simple">
+<li><p>Each laboratory code should be associated with a single unit.</p></li>
+<li><p>If a code is reported with multiple units (e.g., mg/dL and mg/L), users are encouraged to map them to a common unit whenever possible.</p></li>
+<li><p>Although optional, standardizing units is highly recommended for efficient model training.</p></li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>Fill either numeric or nonnumeric, not both.</p></li>
+<li><p>One of numeric or nonnumeric must be present.</p></li>
+</ul>
+</div>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Column Name</p></th>
+<th class="head"><p>Data Type</p></th>
+<th class="head"><p>Non-null</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>patient_id</p></td>
+<td><p>str</p></td>
+<td><p>✓</p></td>
+<td><p>Unique identifier for each patient</p></td>
+</tr>
+<tr class="row-odd"><td><p>timestamp</p></td>
+<td><p>datetime</p></td>
+<td><p>✓</p></td>
+<td><p>Laboratory test timestamp (format: %Y/%m/%d %H:%M)</p></td>
+</tr>
+<tr class="row-even"><td><p>item_code</p></td>
+<td><p>str</p></td>
+<td><p>✓</p></td>
+<td><p>Laboratory test code (e.g., LOINC, JLAC10)</p></td>
+</tr>
+<tr class="row-odd"><td><p>numeric</p></td>
+<td><p>float</p></td>
+<td></td>
+<td><p>Numeric test result</p></td>
+</tr>
+<tr class="row-even"><td><p>unit</p></td>
+<td><p>str</p></td>
+<td></td>
+<td><p>Unit associated with numeric result</p></td>
+</tr>
+<tr class="row-odd"><td><p>nonnumeric</p></td>
+<td><p>str</p></td>
+<td></td>
+<td><p>Non-numeric test result</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="Watcher Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../tutorial.html" class="btn btn-neutral float-right" title="Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Yu Akagi, MD.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+watcher package
+===============
+
+.. automodule:: watcher
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   watcher.db
+   watcher.models
+   watcher.preprocess
+   watcher.training
+   watcher.watcher_api

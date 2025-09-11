@@ -1,0 +1,7 @@
+watcher.db package
+==================
+
+.. automodule:: watcher.db
+   :members:
+   :undoc-members:
+   :show-inheritance:

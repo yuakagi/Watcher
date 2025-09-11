@@ -1,0 +1,268 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>watcher.models.src.simulator &mdash; watcher 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/color_theme.css?v=e98e66a4" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.svg"/>
+    <link rel="canonical" href="https://yuakagi.github.io/Watcher/_modules/watcher/models/src/simulator.html" />
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html">
+            
+              <img src="../../../../_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../table_definitions/tables.html">Table Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorial.html">Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Watcher API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../generated/watcher.html">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../generated/watcher.db.html">watcher.db package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../generated/watcher.models.html">watcher.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../generated/watcher.preprocess.html">watcher.preprocess package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../generated/watcher.training.html">watcher.training package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../generated/watcher.watcher_api.html">watcher.watcher_api package</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">watcher</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">watcher.models.src.simulator</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for watcher.models.src.simulator</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">timedelta</span><span class="p">,</span> <span class="n">datetime</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.model_loaders</span><span class="w"> </span><span class="kn">import</span> <span class="n">build_watcher</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.generation</span><span class="w"> </span><span class="kn">import</span> <span class="n">monte_carlo</span><span class="p">,</span> <span class="n">make_sim_dataframe</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...preprocess</span><span class="w"> </span><span class="kn">import</span> <span class="n">preprocess_for_inference</span>
+
+
+<div class="viewcode-block" id="Simulator">
+<a class="viewcode-back" href="../../../../generated/watcher.models.html#watcher.models.Simulator">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Simulator</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    High-level interface for running patient trajectory simulations.</span>
+
+<span class="sd">    This class wraps a Watcher model and provides a convenient interface for</span>
+<span class="sd">    generating multiple simulated patient timelines given initial patient information.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            from watcher.models import Simulator</span>
+
+<span class="sd">            simulator = Simulator(</span>
+<span class="sd">                blueprint=&quot;path/to/blueprint&quot;,</span>
+<span class="sd">                device = &quot;cuda:0&quot;, # Your GPU ID)</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        blueprint (str): Path to the model blueprint directory.</span>
+<span class="sd">        device (str): GPU device ID.</span>
+<span class="sd">        model (Watcher): Instantiated Watcher model ready for inference.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blueprint</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the Simulator with a trained Watcher model.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            blueprint (str): Path to the model blueprint directory.</span>
+<span class="sd">            device (str): Device for running simulations (&#39;cpu&#39; or &#39;cuda&#39;).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">build_watcher</span><span class="p">(</span><span class="n">blueprint</span><span class="o">=</span><span class="n">blueprint</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">device</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blueprint</span> <span class="o">=</span> <span class="n">blueprint</span>
+
+<div class="viewcode-block" id="Simulator.simulate">
+<a class="viewcode-back" href="../../../../generated/watcher.models.html#watcher.models.Simulator.simulate">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">simulate</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">db_schema</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">patient_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">n_iter</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">timeline_start</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">simulation_start</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">time_horizon</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">max_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">age_as_timestamp</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">stride</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span><span class="p">,</span>
+        <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run Monte Carlo simulations for a single patient.</span>
+
+<span class="sd">        This function performs preprocessing, generates multiple simulated timelines,</span>
+<span class="sd">        and returns the results as a pandas DataFrame.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                from watcher.models import Simulator</span>
+
+<span class="sd">                simulator = Simulator(</span>
+<span class="sd">                        blueprint=&quot;path/to/blueprint&quot;,   # Path to the model blueprint</span>
+<span class="sd">                        device=&quot;cuda:0&quot;,                 # Your GPU ID</span>
+<span class="sd">                    )</span>
+<span class="sd">                simulations = simulator.simulate(</span>
+<span class="sd">                    db_schema=&quot;public&quot;,</span>
+<span class="sd">                    patient_id=&quot;0001UT&quot;,</span>
+<span class="sd">                    n_iter= 256,                         # Run 256 simulations</span>
+<span class="sd">                    timeline_start=&quot;2011/01/01 00:00&quot;,   # Patient history start time</span>
+<span class="sd">                    simulation_start=&quot;2025/04/26 14:57&quot;, # Simulation start time</span>
+<span class="sd">                    time_horizon = 7,                    # Simulation time horizon in days (7 days)</span>
+<span class="sd">                    max_length= 2000,                    # Maximum sequence length for each simulation</span>
+<span class="sd">                    temperature = 1.0,</span>
+
+
+<span class="sd">        The details of the simulation results are available at :ref:`simulation_result_table`.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            db_schema (str): PostgreSQL schema name containing patient records.</span>
+<span class="sd">                (If you have not specified a schema, the schema name is expected to be &#39;public&#39;.)</span>
+<span class="sd">            patient_id (str): Patient ID in the database.</span>
+<span class="sd">            n_iter (int): Number of simulation trajectories to generate.</span>
+<span class="sd">                If you only want one simulation, set this to 1.</span>
+<span class="sd">                If you are performing the Monte Carlo simulation, set this to a large number (e.g., 256).</span>
+<span class="sd">            timeline_start (str): Start date for retrieving patient history (format: &#39;%Y/%m/%d %H:%M&#39;).</span>
+<span class="sd">            simulation_start (str): Simulation start time (format: &#39;%Y/%m/%d %H:%M&#39;).</span>
+<span class="sd">            time_horizon (int): Length of simulation in days. Simulation is completed once the time horizon is reached.</span>
+<span class="sd">            max_length (int): Maximum allowed sequence length for each simulation.</span>
+<span class="sd">                If the simulation exceeds this length, the simulation result is discarded.</span>
+<span class="sd">            age_as_timestamp (bool, optional): If True, timestamps are placed in the `age` column instead of patient age.</span>
+<span class="sd">            stride (int, optional): Stride size for sliding window decoding. Defaults to 64.</span>
+<span class="sd">            temperature (float, optional): Sampling temperature for stochasticity. Defaults to 1.0.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            pd.DataFrame: A DataFrame containing simulated timelines.</span>
+<span class="sd">                - Each simulation is labeled by &#39;patient_id&#39; (e.g., &#39;simulation0&#39;, &#39;simulation1&#39;, etc.).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Preprocess args</span>
+        <span class="n">time_horizon_td</span> <span class="o">=</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">time_horizon</span><span class="p">)</span>
+        <span class="c1"># Preprocess clinical records</span>
+        <span class="n">timeline</span><span class="p">,</span> <span class="n">catalog_ids</span><span class="p">,</span> <span class="n">dob</span> <span class="o">=</span> <span class="n">preprocess_for_inference</span><span class="p">(</span>
+            <span class="n">patient_id</span><span class="o">=</span><span class="n">patient_id</span><span class="p">,</span>
+            <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
+            <span class="n">start</span><span class="o">=</span><span class="n">timeline_start</span><span class="p">,</span>
+            <span class="n">end</span><span class="o">=</span><span class="n">simulation_start</span><span class="p">,</span>
+            <span class="n">db_schema</span><span class="o">=</span><span class="n">db_schema</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="c1"># Preprocess_time</span>
+        <span class="n">horizon_start_td</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">simulation_start</span><span class="p">,</span> <span class="s2">&quot;%Y/%m/</span><span class="si">%d</span><span class="s2"> %H:%M&quot;</span><span class="p">)</span> <span class="o">-</span> <span class="n">dob</span>
+        <span class="c1"># Monte Carlo</span>
+        <span class="n">prod_timelines</span><span class="p">,</span> <span class="n">prod_catalog_ids</span> <span class="o">=</span> <span class="n">monte_carlo</span><span class="p">(</span>
+            <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
+            <span class="n">timeline</span><span class="o">=</span><span class="n">timeline</span><span class="p">,</span>
+            <span class="n">catalog_ids</span><span class="o">=</span><span class="n">catalog_ids</span><span class="p">,</span>
+            <span class="n">n_iter</span><span class="o">=</span><span class="n">n_iter</span><span class="p">,</span>
+            <span class="n">time_horizon</span><span class="o">=</span><span class="n">time_horizon_td</span><span class="p">,</span>
+            <span class="n">horizon_start</span><span class="o">=</span><span class="n">horizon_start_td</span><span class="p">,</span>
+            <span class="n">stride</span><span class="o">=</span><span class="n">stride</span><span class="p">,</span>
+            <span class="n">temperature</span><span class="o">=</span><span class="n">temperature</span><span class="p">,</span>
+            <span class="n">max_length</span><span class="o">=</span><span class="n">max_length</span><span class="p">,</span>
+            <span class="n">stop_vocab</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">return_generated_parts_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">prod_timelines</span> <span class="ow">and</span> <span class="n">prod_catalog_ids</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">make_sim_dataframe</span><span class="p">(</span>
+                <span class="n">interpreter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">interpreter</span><span class="p">,</span>
+                <span class="n">prod_timelines</span><span class="o">=</span><span class="n">prod_timelines</span><span class="p">,</span>
+                <span class="n">prod_catalog_ids</span><span class="o">=</span><span class="n">prod_catalog_ids</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">age_as_timestamp</span><span class="p">:</span>
+                <span class="n">df</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_timedelta</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">])</span>
+                <span class="n">df</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">dob</span>
+                <span class="n">df</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y/%m/</span><span class="si">%d</span><span class="s2"> %H:%M&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">df</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Yu Akagi, MD.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

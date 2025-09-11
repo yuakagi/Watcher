@@ -1,0 +1,5 @@
+User-agent: *
+Disallow:
+Clawl-delay: 10
+
+Sitemap: https://yuakagi.github.io/Watcher/sitemap.xml

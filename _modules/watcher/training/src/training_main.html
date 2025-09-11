@@ -1,0 +1,538 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>watcher.training.src.training_main &mdash; watcher 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/color_theme.css?v=e98e66a4" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.svg"/>
+    <link rel="canonical" href="https://yuakagi.github.io/Watcher/_modules/watcher/training/src/training_main.html" />
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html">
+            
+              <img src="../../../../_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../table_definitions/tables.html">Table Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorial.html">Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Watcher API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../generated/watcher.html">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../generated/watcher.db.html">watcher.db package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../generated/watcher.models.html">watcher.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../generated/watcher.preprocess.html">watcher.preprocess package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../generated/watcher.training.html">watcher.training package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../generated/watcher.watcher_api.html">watcher.watcher_api package</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">watcher</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">watcher.training.src.training_main</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for watcher.training.src.training_main</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;The main module for the model training&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Literal</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">multiprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">active_children</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.distributed</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">dist</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.distributed</span><span class="w"> </span><span class="kn">import</span> <span class="n">destroy_process_group</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.multiprocessing</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.training_utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ddp_setup</span><span class="p">,</span>
+    <span class="n">initialize_training_report</span><span class="p">,</span>
+    <span class="n">LogitsTrainer</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...general_params</span><span class="w"> </span><span class="kn">import</span> <span class="n">watcher_config</span> <span class="k">as</span> <span class="n">config</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...general_params</span><span class="w"> </span><span class="kn">import</span> <span class="n">TrainSettingsManager</span><span class="p">,</span> <span class="n">get_settings</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_training_branch</span><span class="p">(</span>
+    <span class="n">rank</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">world_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">snapshot_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">initial_weight_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">update</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="n">training_report</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="n">log_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">trainer_class</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Helper function for training.&quot;&quot;&quot;</span>
+    <span class="c1"># Set up DDP</span>
+    <span class="n">ddp_setup</span><span class="p">(</span><span class="n">rank</span><span class="p">,</span> <span class="n">world_size</span><span class="p">)</span>
+    <span class="c1"># Set up logs</span>
+    <span class="n">original_stdout</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span>
+    <span class="n">original_stderr</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span>
+    <span class="n">logfile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">log_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;training_log_rank</span><span class="si">{</span><span class="n">rank</span><span class="si">}</span><span class="s2">.txt&quot;</span><span class="p">)</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">logfile</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">f</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="n">f</span>
+
+    <span class="n">completed</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Instantiate trainer</span>
+        <span class="k">if</span> <span class="n">trainer_class</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">trainer_class</span> <span class="o">=</span> <span class="n">LogitsTrainer</span>
+        <span class="n">trainer</span> <span class="o">=</span> <span class="n">trainer_class</span><span class="p">(</span>
+            <span class="n">rank</span><span class="o">=</span><span class="n">rank</span><span class="p">,</span>
+            <span class="n">world_size</span><span class="o">=</span><span class="n">world_size</span><span class="p">,</span>
+            <span class="n">training_report</span><span class="o">=</span><span class="n">training_report</span><span class="p">,</span>
+            <span class="n">update</span><span class="o">=</span><span class="n">update</span><span class="p">,</span>
+            <span class="n">snapshot_path</span><span class="o">=</span><span class="n">snapshot_path</span><span class="p">,</span>
+            <span class="n">initial_weight_path</span><span class="o">=</span><span class="n">initial_weight_path</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="c1"># Wait for all processes to finish initialization</span>
+        <span class="n">dist</span><span class="o">.</span><span class="n">barrier</span><span class="p">()</span>
+        <span class="c1"># Start training</span>
+        <span class="n">trainer</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+        <span class="c1"># Set flag of training completion</span>
+        <span class="n">completed</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error at rank </span><span class="si">{</span><span class="n">rank</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">destroy_process_group</span><span class="p">()</span>
+        <span class="c1"># Close the log file</span>
+        <span class="k">if</span> <span class="n">f</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">original_stdout</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="n">original_stderr</span>
+        <span class="c1"># Raise error if training was disrupted</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">completed</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Training was disrupted.&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="train_watcher">
+<a class="viewcode-back" href="../../../../generated/watcher.training.html#watcher.training.train_watcher">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">train_watcher</span><span class="p">(</span>
+    <span class="n">dataset_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">output_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">max_gpus</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="c1"># These arguments are used by calling locals(), pylint: disable=unused-argument</span>
+    <span class="n">embedding_dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1024</span><span class="p">,</span>
+    <span class="n">num_layers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
+    <span class="n">num_heads</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
+    <span class="n">ff_hidden_dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3072</span><span class="p">,</span>
+    <span class="n">dropout_rate</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">total_epochs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="n">weight_decay</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span>
+    <span class="n">max_lr</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0e-4</span><span class="p">,</span>
+    <span class="n">min_lr</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0e-5</span><span class="p">,</span>
+    <span class="n">lr_scheduler_enabled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">lr_warmup</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span>
+    <span class="n">lr_decay</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">,</span>
+    <span class="n">batch_size_step_scale</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span>
+    <span class="n">batch_size_active_phase</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.03</span><span class="p">,</span>
+    <span class="n">max_batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span><span class="p">,</span>
+    <span class="n">min_batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
+    <span class="n">batch_schedule_enabled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">dataloader_workers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">checkpoint_interval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="n">validation_interval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="n">early_stopping_epochs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="n">snapshot_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">initial_weight_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">precision</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;float32&quot;</span><span class="p">,</span> <span class="s2">&quot;float16&quot;</span><span class="p">,</span> <span class="s2">&quot;bfloat16&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;bfloat16&quot;</span><span class="p">,</span>
+    <span class="n">update</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">restart_limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="n">debug</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">debug_chunks</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="n">trainer_class</span><span class="p">:</span> <span class="nb">object</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Train a Watcher model.</span>
+
+<span class="sd">    This function initiates training and stops either when the maximum number of epochs is reached,</span>
+<span class="sd">    or when early stopping is triggered due to no improvement in validation loss.</span>
+
+<span class="sd">    Warnings:</span>
+
+<span class="sd">        - Training requires GPU devices with large memory capacity. We recommend using NVIDIA A100 or newer GPUs.</span>
+<span class="sd">        - If training fails, it may be due to an OutOfMemoryError. In that case, consider reducing the batch size or using a smaller model configuration.</span>
+
+<span class="sd">    Note:</span>
+
+<span class="sd">        - Training may take from several hours to several days, depending on dataset size and hardware specifications.</span>
+<span class="sd">        - For reference, in an experiment with approximately 370,000 patients using four NVIDIA A100 80GB GPUs, training completed in about 48 hours.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">        **Pretraining**</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            from watcher.training import train_watcher</span>
+
+<span class="sd">            best_weights_path = train_watcher(</span>
+<span class="sd">                dataset_dir=&quot;/path/to/prepared_dataset&quot;,</span>
+<span class="sd">                output_dir=&quot;/path/to/save_training_outputs&quot;,</span>
+<span class="sd">                max_gpus=4,</span>
+<span class="sd">                embedding_dim=1024,</span>
+<span class="sd">                num_layers=16,</span>
+<span class="sd">                num_heads=16,</span>
+<span class="sd">                ff_hidden_dim=3072,</span>
+<span class="sd">                dropout_rate=0.1,</span>
+<span class="sd">                total_epochs=100,</span>
+<span class="sd">                weight_decay=0.01,</span>
+<span class="sd">                max_lr=1e-4,</span>
+<span class="sd">                min_lr=1e-5,</span>
+<span class="sd">                lr_scheduler_enabled=True,</span>
+<span class="sd">                lr_warmup=0.01,</span>
+<span class="sd">                lr_decay=0.9,</span>
+<span class="sd">                batch_size_step_scale=8,</span>
+<span class="sd">                batch_size_active_phase=0.03,</span>
+<span class="sd">                max_batch_size=64,</span>
+<span class="sd">                min_batch_size=16,</span>
+<span class="sd">                batch_schedule_enabled=True,</span>
+<span class="sd">                dataloader_workers=2,</span>
+<span class="sd">                checkpoint_interval=5,</span>
+<span class="sd">                validation_interval=5,</span>
+<span class="sd">                early_stopping_epochs=10,</span>
+<span class="sd">                snapshot_path=None,</span>
+<span class="sd">                initial_weight_path=None,</span>
+<span class="sd">                precision=&quot;bfloat16&quot;,</span>
+<span class="sd">                restart_limit=10,</span>
+<span class="sd">            )</span>
+
+<span class="sd">            print(f&quot;Best model weights saved at: {best_weights_path}&quot;)</span>
+
+
+<span class="sd">        **Fine tuning**</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            from watcher.training import train_watcher</span>
+
+<span class="sd">            best_weights_path = train_watcher(</span>
+<span class="sd">                dataset_dir=&quot;/path/to/prepared_dataset&quot;,  # Use the same dataset as pretraining</span>
+<span class="sd">                output_dir=&quot;/path/to/save_finetuning_outputs&quot;,</span>
+<span class="sd">                max_gpus=4,</span>
+<span class="sd">                embedding_dim=1024,  # Use the same model hyperparameters as pretraining</span>
+<span class="sd">                num_layers=16,       # Must match pretraining</span>
+<span class="sd">                num_heads=16,        # Must match pretraining</span>
+<span class="sd">                ff_hidden_dim=3072,  # Must match pretraining</span>
+<span class="sd">                dropout_rate=0.1,</span>
+<span class="sd">                total_epochs=20,</span>
+<span class="sd">                weight_decay=0.01,</span>
+<span class="sd">                max_lr=1e-5,</span>
+<span class="sd">                min_lr=1e-5,</span>
+<span class="sd">                lr_scheduler_enabled=False,  # Constant LR = min_lr</span>
+<span class="sd">                batch_schedule_enabled=False,  # Constant batch size</span>
+<span class="sd">                max_batch_size=64,</span>
+<span class="sd">                min_batch_size=64,</span>
+<span class="sd">                dataloader_workers=2,</span>
+<span class="sd">                checkpoint_interval=5,</span>
+<span class="sd">                validation_interval=5,</span>
+<span class="sd">                early_stopping_epochs=5,</span>
+<span class="sd">                initial_weight_path=&quot;/path/to/pretrained_model.pt&quot;,  # Set pretrained weight path</span>
+<span class="sd">                precision=&quot;bfloat16&quot;,</span>
+<span class="sd">                update=True,  # Flag to use fine-tuning dataset</span>
+<span class="sd">                restart_limit=10,</span>
+<span class="sd">            )</span>
+
+<span class="sd">            print(f&quot;Best model weights saved at: {best_weights_path}&quot;)</span>
+
+<span class="sd">    The following directory structure is created during training:</span>
+
+<span class="sd">        .. code-block:: text</span>
+
+<span class="sd">            output_dir</span>
+<span class="sd">            ├── main_training_report.json     # Training summary</span>
+<span class="sd">            ├── profiling/</span>
+<span class="sd">            │   └── ...</span>
+<span class="sd">            ├── snapshots/</span>
+<span class="sd">            │   ├── epoch_0/</span>
+<span class="sd">            │   │   ├── training_state.pt</span>
+<span class="sd">            │   │   ├── tensorboard_logs/</span>
+<span class="sd">            │   │   └── watcher_blueprint/</span>
+<span class="sd">            │   │       ├── catalogs/         # CSV files containing model vocabulary</span>
+<span class="sd">            │   │       ├── laboratory_stats/ # CSV files of lab test stats</span>
+<span class="sd">            │   │       ├── model_state.pt    # Model weights</span>
+<span class="sd">            │   │       └── training_report.json</span>
+<span class="sd">            │   └── ...</span>
+<span class="sd">            └── tensorboard_active/</span>
+<span class="sd">                └── ... (TensorBoard logs)</span>
+
+<span class="sd">    The `watcher_blueprint` directory is the main product of training. Each blueprint contains</span>
+<span class="sd">    everything needed to re-instantiate the Watcher model.</span>
+<span class="sd">    To monitor training progress with TensorBoard, set the `tensorboard_active` directory as the logdir.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        dataset_dir (str): Path to the dataset created by :meth:`watcher.preprocess.create_dataset()`.</span>
+<span class="sd">        output_dir (str): Directory where training results are saved.</span>
+<span class="sd">        max_gpus (int, optional): Maximum number of GPUs to use for training.</span>
+<span class="sd">        embedding_dim (int, optional): Dimensionality of the model embeddings (`d_model`).</span>
+<span class="sd">        num_layers (int, optional): Number of transformer blocks in the model.</span>
+<span class="sd">        num_heads (int, optional): Number of attention heads per transformer layer.</span>
+<span class="sd">        ff_hidden_dim (int, optional): Hidden layer size of the feedforward network (`d_ff`).</span>
+<span class="sd">        dropout_rate (float, optional): Dropout rate applied during training.</span>
+<span class="sd">        total_epochs (int, optional): Maximum number of training epochs.</span>
+<span class="sd">        weight_decay (float, optional): Weight decay for regularization.</span>
+<span class="sd">        max_lr (float, optional): Peak learning rate.</span>
+<span class="sd">        min_lr (float, optional): Minimum learning rate.</span>
+<span class="sd">        lr_scheduler_enabled (bool, optional): Whether to use a learning rate scheduler. If False, `min_lr` is used throughout training.</span>
+<span class="sd">        lr_warmup (float, optional): Warm-up duration as a fraction of total training data.</span>
+<span class="sd">        lr_decay (float, optional): Learning rate decay duration after warm-up.</span>
+<span class="sd">        batch_size_step_scale (int, optional): Scaling factor for batch size scheduling.</span>
+<span class="sd">        batch_size_active_phase (float, optional): Fraction of data (0 to 1.0) during which the batch size increases.</span>
+<span class="sd">        max_batch_size (int, optional): Maximum batch size.</span>
+<span class="sd">        min_batch_size (int, optional): Initial batch size.</span>
+<span class="sd">        batch_schedule_enabled (bool, optional): If False, batch size is fixed to `max_batch_size` throughout training.</span>
+<span class="sd">        dataloader_workers (int, optional): Number of worker processes for data loading.</span>
+<span class="sd">        checkpoint_interval (int, optional): Epoch interval at which training snapshots are saved.</span>
+<span class="sd">        validation_interval (int, optional): Epoch interval at which validation is performed.</span>
+<span class="sd">        early_stopping_epochs (int, optional): Number of consecutive epochs without validation loss improvement required to stop training early.</span>
+<span class="sd">        snapshot_path (str, optional): Path to a training snapshot to resume from. Ensure that all training parameters match the previous run.</span>
+<span class="sd">        initial_weight_path (str, optional): Path to pretrained weights for model initialization. Required if `update=True`.</span>
+<span class="sd">        precision (Literal[&quot;float32&quot;, &quot;float16&quot;, &quot;bfloat16&quot;], optional): Floating point precision for training.</span>
+<span class="sd">        update (bool, optional): If True, fine-tunes the model using the current dataset.</span>
+<span class="sd">        restart_limit (int, optional): Maximum number of automatic training restarts after runtime errors.</span>
+<span class="sd">        debug (bool, optional): If True, enables debug mode. Dataloaders will yield only `debug_chunks` number of samples.</span>
+<span class="sd">        debug_chunks (int, optional): Number of samples yielded per loader in debug mode.</span>
+<span class="sd">        trainer_class (object, optional): [Deprecated] Custom trainer class.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        best_weights (str): Path to the best-performing model weights.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Record the time of training initiation</span>
+    <span class="n">initiated_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">%H%M%S&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Validate arguments</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">snapshot_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">initial_weight_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;snapshot_path and initial_weight_path are mutual exclusive.</span>
+<span class="s2">            Do not path them both at a time.&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+    <span class="c1"># Ensure that paths are absolute</span>
+    <span class="n">dataset_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">dataset_dir</span><span class="p">)</span>
+    <span class="n">output_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">initial_weight_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">initial_weight_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">initial_weight_path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">snapshot_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">snapshot_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">snapshot_path</span><span class="p">)</span>
+
+    <span class="c1"># Validate precision</span>
+    <span class="k">if</span> <span class="n">precision</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;float32&quot;</span><span class="p">,</span> <span class="s2">&quot;float16&quot;</span><span class="p">,</span> <span class="s2">&quot;bfloat16&quot;</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;precision must be either float32, float16, or bfloat16&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Determine world size</span>
+    <span class="k">if</span> <span class="n">max_gpus</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">world_size</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">device_count</span><span class="p">(),</span> <span class="n">max_gpus</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">world_size</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="c1"># Determine training report and previous checkpoint</span>
+    <span class="n">n_restart</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">snapshot_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># Load an old trianing report and restore the initiated time</span>
+        <span class="n">training_report_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">snapshot_path</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">DIR_BLUEPRINT</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">TRAINING_REPORT</span>
+        <span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">training_report_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">training_report</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="n">initiated_time</span> <span class="o">=</span> <span class="n">training_report</span><span class="p">[</span><span class="s2">&quot;initiated_time&quot;</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Initialize everything</span>
+        <span class="n">training_report</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="c1"># Write environment variables</span>
+    <span class="n">settings_manager</span> <span class="o">=</span> <span class="n">TrainSettingsManager</span><span class="p">(</span>
+        <span class="n">dataset_dir</span><span class="o">=</span><span class="n">dataset_dir</span><span class="p">,</span>
+        <span class="n">output_dir</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span>
+        <span class="n">initiated_time</span><span class="o">=</span><span class="n">initiated_time</span><span class="p">,</span>
+        <span class="n">debug</span><span class="o">=</span><span class="n">debug</span><span class="p">,</span>
+        <span class="n">debug_chunks</span><span class="o">=</span><span class="n">debug_chunks</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">settings_manager</span><span class="o">.</span><span class="n">create_dirs</span><span class="p">()</span>
+    <span class="n">settings_manager</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+
+    <span class="c1"># Redirect logs</span>
+    <span class="n">original_stdout</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span>
+    <span class="n">original_stderr</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span>
+    <span class="n">log_dir</span> <span class="o">=</span> <span class="n">get_settings</span><span class="p">(</span><span class="s2">&quot;TRAINING_LOG_DIR&quot;</span><span class="p">)</span>
+    <span class="n">logfile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">log_dir</span><span class="p">,</span> <span class="s2">&quot;main_training_log.txt&quot;</span><span class="p">)</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">logfile</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Standard outputs and errors are saved in </span><span class="si">{</span><span class="n">log_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;See the file for details.&quot;</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">f</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="n">f</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">training_report</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">training_report</span> <span class="o">=</span> <span class="n">initialize_training_report</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
+        <span class="c1"># Start training</span>
+        <span class="n">main_tr_path</span> <span class="o">=</span> <span class="n">get_settings</span><span class="p">(</span><span class="s2">&quot;MAIN_TRAINING_REPORT_PTH&quot;</span><span class="p">)</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># Run distributed training</span>
+                <span class="n">arguments</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">world_size</span><span class="p">,</span>
+                    <span class="n">snapshot_path</span><span class="p">,</span>
+                    <span class="n">initial_weight_path</span><span class="p">,</span>
+                    <span class="n">update</span><span class="p">,</span>
+                    <span class="n">training_report</span><span class="p">,</span>
+                    <span class="n">log_dir</span><span class="p">,</span>
+                    <span class="n">trainer_class</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">mp</span><span class="o">.</span><span class="n">spawn</span><span class="p">(</span>
+                    <span class="n">_training_branch</span><span class="p">,</span>
+                    <span class="n">args</span><span class="o">=</span><span class="n">arguments</span><span class="p">,</span>
+                    <span class="n">nprocs</span><span class="o">=</span><span class="n">world_size</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="k">break</span>
+
+            <span class="c1"># Handle disrupted training</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training disruped&quot;</span><span class="p">)</span>
+                <span class="c1"># Count up</span>
+                <span class="n">n_restart</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="c1"># Terminate all child processes</span>
+                <span class="n">active</span> <span class="o">=</span> <span class="n">active_children</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">active</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Killing child processes... (active child processes: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">active</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span>
+                    <span class="p">)</span>
+                    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">active</span><span class="p">:</span>
+                        <span class="n">child</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
+                    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">active</span><span class="p">:</span>
+                        <span class="n">child</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Successfully terminated child processes.&quot;</span><span class="p">)</span>
+                <span class="c1"># Try to get the latest checkpoint path</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Trying to get the latest checkpoint path...&quot;</span><span class="p">)</span>
+                    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">main_tr_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                        <span class="n">training_report</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+                        <span class="c1"># Update checkpoint path</span>
+                        <span class="n">snapshot_path</span> <span class="o">=</span> <span class="n">training_report</span><span class="p">[</span><span class="s2">&quot;previous_snapshot&quot;</span><span class="p">]</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Latest snapshot:&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">snapshot_path</span><span class="p">))</span>
+
+                    <span class="c1"># Once a checkpoint is saved, disable the initial weight path</span>
+                    <span class="k">if</span> <span class="n">snapshot_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">initial_weight_path</span> <span class="o">=</span> <span class="kc">None</span>
+
+                <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Failed to load the latest checkpoint path.&quot;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Start the training all over&quot;</span><span class="p">)</span>
+                    <span class="n">snapshot_path</span> <span class="o">=</span> <span class="kc">None</span>
+
+                <span class="c1"># Forcefully terminate training if restart limit is reached</span>
+                <span class="k">if</span> <span class="n">n_restart</span> <span class="o">&gt;</span> <span class="n">restart_limit</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Max number restarting attempts reached.&quot;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Giving up training&quot;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Training failed too many times.&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+
+                <span class="c1"># Restart training</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Restarting training...&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Close the log file</span>
+        <span class="k">if</span> <span class="n">f</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">original_stdout</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="n">original_stderr</span>
+
+        <span class="c1"># Get the best model weights and return it</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training done&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">main_tr_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">training_report</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="n">best_snapshot</span> <span class="o">=</span> <span class="n">training_report</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;best_snapshot&quot;</span><span class="p">)</span>
+            <span class="n">best_weights</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="n">best_snapshot</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">DIR_BLUEPRINT</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">MODEL_STATE</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">best_weights</span>
+
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">settings_manager</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Yu Akagi, MD.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
