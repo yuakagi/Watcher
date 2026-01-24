@@ -35,7 +35,10 @@ exclude_patterns = []
 
 html_theme = "sphinx_rtd_theme"
 html_static_path = ["_static"]
-html_extra_path = ["_static/robots.txt"]  # Add robots.txt to the root of the built docs
+html_extra_path = [
+    "_static/robots.txt",               # For web crawlers
+    "google2bff283babf31978.html",      # For Google Search Console verification
+]
 
 # -- Extended by the author --
 html_show_sourcelink = False
@@ -61,6 +64,8 @@ html_theme_options = {
     "titles_only": True,
 }
 
+html_scaled_image_link = False
+
 
 # Sitemap
 # ⚠️ Make sure to change this if you change the domain or project name!
@@ -69,3 +74,7 @@ html_theme_options = {
 html_baseurl = "https://yuakagi.github.io/Watcher/"  # Tailing slash is important!!!
 sitemap_filename = "sitemap.xml"
 sitemap_url_scheme = "{link}"  # ensures clean URLs
+sitemap_locales = [None]                 # only default locale
+sitemap_exclude = []
+sitemap_changefreq = "weekly"
+sitemap_priority = 0.5
