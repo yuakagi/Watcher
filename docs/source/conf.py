@@ -38,6 +38,7 @@ html_static_path = ["_static"]
 html_extra_path = [
     "_static/robots.txt",               # For web crawlers
     "google2bff283babf31978.html",      # For Google Search Console verification
+    
 ]
 
 # -- Extended by the author --
