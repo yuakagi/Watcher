@@ -23,6 +23,7 @@ def save_as_svg(fig, path):
     """Save fig as SVG, the best format for scientific figs."""
     if not path.endswith(".svg"):
         path += ".svg"
+    fig.tight_layout()
     fig.savefig(path, format="svg", transparent=True, bbox_inches="tight")
     print(f"Figure saved at {path}")
 

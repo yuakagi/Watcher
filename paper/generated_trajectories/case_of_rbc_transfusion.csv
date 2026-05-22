@@ -1,0 +1,560 @@
+patient_id,type,age,code,text,result
+simulation226,0,33673 days 00:00:00,[M],male patient,
+simulation226,6,33677 days 13:45:00,1A0300000001---01,"urine,specific gravity [urine],quantitative,",1.011 no_unit
+simulation226,6,33677 days 13:45:00,1A1050000001---51,"urine,sediment [urine],red blood cell,",(-)
+simulation226,6,33677 days 13:45:00,1A1050000001---52,"urine,sediment [urine],white blood cell,",(-)
+simulation226,6,33677 days 13:45:00,1A1050000001---56,"urine,sediment [urine],tubular epithelial cell,",(-)
+simulation226,6,33677 days 13:45:00,1A1050000001---67,"urine,sediment [urine],hyaline cast,",50-99/WF(4+)
+simulation226,6,33677 days 13:45:00,1A1050000001---68,"urine,sediment [urine],epithelial cast,",1-4個/WF(1+)
+simulation226,6,33677 days 13:45:00,1A1050000001---69,"urine,sediment [urine],granular cast,",1-4/WF(1+)
+simulation226,6,33677 days 13:45:00,1A9900000001---52,"urine,urinalysis qualitative/semiquantitative,pH,",5.5 no_unit
+simulation226,6,33677 days 13:45:00,1A9900000001---53,"urine,urinalysis qualitative/semiquantitative,protein (qualitative),",(-)
+simulation226,6,33677 days 13:45:00,1A9900000001---54,"urine,urinalysis qualitative/semiquantitative,glucose (qualitative),",(-)
+simulation226,6,33677 days 13:45:00,1A9900000001---55,"urine,urinalysis qualitative/semiquantitative,urobilinogen (qualitative),",(+-)
+simulation226,6,33677 days 13:45:00,1A9900000001---57,"urine,urinalysis qualitative/semiquantitative,bilirubin (qualitative),",(-)
+simulation226,6,33677 days 13:45:00,1A9900000001---58,"urine,urinalysis qualitative/semiquantitative,ketone bodies (qualitative),",(-)
+simulation226,6,33677 days 13:45:00,1A9900000001---59,"urine,urinalysis qualitative/semiquantitative,occult blood (qualitative),",(-)
+simulation226,6,33677 days 13:45:00,1A9900000001---62,"urine,urinalysis qualitative/semiquantitative,leukocytes (test paper) (qualitative),",(-)
+simulation226,6,33677 days 13:45:00,1A9900000001---64,"urine,urinalysis qualitative/semiquantitative,nitrite,",(-)
+simulation226,6,33677 days 13:45:00,1A9900000001---83,"urine,urinalysis qualitative/semiquantitative,protein/creatinine ratio,",NORMAL
+simulation226,6,33677 days 13:45:00,1A9900000001---85,"urine,urinalysis qualitative/semiquantitative,(jp: 色調),",STRAW
+simulation226,6,33677 days 13:45:00,1A9900000001---86,"urine,urinalysis qualitative/semiquantitative,(jp: 混濁),",(-)
+simulation226,6,33677 days 13:45:00,2A1600000019---51,"whole blood(with additive),hemogram,neutrophil,",54.1 %
+simulation226,6,33677 days 13:45:00,2A1600000019---52,"whole blood(with additive),hemogram,stab form neutrophil,",6.5 %
+simulation226,6,33677 days 13:45:00,2A1600000019---53,"whole blood(with additive),hemogram,segmented neutrophil,",55.0 %
+simulation226,6,33677 days 13:45:00,2A1600000019---54,"whole blood(with additive),hemogram,eosinophil,",2.0 %
+simulation226,6,33677 days 13:45:00,2A1600000019---55,"whole blood(with additive),hemogram,basophil,",0.5 %
+simulation226,6,33677 days 13:45:00,2A1600000019---56,"whole blood(with additive),hemogram,monocyte,",9.4 %
+simulation226,6,33677 days 13:45:00,2A1600000019---57,"whole blood(with additive),hemogram,lymphocyte,",26.6 %
+simulation226,6,33677 days 13:45:00,2A1600000019---58,"whole blood(with additive),hemogram,atypical lymphocyte,",0.5 %
+simulation226,6,33677 days 13:45:00,2A1600000019---59,"whole blood(with additive),hemogram,myelocyte,",0.0 %
+simulation226,6,33677 days 13:45:00,2A1600000019---60,"whole blood(with additive),hemogram,metamyelocyte,",0.0 %
+simulation226,6,33677 days 13:45:00,2A1600000019---61,"whole blood(with additive),hemogram,promyelocyte,",0.0 %
+simulation226,6,33677 days 13:45:00,2A1600000019---62,"whole blood(with additive),hemogram,myeloblast,",0.0 %
+simulation226,6,33677 days 13:45:00,2A1600000019---77,"whole blood(with additive),hemogram,others,",0.0 %
+simulation226,6,33677 days 13:45:00,2A9900000019---51,"whole blood(with additive),CBC,red blood cell count,",239.0 ×10^4/μL
+simulation226,6,33677 days 13:45:00,2A9900000019---52,"whole blood(with additive),CBC,white blood cell count,",3.9 ×10^3/μL
+simulation226,6,33677 days 13:45:00,2A9900000019---53,"whole blood(with additive),CBC,hemoglobin,",7.1 g/dL
+simulation226,6,33677 days 13:45:00,2A9900000019---54,"whole blood(with additive),CBC,hematocrit,",22.0 %
+simulation226,6,33677 days 13:45:00,2A9900000019---55,"whole blood(with additive),CBC,platelet count,",31.2 ×10^4/μL
+simulation226,6,33677 days 13:45:00,2A9900000019---56,"whole blood(with additive),CBC,mean corpuscular volume,",92.3 fL
+simulation226,6,33677 days 13:45:00,2A9900000019---57,"whole blood(with additive),CBC,mean corpuscular hemoglobin,",29.8 pg
+simulation226,6,33677 days 13:45:00,2A9900000019---58,"whole blood(with additive),CBC,mean corpuscular hemoglobin concentration,",32.3 %
+simulation226,6,33677 days 13:45:00,2A9900000019---60,"whole blood(with additive),CBC,RBC Distribution Width -Coefficient of Variation,",15.8 %
+simulation226,6,33677 days 13:45:00,2A9900000019---61,"whole blood(with additive),CBC,Mean Platelet Volume,",12.2 fL
+simulation226,6,33677 days 13:45:00,2A9900000019---62,"whole blood(with additive),CBC,platelet distribution width,",13.6 no_unit
+simulation226,6,33677 days 13:45:00,2A9900000019---63,"whole blood(with additive),CBC,platelet crit,",0.37 no_unit
+simulation226,6,33677 days 13:45:00,2A9900000019---66,"whole blood(with additive),CBC,immature platelet fraction,",4.3 %
+simulation226,6,33677 days 13:45:00,2B0300000022---51,"plasma,prothrombin time,coagulation time sample (sec),",14.9 sec
+simulation226,6,33677 days 13:45:00,2B0300000022---53,"plasma,prothrombin time,PT activity (%),",60.7 %
+simulation226,6,33677 days 13:45:00,2B0300000022---55,"plasma,prothrombin time,PT ratio,",1.3 no_unit
+simulation226,6,33677 days 13:45:00,2B0300000022---57,"plasma,prothrombin time,international normalized ratio,",1.3 no_unit
+simulation226,6,33677 days 13:45:00,2B1400000022---01,"plasma,D-D dimer,quantitative,",5.9 μg/mL
+simulation226,6,33677 days 13:45:00,3A0100000023---01,"serum,total proteins,quantitative,",5.7 g/dL
+simulation226,6,33677 days 13:45:00,3A0150000001---01,"urine,albumin,quantitative,",10.0 mg/L
+simulation226,6,33677 days 13:45:00,3A0150000001---28,"urine,albumin,creatinine-adjusted,",NORMAL
+simulation226,6,33677 days 13:45:00,3A0150000023---01,"serum,albumin,quantitative,",1.8 g/dL
+simulation226,6,33677 days 13:45:00,3A0160000023---02,"serum,albumin/globulin ratio,composition ratio,",0.46 no_unit
+simulation226,6,33677 days 13:45:00,3B0350000023---01,"serum,asparate aminotransferase,quantitative,",21.0 U/L
+simulation226,6,33677 days 13:45:00,3B0450000023---01,"serum,alanine aminotransferase,quantitative,",16.0 U/L
+simulation226,6,33677 days 13:45:00,3B0500000023---01,"serum,lactate dehydrogenase,quantitative,",177.0 U/L
+simulation226,6,33677 days 13:45:00,3B0700000023---01,"serum,alkaline phosphatase,quantitative,",170.0 U/L
+simulation226,6,33677 days 13:45:00,3B0900000023---01,"serum,gamma glutamyl transpeptidase,quantitative,",165.0 U/L
+simulation226,6,33677 days 13:45:00,3B1600000023---01,"serum,amylase,quantitative,",51.0 U/L
+simulation226,6,33677 days 13:45:00,3B1750000023---01,"serum,pancreatic amylase,quantitative,",34.0 U/L
+simulation226,6,33677 days 13:45:00,3B1800000023---01,"serum,lipase,quantitative,",28.0 U/L
+simulation226,6,33677 days 13:45:00,3C0150000001---01,"urine,creatinine,quantitative,",50.0 mg/dL
+simulation226,6,33677 days 13:45:00,3C0150000023---01,"serum,creatinine,quantitative,",1.18 mg/dL
+simulation226,6,33677 days 13:45:00,3C0250000023---01,"serum,urea nitrogen,quantitative,",21.5 mg/dL
+simulation226,6,33677 days 13:45:00,3C0250000023---28,"serum,urea nitrogen,creatinine-adjusted,",17.96 no_unit
+simulation226,6,33677 days 13:45:00,3D0100000022---01,"plasma,glucose,quantitative,",80.0 mg/dL
+simulation226,6,33677 days 13:45:00,3H0100000023---01,"serum,sodium,quantitative,",137.0 mmol/L
+simulation226,6,33677 days 13:45:00,3H0150000023---01,"serum,potassium,quantitative,",4.6 mmol/L
+simulation226,6,33677 days 13:45:00,3H0200000023---01,"serum,chloride,quantitative,",110.0 mmol/L
+simulation226,6,33677 days 13:45:00,3H0300000023---01,"serum,calcium,quantitative,",7.2 mg/dL
+simulation226,6,33677 days 13:45:00,3H0380000023---01,"serum,adjusted calcium,quantitative,",9.4 mg/dL
+simulation226,6,33677 days 13:45:00,3J0100000023---01,"serum,bilirubins total,quantitative,",0.6 mg/dL
+simulation226,6,33677 days 13:45:00,3J0150000023---01,"serum,bilirubin conjugated,quantitative,",0.3 mg/dL
+simulation226,6,33677 days 13:45:00,5C0700000023---01,"serum,C-reactive protein,quantitative,",6.14 mg/dL
+simulation226,6,33677 days 13:45:00,5D0100000023---01,"serum,carcinoembryonic antigen,quantitative,",3.0 ng/mL
+simulation226,6,33677 days 13:45:00,5D1300000023---01,"serum,CA19-9,quantitative,",7.0 U/mL
+simulation226,6,33677 days 13:45:00,5E0740000023---11,"serum,serologic test for syphilis rapid plasma reagin card agglutination test,interpretation,",(-)
+simulation226,6,33677 days 13:45:00,5E0750000023---11,"serum,anti-TP antibody,interpretation,",(-)
+simulation226,6,33677 days 13:45:00,5F0161410023---01,"serum,HBs,quantitative,viral antigen",0.05 U/mL
+simulation226,6,33677 days 13:45:00,5F0161410023---11,"serum,HBs,interpretation,viral antigen",(-)
+simulation226,6,33677 days 13:45:00,5F0161430023---01,"serum,HBs,quantitative,viral antibodies",5.0 mIU/mL
+simulation226,6,33677 days 13:45:00,5F0161430023---11,"serum,HBs,interpretation,viral antibodies",(-)
+simulation226,6,33677 days 13:45:00,5F0181430023---11,"serum,HBc,interpretation,viral antibodies",(-)
+simulation226,6,33677 days 13:45:00,5F0181430023---32,"serum,HBc,ratio to negative control,viral antibodies",0.2 S/CO
+simulation226,6,33677 days 13:45:00,5F3601480023---11,"serum,hepatitis C virus,interpretation,HC-43/C100-3 antibodies [HCV antibodies 2nd generation]",(-)
+simulation226,6,33677 days 13:45:00,5F3601480023---33,"serum,hepatitis C virus,ratio to positive control,HC-43/C100-3 antibodies [HCV antibodies 2nd generation]",1.0 S/CO
+simulation226,6,33677 days 13:45:00,5H0100000019---14,"whole blood(with additive),blood typing ABO blood group system,type,",B
+simulation226,6,33677 days 13:45:00,5H0200000019---14,"whole blood(with additive),blood typing Rho(D) factor,type,",(+)
+simulation226,6,33677 days 13:45:00,8A0650000023---01,"serum,estimated GFR based on creatinine,quantitative,",43.3 mL/min/1.73m2
+simulation226,4,33677 days 14:04:00,A03FA01,metoclopramide,
+simulation226,4,33677 days 14:04:00,A03FA01,metoclopramide,
+simulation226,4,33677 days 14:04:00,A03FA01,metoclopramide,
+simulation226,4,33677 days 14:04:00,A03FA01,metoclopramide,
+simulation226,4,33677 days 14:04:00,A03FA01,metoclopramide,
+simulation226,4,33677 days 14:04:00,A03FA01,metoclopramide,
+simulation226,4,33677 days 14:04:00,A03FA01,metoclopramide,
+simulation226,4,33677 days 14:04:00,A03FA01,metoclopramide,
+simulation226,4,33677 days 14:04:00,A03FA01,metoclopramide,
+simulation226,4,33677 days 14:04:00,A03FA01,metoclopramide,
+simulation226,4,33677 days 14:04:00,A03FA01,metoclopramide,
+simulation226,4,33677 days 14:04:00,A03FA01,metoclopramide,
+simulation226,4,33677 days 14:04:00,A03FA01,metoclopramide,
+simulation226,4,33677 days 14:04:00,A03FA01,metoclopramide,
+simulation226,4,33677 days 14:04:00,A03FA01,metoclopramide,
+simulation226,4,33677 days 14:04:00,A03FA01,metoclopramide,
+simulation226,4,33677 days 14:04:00,A03FA01,metoclopramide,
+simulation226,4,33677 days 14:04:00,A03FA01,metoclopramide,
+simulation226,4,33677 days 14:04:00,B01AB01,heparin,
+simulation226,4,33677 days 14:04:00,B01AB01,heparin,
+simulation226,4,33677 days 14:04:00,B01AB01,heparin,
+simulation226,4,33677 days 14:04:00,B01AB01,heparin,
+simulation226,4,33677 days 14:04:00,B01AB01,heparin,
+simulation226,4,33677 days 14:04:00,B01AB01,heparin,
+simulation226,4,33677 days 14:04:00,B01AB01,heparin,
+simulation226,4,33677 days 14:04:00,B01AB01,heparin,
+simulation226,4,33677 days 14:04:00,B01AB01,heparin,
+simulation226,4,33677 days 14:04:00,B01AB01,heparin,
+simulation226,4,33677 days 14:04:00,B01AB01,heparin,
+simulation226,4,33677 days 14:04:00,B01AB01,heparin,
+simulation226,4,33677 days 14:04:00,B01AB01,heparin,
+simulation226,4,33677 days 14:04:00,B05BB01,electrolytes,
+simulation226,4,33677 days 14:04:00,B05BB01,electrolytes,
+simulation226,4,33677 days 14:04:00,B05BB01,electrolytes,
+simulation226,4,33677 days 14:04:00,B05BB01,electrolytes,
+simulation226,4,33677 days 14:04:00,B05BB01,electrolytes,
+simulation226,4,33677 days 14:04:00,B05BB01,electrolytes,
+simulation226,4,33677 days 14:04:00,B05BB01,electrolytes,
+simulation226,4,33677 days 14:04:00,B05BB01,electrolytes,
+simulation226,4,33677 days 14:04:00,B05BB01,electrolytes,
+simulation226,4,33677 days 14:04:00,B05BB01,electrolytes,
+simulation226,4,33677 days 14:04:00,B05BB01,electrolytes,
+simulation226,4,33677 days 14:04:00,B05BB01,electrolytes,
+simulation226,4,33677 days 14:04:00,B05BB01,electrolytes,
+simulation226,4,33677 days 14:04:00,B05BB01,electrolytes,
+simulation226,4,33677 days 14:04:00,B05BB01,electrolytes,
+simulation226,4,33677 days 14:04:00,B05BB01,electrolytes,
+simulation226,4,33677 days 14:04:00,B05BB01,electrolytes,
+simulation226,4,33677 days 14:04:00,B05BB01,electrolytes,
+simulation226,4,33677 days 14:04:00,B05BB01,electrolytes,
+simulation226,4,33677 days 14:04:00,B05BB01,electrolytes,
+simulation226,4,33677 days 14:04:00,B05BB01,electrolytes,
+simulation226,4,33677 days 14:04:00,B05BB01,electrolytes,
+simulation226,4,33677 days 14:04:00,B05BB01,electrolytes,
+simulation226,4,33677 days 14:04:00,B05BB01,electrolytes,
+simulation226,4,33677 days 14:04:00,B05BB01,electrolytes,
+simulation226,4,33677 days 14:04:00,B05BB01,electrolytes,
+simulation226,4,33677 days 14:04:00,J01CR05,piperacillin and beta-lactamase inhibitor,
+simulation226,4,33677 days 14:04:00,J01CR05,piperacillin and beta-lactamase inhibitor,
+simulation226,4,33677 days 14:04:00,J01CR05,piperacillin and beta-lactamase inhibitor,
+simulation226,4,33677 days 14:04:00,J01CR05,piperacillin and beta-lactamase inhibitor,
+simulation226,4,33677 days 14:04:00,J01CR05,piperacillin and beta-lactamase inhibitor,
+simulation226,4,33677 days 14:04:00,J01CR05,piperacillin and beta-lactamase inhibitor,
+simulation226,4,33677 days 14:04:00,J01CR05,piperacillin and beta-lactamase inhibitor,
+simulation226,4,33677 days 14:04:00,J01CR05,piperacillin and beta-lactamase inhibitor,
+simulation226,4,33677 days 14:04:00,J01CR05,piperacillin and beta-lactamase inhibitor,
+simulation226,4,33677 days 14:04:00,J01CR05,piperacillin and beta-lactamase inhibitor,
+simulation226,4,33677 days 14:04:00,J01CR05,piperacillin and beta-lactamase inhibitor,
+simulation226,4,33677 days 14:04:00,J01CR05,piperacillin and beta-lactamase inhibitor,
+simulation226,4,33677 days 14:04:00,J01CR05,piperacillin and beta-lactamase inhibitor,
+simulation226,4,33677 days 14:04:00,J01CR05,piperacillin and beta-lactamase inhibitor,
+simulation226,4,33677 days 14:04:00,J01CR05,piperacillin and beta-lactamase inhibitor,
+simulation226,4,33677 days 14:04:00,J01CR05,piperacillin and beta-lactamase inhibitor,
+simulation226,4,33677 days 14:04:00,J01CR05,piperacillin and beta-lactamase inhibitor,
+simulation226,4,33677 days 14:04:00,J01CR05,piperacillin and beta-lactamase inhibitor,
+simulation226,4,33677 days 14:04:00,J01CR05,piperacillin and beta-lactamase inhibitor,
+simulation226,4,33677 days 14:04:00,J01CR05,piperacillin and beta-lactamase inhibitor,
+simulation226,4,33677 days 14:04:00,J01CR05,piperacillin and beta-lactamase inhibitor,
+simulation226,4,33677 days 14:04:00,N02BE01,paracetamol,
+simulation226,4,33677 days 14:04:00,N02BE01,paracetamol,
+simulation226,4,33677 days 14:04:00,N02BE01,paracetamol,
+simulation226,4,33677 days 14:04:00,N02BE01,paracetamol,
+simulation226,4,33677 days 14:04:00,N02BE01,paracetamol,
+simulation226,4,33677 days 14:04:00,N02BE01,paracetamol,
+simulation226,4,33677 days 14:04:00,N02BE01,paracetamol,
+simulation226,4,33677 days 14:04:00,N02BE01,paracetamol,
+simulation226,4,33677 days 14:04:00,N02BE01,paracetamol,
+simulation226,4,33677 days 14:04:00,N02BE01,paracetamol,
+simulation226,4,33677 days 14:04:00,N02BE01,paracetamol,
+simulation226,4,33677 days 14:04:00,N02BE01,paracetamol,
+simulation226,4,33677 days 14:04:00,N02BE01,paracetamol,
+simulation226,4,33677 days 14:04:00,N02BE01,paracetamol,
+simulation226,4,33677 days 14:04:00,N02BE01,paracetamol,
+simulation226,4,33677 days 14:04:00,N02BE01,paracetamol,
+simulation226,4,33677 days 14:04:00,N02BE01,paracetamol,
+simulation226,4,33677 days 14:04:00,N05AD01,haloperidol,
+simulation226,4,33677 days 14:04:00,N05AD01,haloperidol,
+simulation226,4,33677 days 14:04:00,N05AD01,haloperidol,
+simulation226,4,33677 days 14:04:00,N05AD01,haloperidol,
+simulation226,4,33677 days 14:04:00,N05AD01,haloperidol,
+simulation226,4,33677 days 14:04:00,N05AD01,haloperidol,
+simulation226,4,33677 days 14:04:00,N05AD01,haloperidol,
+simulation226,4,33677 days 14:04:00,N05AD01,haloperidol,
+simulation226,6,33677 days 14:35:00,5H0100000019---14,"whole blood(with additive),blood typing ABO blood group system,type,",B
+simulation226,6,33677 days 14:35:00,5H0200000019---14,"whole blood(with additive),blood typing Rho(D) factor,type,",(+)
+simulation226,6,33677 days 14:35:00,5H1800000018---11,"whole blood,irregular antibody,interpretation,",(-)
+simulation226,4,33677 days 14:58:00,B05AX01,erythrocytes,
+simulation226,4,33677 days 14:58:00,B05BB01,electrolytes,
+simulation226,6,33677 days 16:01:00,5H0100000019---14,"whole blood(with additive),blood typing ABO blood group system,type,",B
+simulation226,6,33677 days 16:01:00,5H0200000019---14,"whole blood(with additive),blood typing Rho(D) factor,type,",(+)
+simulation226,4,33677 days 16:24:00,A02BC05,esomeprazole,
+simulation226,4,33677 days 16:24:00,A06AB06,senna glycosides,
+simulation226,4,33677 days 16:24:00,A07FA51,"lactic acid producing organisms, combinations",
+simulation226,4,33677 days 16:24:00,C03CA01,furosemide,
+simulation226,4,33677 days 16:24:00,C03DA01,spironolactone,
+simulation226,4,33677 days 16:24:00,C09CA06,candesartan,
+simulation226,4,33677 days 16:24:00,G04CA04,silodosin,
+simulation226,4,33678 days 08:37:00,B05BA10,combinations,
+simulation226,4,33678 days 08:37:00,B05BA10,combinations,
+simulation226,4,33678 days 08:37:00,B05BA10,combinations,
+simulation226,6,33678 days 09:28:00,2A1600000019---51,"whole blood(with additive),hemogram,neutrophil,",65.7 %
+simulation226,6,33678 days 09:28:00,2A1600000019---54,"whole blood(with additive),hemogram,eosinophil,",2.5 %
+simulation226,6,33678 days 09:28:00,2A1600000019---55,"whole blood(with additive),hemogram,basophil,",0.6 %
+simulation226,6,33678 days 09:28:00,2A1600000019---56,"whole blood(with additive),hemogram,monocyte,",7.0 %
+simulation226,6,33678 days 09:28:00,2A1600000019---57,"whole blood(with additive),hemogram,lymphocyte,",24.2 %
+simulation226,6,33678 days 09:28:00,2A9900000019---51,"whole blood(with additive),CBC,red blood cell count,",262.0 ×10^4/μL
+simulation226,6,33678 days 09:28:00,2A9900000019---52,"whole blood(with additive),CBC,white blood cell count,",3.4 ×10^3/μL
+simulation226,6,33678 days 09:28:00,2A9900000019---53,"whole blood(with additive),CBC,hemoglobin,",7.9 g/dL
+simulation226,6,33678 days 09:28:00,2A9900000019---54,"whole blood(with additive),CBC,hematocrit,",23.2 %
+simulation226,6,33678 days 09:28:00,2A9900000019---55,"whole blood(with additive),CBC,platelet count,",29.6 ×10^4/μL
+simulation226,6,33678 days 09:28:00,2A9900000019---56,"whole blood(with additive),CBC,mean corpuscular volume,",88.7 fL
+simulation226,6,33678 days 09:28:00,2A9900000019---57,"whole blood(with additive),CBC,mean corpuscular hemoglobin,",30.2 pg
+simulation226,6,33678 days 09:28:00,2A9900000019---58,"whole blood(with additive),CBC,mean corpuscular hemoglobin concentration,",34.1 %
+simulation226,6,33678 days 09:28:00,3A0100000023---01,"serum,total proteins,quantitative,",5.1 g/dL
+simulation226,6,33678 days 09:28:00,3A0150000023---01,"serum,albumin,quantitative,",1.7 g/dL
+simulation226,6,33678 days 09:28:00,3A0160000023---02,"serum,albumin/globulin ratio,composition ratio,",0.5 no_unit
+simulation226,6,33678 days 09:28:00,3B0350000023---01,"serum,asparate aminotransferase,quantitative,",23.0 U/L
+simulation226,6,33678 days 09:28:00,3B0450000023---01,"serum,alanine aminotransferase,quantitative,",16.0 U/L
+simulation226,6,33678 days 09:28:00,3B0500000023---01,"serum,lactate dehydrogenase,quantitative,",168.0 U/L
+simulation226,6,33678 days 09:28:00,3B0700000023---01,"serum,alkaline phosphatase,quantitative,",153.0 U/L
+simulation226,6,33678 days 09:28:00,3B0700000023---01,"serum,alkaline phosphatase,quantitative,",139.0 U/L
+simulation226,6,33678 days 09:28:00,3B0900000023---01,"serum,gamma glutamyl transpeptidase,quantitative,",153.0 U/L
+simulation226,6,33678 days 09:28:00,3C0150000023---01,"serum,creatinine,quantitative,",1.23 mg/dL
+simulation226,6,33678 days 09:28:00,3C0250000023---01,"serum,urea nitrogen,quantitative,",19.4 mg/dL
+simulation226,6,33678 days 09:28:00,3H0100000023---01,"serum,sodium,quantitative,",136.0 mmol/L
+simulation226,6,33678 days 09:28:00,3H0150000023---01,"serum,potassium,quantitative,",4.6 mmol/L
+simulation226,6,33678 days 09:28:00,3H0200000023---01,"serum,chloride,quantitative,",108.0 mmol/L
+simulation226,6,33678 days 09:28:00,3J0100000023---01,"serum,bilirubins total,quantitative,",0.8 mg/dL
+simulation226,6,33678 days 09:28:00,3J0150000023---01,"serum,bilirubin conjugated,quantitative,",0.3 mg/dL
+simulation226,6,33678 days 09:28:00,5C0700000023---01,"serum,C-reactive protein,quantitative,",4.41 mg/dL
+simulation226,6,33678 days 09:28:00,8A0650000023---01,"serum,estimated GFR based on creatinine,quantitative,",42.4 mL/min/1.73m2
+simulation226,4,33678 days 13:36:00,B05BA10,combinations,
+simulation226,6,33679 days 06:58:00,2A1600000019---51,"whole blood(with additive),hemogram,neutrophil,",70.3 %
+simulation226,6,33679 days 06:58:00,2A1600000019---54,"whole blood(with additive),hemogram,eosinophil,",3.5 %
+simulation226,6,33679 days 06:58:00,2A1600000019---55,"whole blood(with additive),hemogram,basophil,",0.3 %
+simulation226,6,33679 days 06:58:00,2A1600000019---56,"whole blood(with additive),hemogram,monocyte,",6.2 %
+simulation226,6,33679 days 06:58:00,2A1600000019---57,"whole blood(with additive),hemogram,lymphocyte,",20.0 %
+simulation226,6,33679 days 06:58:00,2A9900000019---51,"whole blood(with additive),CBC,red blood cell count,",245.0 ×10^4/μL
+simulation226,6,33679 days 06:58:00,2A9900000019---52,"whole blood(with additive),CBC,white blood cell count,",3.8 ×10^3/μL
+simulation226,6,33679 days 06:58:00,2A9900000019---53,"whole blood(with additive),CBC,hemoglobin,",7.3 g/dL
+simulation226,6,33679 days 06:58:00,2A9900000019---54,"whole blood(with additive),CBC,hematocrit,",22.0 %
+simulation226,6,33679 days 06:58:00,2A9900000019---55,"whole blood(with additive),CBC,platelet count,",29.0 ×10^4/μL
+simulation226,6,33679 days 06:58:00,2A9900000019---56,"whole blood(with additive),CBC,mean corpuscular volume,",90.0 fL
+simulation226,6,33679 days 06:58:00,2A9900000019---57,"whole blood(with additive),CBC,mean corpuscular hemoglobin,",29.9 pg
+simulation226,6,33679 days 06:58:00,2A9900000019---58,"whole blood(with additive),CBC,mean corpuscular hemoglobin concentration,",33.2 %
+simulation226,6,33679 days 06:58:00,3A0100000023---01,"serum,total proteins,quantitative,",5.0 g/dL
+simulation226,6,33679 days 06:58:00,3A0150000023---01,"serum,albumin,quantitative,",1.6 g/dL
+simulation226,6,33679 days 06:58:00,3A0160000023---02,"serum,albumin/globulin ratio,composition ratio,",0.47 no_unit
+simulation226,6,33679 days 06:58:00,3B0350000023---01,"serum,asparate aminotransferase,quantitative,",27.0 U/L
+simulation226,6,33679 days 06:58:00,3B0450000023---01,"serum,alanine aminotransferase,quantitative,",15.0 U/L
+simulation226,6,33679 days 06:58:00,3B0500000023---01,"serum,lactate dehydrogenase,quantitative,",159.0 U/L
+simulation226,6,33679 days 06:58:00,3B0700000023---01,"serum,alkaline phosphatase,quantitative,",123.0 U/L
+simulation226,6,33679 days 06:58:00,3B0900000023---01,"serum,gamma glutamyl transpeptidase,quantitative,",131.0 U/L
+simulation226,6,33679 days 06:58:00,3B1600000023---01,"serum,amylase,quantitative,",42.0 U/L
+simulation226,6,33679 days 06:58:00,3B1750000023---01,"serum,pancreatic amylase,quantitative,",24.0 U/L
+simulation226,6,33679 days 06:58:00,3C0150000023---01,"serum,creatinine,quantitative,",1.2 mg/dL
+simulation226,6,33679 days 06:58:00,3C0250000023---01,"serum,urea nitrogen,quantitative,",16.4 mg/dL
+simulation226,6,33679 days 06:58:00,3H0100000023---01,"serum,sodium,quantitative,",135.0 mmol/L
+simulation226,6,33679 days 06:58:00,3H0150000023---01,"serum,potassium,quantitative,",4.1 mmol/L
+simulation226,6,33679 days 06:58:00,3H0200000023---01,"serum,chloride,quantitative,",108.0 mmol/L
+simulation226,6,33679 days 06:58:00,3J0100000023---01,"serum,bilirubins total,quantitative,",0.6 mg/dL
+simulation226,6,33679 days 06:58:00,3J0150000023---01,"serum,bilirubin conjugated,quantitative,",0.3 mg/dL
+simulation226,6,33679 days 06:58:00,5C0700000023---01,"serum,C-reactive protein,quantitative,",4.41 mg/dL
+simulation226,6,33679 days 06:58:00,8A0650000023---01,"serum,estimated GFR based on creatinine,quantitative,",43.3 mL/min/1.73m2
+simulation226,4,33679 days 10:16:00,B05BA10,combinations,
+simulation226,4,33679 days 10:16:00,B05BA10,combinations,
+simulation226,4,33679 days 10:16:00,B05BA10,combinations,
+simulation226,4,33679 days 10:16:00,B05BA10,combinations,
+simulation226,4,33679 days 10:16:00,B05BA10,combinations,
+simulation226,4,33679 days 10:16:00,B05BA10,combinations,
+simulation226,3,33680 days 10:19:00,R13,Dysphagia,
+simulation226,6,33681 days 08:21:00,2A1600000019---51,"whole blood(with additive),hemogram,neutrophil,",65.7 %
+simulation226,6,33681 days 08:21:00,2A1600000019---52,"whole blood(with additive),hemogram,stab form neutrophil,",6.0 %
+simulation226,6,33681 days 08:21:00,2A1600000019---53,"whole blood(with additive),hemogram,segmented neutrophil,",65.0 %
+simulation226,6,33681 days 08:21:00,2A1600000019---54,"whole blood(with additive),hemogram,eosinophil,",2.5 %
+simulation226,6,33681 days 08:21:00,2A1600000019---55,"whole blood(with additive),hemogram,basophil,",0.5 %
+simulation226,6,33681 days 08:21:00,2A1600000019---56,"whole blood(with additive),hemogram,monocyte,",6.0 %
+simulation226,6,33681 days 08:21:00,2A1600000019---57,"whole blood(with additive),hemogram,lymphocyte,",20.0 %
+simulation226,6,33681 days 08:21:00,2A1600000019---58,"whole blood(with additive),hemogram,atypical lymphocyte,",0.0 %
+simulation226,6,33681 days 08:21:00,2A1600000019---59,"whole blood(with additive),hemogram,myelocyte,",0.0 %
+simulation226,6,33681 days 08:21:00,2A1600000019---60,"whole blood(with additive),hemogram,metamyelocyte,",0.0 %
+simulation226,6,33681 days 08:21:00,2A1600000019---61,"whole blood(with additive),hemogram,promyelocyte,",0.0 %
+simulation226,6,33681 days 08:21:00,2A1600000019---62,"whole blood(with additive),hemogram,myeloblast,",0.0 %
+simulation226,6,33681 days 08:21:00,2A1600000019---77,"whole blood(with additive),hemogram,others,",0.0 %
+simulation226,6,33681 days 08:21:00,2A9900000019---51,"whole blood(with additive),CBC,red blood cell count,",232.0 ×10^4/μL
+simulation226,6,33681 days 08:21:00,2A9900000019---52,"whole blood(with additive),CBC,white blood cell count,",4.2 ×10^3/μL
+simulation226,6,33681 days 08:21:00,2A9900000019---53,"whole blood(with additive),CBC,hemoglobin,",6.9 g/dL
+simulation226,6,33681 days 08:21:00,2A9900000019---54,"whole blood(with additive),CBC,hematocrit,",21.0 %
+simulation226,6,33681 days 08:21:00,2A9900000019---55,"whole blood(with additive),CBC,platelet count,",25.3 ×10^4/μL
+simulation226,6,33681 days 08:21:00,2A9900000019---56,"whole blood(with additive),CBC,mean corpuscular volume,",90.7 fL
+simulation226,6,33681 days 08:21:00,2A9900000019---57,"whole blood(with additive),CBC,mean corpuscular hemoglobin,",29.8 pg
+simulation226,6,33681 days 08:21:00,2A9900000019---58,"whole blood(with additive),CBC,mean corpuscular hemoglobin concentration,",32.9 %
+simulation226,6,33681 days 08:21:00,2A9900000019---60,"whole blood(with additive),CBC,RBC Distribution Width -Coefficient of Variation,",16.7 %
+simulation226,6,33681 days 08:21:00,2A9900000019---61,"whole blood(with additive),CBC,Mean Platelet Volume,",11.9 fL
+simulation226,6,33681 days 08:21:00,2A9900000019---62,"whole blood(with additive),CBC,platelet distribution width,",14.3 no_unit
+simulation226,6,33681 days 08:21:00,2A9900000019---63,"whole blood(with additive),CBC,platelet crit,",0.29 no_unit
+simulation226,6,33681 days 08:21:00,2A9900000019---66,"whole blood(with additive),CBC,immature platelet fraction,",2.6 %
+simulation226,6,33681 days 08:21:00,3A0100000023---01,"serum,total proteins,quantitative,",4.6 g/dL
+simulation226,6,33681 days 08:21:00,3A0150000023---01,"serum,albumin,quantitative,",1.4 g/dL
+simulation226,6,33681 days 08:21:00,3A0160000023---02,"serum,albumin/globulin ratio,composition ratio,",0.44 no_unit
+simulation226,6,33681 days 08:21:00,3B0350000023---01,"serum,asparate aminotransferase,quantitative,",23.0 U/L
+simulation226,6,33681 days 08:21:00,3B0450000023---01,"serum,alanine aminotransferase,quantitative,",14.0 U/L
+simulation226,6,33681 days 08:21:00,3B0500000023---01,"serum,lactate dehydrogenase,quantitative,",167.0 U/L
+simulation226,6,33681 days 08:21:00,3B0700000023---01,"serum,alkaline phosphatase,quantitative,",95.0 U/L
+simulation226,6,33681 days 08:21:00,3B0900000023---01,"serum,gamma glutamyl transpeptidase,quantitative,",107.0 U/L
+simulation226,6,33681 days 08:21:00,3B1600000023---01,"serum,amylase,quantitative,",45.0 U/L
+simulation226,6,33681 days 08:21:00,3B1750000023---01,"serum,pancreatic amylase,quantitative,",26.0 U/L
+simulation226,6,33681 days 08:21:00,3C0150000023---01,"serum,creatinine,quantitative,",1.27 mg/dL
+simulation226,6,33681 days 08:21:00,3C0250000023---01,"serum,urea nitrogen,quantitative,",12.8 mg/dL
+simulation226,6,33681 days 08:21:00,3C0250000023---28,"serum,urea nitrogen,creatinine-adjusted,",10.15 no_unit
+simulation226,6,33681 days 08:21:00,3H0100000023---01,"serum,sodium,quantitative,",134.0 mmol/L
+simulation226,6,33681 days 08:21:00,3H0150000023---01,"serum,potassium,quantitative,",4.0 mmol/L
+simulation226,6,33681 days 08:21:00,3H0200000023---01,"serum,chloride,quantitative,",108.0 mmol/L
+simulation226,6,33681 days 08:21:00,3I0100000023---01,"serum,iron,quantitative,",23.0 μg/dL
+simulation226,6,33681 days 08:21:00,3I0150000023---01,"serum,total iron binding capacity,quantitative,",111.0 μg/dL
+simulation226,6,33681 days 08:21:00,3I0200000023---01,"serum,unsaturated iron binding capacity,quantitative,",91.0 μg/dL
+simulation226,6,33681 days 08:21:00,3J0100000023---01,"serum,bilirubins total,quantitative,",0.4 mg/dL
+simulation226,6,33681 days 08:21:00,3J0150000023---01,"serum,bilirubin conjugated,quantitative,",0.2 mg/dL
+simulation226,6,33681 days 08:21:00,5C0700000023---01,"serum,C-reactive protein,quantitative,",5.64 mg/dL
+simulation226,6,33681 days 08:21:00,5C0950000023---01,"serum,ferritin,quantitative,",803.0 ng/mL
+simulation226,6,33681 days 08:21:00,8A0650000023---01,"serum,estimated GFR based on creatinine,quantitative,",40.7 mL/min/1.73m2
+simulation226,4,33682 days 13:04:00,C03CA01,furosemide,
+simulation226,4,33682 days 13:04:00,C03DA01,spironolactone,
+simulation226,4,33682 days 13:04:00,C09CA06,candesartan,
+simulation226,4,33682 days 13:07:00,A03FA01,metoclopramide,
+simulation226,4,33682 days 13:07:00,A03FA01,metoclopramide,
+simulation226,4,33682 days 13:07:00,A03FA01,metoclopramide,
+simulation226,4,33682 days 13:07:00,A03FA01,metoclopramide,
+simulation226,4,33682 days 13:07:00,A03FA01,metoclopramide,
+simulation226,4,33682 days 13:07:00,A03FA01,metoclopramide,
+simulation226,4,33682 days 13:07:00,A03FA01,metoclopramide,
+simulation226,4,33682 days 13:07:00,A03FA01,metoclopramide,
+simulation226,4,33682 days 13:07:00,A03FA01,metoclopramide,
+simulation226,4,33682 days 13:07:00,A03FA01,metoclopramide,
+simulation226,4,33682 days 13:07:00,A03FA01,metoclopramide,
+simulation226,4,33682 days 13:07:00,A03FA01,metoclopramide,
+simulation226,4,33682 days 13:07:00,A03FA01,metoclopramide,
+simulation226,4,33682 days 13:07:00,A03FA01,metoclopramide,
+simulation226,4,33682 days 13:07:00,A03FA01,metoclopramide,
+simulation226,4,33682 days 13:07:00,A03FA01,metoclopramide,
+simulation226,4,33682 days 13:07:00,A03FA01,metoclopramide,
+simulation226,4,33682 days 13:07:00,A03FA01,metoclopramide,
+simulation226,4,33682 days 13:07:00,A03FA01,metoclopramide,
+simulation226,4,33682 days 13:07:00,A03FA01,metoclopramide,
+simulation226,4,33682 days 13:07:00,A03FA01,metoclopramide,
+simulation226,4,33682 days 13:07:00,A03FA01,metoclopramide,
+simulation226,4,33682 days 13:07:00,A03FA01,metoclopramide,
+simulation226,4,33682 days 13:07:00,A03FA01,metoclopramide,
+simulation226,4,33682 days 13:07:00,A03FA01,metoclopramide,
+simulation226,4,33682 days 13:07:00,A03FA01,metoclopramide,
+simulation226,4,33682 days 13:07:00,A03FA01,metoclopramide,
+simulation226,4,33682 days 13:07:00,A03FA01,metoclopramide,
+simulation226,4,33682 days 13:07:00,B01AB01,heparin,
+simulation226,4,33682 days 13:07:00,B01AB01,heparin,
+simulation226,4,33682 days 13:07:00,B01AB01,heparin,
+simulation226,4,33682 days 13:07:00,B01AB01,heparin,
+simulation226,4,33682 days 13:07:00,B01AB01,heparin,
+simulation226,4,33682 days 13:07:00,B01AB01,heparin,
+simulation226,4,33682 days 13:07:00,B01AB01,heparin,
+simulation226,4,33682 days 13:07:00,B01AB01,heparin,
+simulation226,4,33682 days 13:07:00,B01AB01,heparin,
+simulation226,4,33682 days 13:07:00,B01AB01,heparin,
+simulation226,4,33682 days 13:07:00,B01AB01,heparin,
+simulation226,4,33682 days 13:07:00,B01AB01,heparin,
+simulation226,4,33682 days 13:07:00,B01AB01,heparin,
+simulation226,4,33682 days 13:07:00,B01AB01,heparin,
+simulation226,4,33682 days 13:07:00,B01AB01,heparin,
+simulation226,4,33682 days 13:07:00,B01AB01,heparin,
+simulation226,4,33682 days 13:07:00,B01AB01,heparin,
+simulation226,4,33682 days 13:07:00,B01AB01,heparin,
+simulation226,4,33682 days 13:07:00,B01AB01,heparin,
+simulation226,4,33682 days 13:07:00,B01AB01,heparin,
+simulation226,4,33682 days 13:07:00,B01AB01,heparin,
+simulation226,4,33682 days 13:07:00,B01AB01,heparin,
+simulation226,4,33682 days 13:07:00,B01AB01,heparin,
+simulation226,4,33682 days 13:07:00,B01AB01,heparin,
+simulation226,4,33682 days 13:07:00,B01AB01,heparin,
+simulation226,4,33682 days 13:07:00,B01AB01,heparin,
+simulation226,4,33682 days 13:07:00,B01AB01,heparin,
+simulation226,4,33682 days 13:07:00,B01AB01,heparin,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,B05BB01,electrolytes,
+simulation226,4,33682 days 13:07:00,J01CR05,piperacillin and beta-lactamase inhibitor,
+simulation226,4,33682 days 13:07:00,J01CR05,piperacillin and beta-lactamase inhibitor,
+simulation226,4,33682 days 13:07:00,J01CR05,piperacillin and beta-lactamase inhibitor,
+simulation226,4,33682 days 13:07:00,J01CR05,piperacillin and beta-lactamase inhibitor,
+simulation226,4,33682 days 13:07:00,J01CR05,piperacillin and beta-lactamase inhibitor,
+simulation226,4,33682 days 13:07:00,J01CR05,piperacillin and beta-lactamase inhibitor,
+simulation226,4,33682 days 13:07:00,J01CR05,piperacillin and beta-lactamase inhibitor,
+simulation226,4,33682 days 13:07:00,N02BE01,paracetamol,
+simulation226,4,33682 days 13:07:00,N02BE01,paracetamol,
+simulation226,4,33682 days 13:07:00,N02BE01,paracetamol,
+simulation226,4,33682 days 13:07:00,N02BE01,paracetamol,
+simulation226,4,33682 days 13:07:00,N02BE01,paracetamol,
+simulation226,4,33682 days 13:07:00,N02BE01,paracetamol,
+simulation226,4,33682 days 13:07:00,N02BE01,paracetamol,
+simulation226,4,33682 days 13:07:00,N02BE01,paracetamol,
+simulation226,4,33682 days 13:07:00,N02BE01,paracetamol,
+simulation226,4,33682 days 13:07:00,N02BE01,paracetamol,
+simulation226,4,33682 days 13:07:00,N02BE01,paracetamol,
+simulation226,4,33682 days 13:07:00,N02BE01,paracetamol,
+simulation226,4,33682 days 13:07:00,N02BE01,paracetamol,
+simulation226,4,33682 days 13:07:00,N02BE01,paracetamol,
+simulation226,4,33682 days 13:07:00,N02BE01,paracetamol,
+simulation226,4,33682 days 13:07:00,N02BE01,paracetamol,
+simulation226,4,33682 days 13:07:00,N02BE01,paracetamol,
+simulation226,4,33682 days 13:07:00,N02BE01,paracetamol,
+simulation226,4,33682 days 13:07:00,N02BE01,paracetamol,
+simulation226,4,33682 days 13:07:00,N02BE01,paracetamol,
+simulation226,4,33682 days 13:07:00,N02BE01,paracetamol,
+simulation226,4,33682 days 13:07:00,N02BE01,paracetamol,
+simulation226,4,33682 days 13:07:00,N02BE01,paracetamol,
+simulation226,4,33682 days 13:07:00,N02BE01,paracetamol,
+simulation226,4,33682 days 13:07:00,N02BE01,paracetamol,
+simulation226,4,33682 days 13:07:00,N02BE01,paracetamol,
+simulation226,4,33682 days 13:07:00,N02BE01,paracetamol,
+simulation226,4,33682 days 13:07:00,N05AD01,haloperidol,
+simulation226,4,33682 days 13:07:00,N05AD01,haloperidol,
+simulation226,4,33682 days 13:07:00,N05AD01,haloperidol,
+simulation226,4,33682 days 13:07:00,N05AD01,haloperidol,
+simulation226,4,33682 days 13:07:00,N05AD01,haloperidol,
+simulation226,4,33682 days 13:07:00,N05AD01,haloperidol,
+simulation226,4,33682 days 13:07:00,N05AD01,haloperidol,
+simulation226,4,33682 days 13:07:00,N05AD01,haloperidol,
+simulation226,4,33682 days 13:07:00,N05AD01,haloperidol,
+simulation226,4,33682 days 13:07:00,N05AD01,haloperidol,
+simulation226,4,33682 days 13:07:00,N05AD01,haloperidol,
+simulation226,4,33682 days 13:07:00,N05AD01,haloperidol,
+simulation226,4,33682 days 13:07:00,N05AD01,haloperidol,
+simulation226,4,33682 days 16:00:00,B05AX01,erythrocytes,
+simulation226,4,33682 days 16:00:00,B05BB01,electrolytes,
+simulation226,4,33682 days 16:17:00,B05AA01,albumin,
+simulation226,4,33682 days 16:17:00,B05BB01,electrolytes,
+simulation226,6,33683 days 07:31:00,2A1600000019---51,"whole blood(with additive),hemogram,neutrophil,",56.7 %
+simulation226,6,33683 days 07:31:00,2A1600000019---54,"whole blood(with additive),hemogram,eosinophil,",5.8 %
+simulation226,6,33683 days 07:31:00,2A1600000019---55,"whole blood(with additive),hemogram,basophil,",0.9 %
+simulation226,6,33683 days 07:31:00,2A1600000019---56,"whole blood(with additive),hemogram,monocyte,",8.6 %
+simulation226,6,33683 days 07:31:00,2A1600000019---57,"whole blood(with additive),hemogram,lymphocyte,",28.0 %
+simulation226,6,33683 days 07:31:00,2A9900000019---51,"whole blood(with additive),CBC,red blood cell count,",254.0 ×10^4/μL
+simulation226,6,33683 days 07:31:00,2A9900000019---52,"whole blood(with additive),CBC,white blood cell count,",2.3 ×10^3/μL
+simulation226,6,33683 days 07:31:00,2A9900000019---53,"whole blood(with additive),CBC,hemoglobin,",7.5 g/dL
+simulation226,6,33683 days 07:31:00,2A9900000019---54,"whole blood(with additive),CBC,hematocrit,",22.8 %
+simulation226,6,33683 days 07:31:00,2A9900000019---55,"whole blood(with additive),CBC,platelet count,",27.0 ×10^4/μL
+simulation226,6,33683 days 07:31:00,2A9900000019---56,"whole blood(with additive),CBC,mean corpuscular volume,",89.8 fL
+simulation226,6,33683 days 07:31:00,2A9900000019---57,"whole blood(with additive),CBC,mean corpuscular hemoglobin,",29.4 pg
+simulation226,6,33683 days 07:31:00,2A9900000019---58,"whole blood(with additive),CBC,mean corpuscular hemoglobin concentration,",32.8 %
+simulation226,6,33683 days 07:31:00,3A0100000023---01,"serum,total proteins,quantitative,",5.2 g/dL
+simulation226,6,33683 days 07:31:00,3A0150000023---01,"serum,albumin,quantitative,",2.1 g/dL
+simulation226,6,33683 days 07:31:00,3A0160000023---02,"serum,albumin/globulin ratio,composition ratio,",0.68 no_unit
+simulation226,6,33683 days 07:31:00,3B0350000023---01,"serum,asparate aminotransferase,quantitative,",38.0 U/L
+simulation226,6,33683 days 07:31:00,3B0450000023---01,"serum,alanine aminotransferase,quantitative,",19.0 U/L
+simulation226,6,33683 days 07:31:00,3B0500000023---01,"serum,lactate dehydrogenase,quantitative,",212.0 U/L
+simulation226,6,33683 days 07:31:00,3B0700000023---01,"serum,alkaline phosphatase,quantitative,",102.0 U/L
+simulation226,6,33683 days 07:31:00,3B0900000023---01,"serum,gamma glutamyl transpeptidase,quantitative,",107.0 U/L
+simulation226,6,33683 days 07:31:00,3B1600000023---01,"serum,amylase,quantitative,",48.0 U/L
+simulation226,6,33683 days 07:31:00,3B1750000023---01,"serum,pancreatic amylase,quantitative,",30.0 U/L
+simulation226,6,33683 days 07:31:00,3C0150000023---01,"serum,creatinine,quantitative,",1.25 mg/dL
+simulation226,6,33683 days 07:31:00,3C0250000023---01,"serum,urea nitrogen,quantitative,",15.2 mg/dL
+simulation226,6,33683 days 07:31:00,3H0100000023---01,"serum,sodium,quantitative,",135.0 mmol/L
+simulation226,6,33683 days 07:31:00,3H0150000023---01,"serum,potassium,quantitative,",4.0 mmol/L
+simulation226,6,33683 days 07:31:00,3H0200000023---01,"serum,chloride,quantitative,",104.0 mmol/L
+simulation226,6,33683 days 07:31:00,3J0100000023---01,"serum,bilirubins total,quantitative,",0.6 mg/dL
+simulation226,6,33683 days 07:31:00,3J0150000023---01,"serum,bilirubin conjugated,quantitative,",0.3 mg/dL
+simulation226,6,33683 days 07:31:00,5C0700000023---01,"serum,C-reactive protein,quantitative,",6.14 mg/dL
+simulation226,6,33683 days 07:31:00,8A0650000023---01,"serum,estimated GFR based on creatinine,quantitative,",41.6 mL/min/1.73m2
+simulation226,4,33683 days 17:19:00,A06AB06,senna glycosides,
+simulation226,4,33683 days 17:42:00,A06AB08,sodium picosulfate,
+simulation226,6,33684 days 07:35:00,1A0300000001---01,"urine,specific gravity [urine],quantitative,",1.01 no_unit
+simulation226,6,33684 days 07:35:00,1A9900000001---52,"urine,urinalysis qualitative/semiquantitative,pH,",6.5 no_unit
+simulation226,6,33684 days 07:35:00,1A9900000001---53,"urine,urinalysis qualitative/semiquantitative,protein (qualitative),",(+-)
+simulation226,6,33684 days 07:35:00,1A9900000001---54,"urine,urinalysis qualitative/semiquantitative,glucose (qualitative),",(-)
+simulation226,6,33684 days 07:35:00,1A9900000001---58,"urine,urinalysis qualitative/semiquantitative,ketone bodies (qualitative),",(-)
+simulation226,6,33684 days 07:35:00,1A9900000001---59,"urine,urinalysis qualitative/semiquantitative,occult blood (qualitative),",(-)
+simulation226,6,33684 days 07:35:00,1A9900000001---62,"urine,urinalysis qualitative/semiquantitative,leukocytes (test paper) (qualitative),",(-)
+simulation226,6,33684 days 07:35:00,1A9900000001---64,"urine,urinalysis qualitative/semiquantitative,nitrite,",(-)
+simulation226,6,33684 days 07:35:00,2A1600000019---51,"whole blood(with additive),hemogram,neutrophil,",64.2 %
+simulation226,6,33684 days 07:35:00,2A1600000019---54,"whole blood(with additive),hemogram,eosinophil,",4.4 %
+simulation226,6,33684 days 07:35:00,2A1600000019---55,"whole blood(with additive),hemogram,basophil,",0.7 %
+simulation226,6,33684 days 07:35:00,2A1600000019---56,"whole blood(with additive),hemogram,monocyte,",7.7 %
+simulation226,6,33684 days 07:35:00,2A1600000019---57,"whole blood(with additive),hemogram,lymphocyte,",23.3 %
+simulation226,6,33684 days 07:35:00,2A9900000019---51,"whole blood(with additive),CBC,red blood cell count,",254.0 ×10^4/μL
+simulation226,6,33684 days 07:35:00,2A9900000019---52,"whole blood(with additive),CBC,white blood cell count,",2.7 ×10^3/μL
+simulation226,6,33684 days 07:35:00,2A9900000019---53,"whole blood(with additive),CBC,hemoglobin,",7.8 g/dL
+simulation226,6,33684 days 07:35:00,2A9900000019---54,"whole blood(with additive),CBC,hematocrit,",22.8 %
+simulation226,6,33684 days 07:35:00,2A9900000019---55,"whole blood(with additive),CBC,platelet count,",25.3 ×10^4/μL
+simulation226,6,33684 days 07:35:00,2A9900000019---56,"whole blood(with additive),CBC,mean corpuscular volume,",89.8 fL
+simulation226,6,33684 days 07:35:00,2A9900000019---57,"whole blood(with additive),CBC,mean corpuscular hemoglobin,",30.5 pg
+simulation226,6,33684 days 07:35:00,2A9900000019---58,"whole blood(with additive),CBC,mean corpuscular hemoglobin concentration,",34.0 %
+simulation226,6,33684 days 07:35:00,3A0100000023---01,"serum,total proteins,quantitative,",4.8 g/dL
+simulation226,6,33684 days 07:35:00,3A0150000023---01,"serum,albumin,quantitative,",1.8 g/dL
+simulation226,6,33684 days 07:35:00,3A0160000023---02,"serum,albumin/globulin ratio,composition ratio,",0.6 no_unit
+simulation226,6,33684 days 07:35:00,3B0350000023---01,"serum,asparate aminotransferase,quantitative,",27.0 U/L
+simulation226,6,33684 days 07:35:00,3B0450000023---01,"serum,alanine aminotransferase,quantitative,",16.0 U/L
+simulation226,6,33684 days 07:35:00,3B0500000023---01,"serum,lactate dehydrogenase,quantitative,",143.0 U/L
+simulation226,6,33684 days 07:35:00,3B0700000023---01,"serum,alkaline phosphatase,quantitative,",87.0 U/L
+simulation226,6,33684 days 07:35:00,3B0900000023---01,"serum,gamma glutamyl transpeptidase,quantitative,",99.0 U/L
+simulation226,6,33684 days 07:35:00,3B1600000023---01,"serum,amylase,quantitative,",51.0 U/L
+simulation226,6,33684 days 07:35:00,3B1750000023---01,"serum,pancreatic amylase,quantitative,",31.0 U/L
+simulation226,6,33684 days 07:35:00,3C0150000023---01,"serum,creatinine,quantitative,",1.16 mg/dL
+simulation226,6,33684 days 07:35:00,3C0250000023---01,"serum,urea nitrogen,quantitative,",15.4 mg/dL
+simulation226,6,33684 days 07:35:00,3H0100000023---01,"serum,sodium,quantitative,",135.0 mmol/L
+simulation226,6,33684 days 07:35:00,3H0150000023---01,"serum,potassium,quantitative,",4.1 mmol/L
+simulation226,6,33684 days 07:35:00,3H0200000023---01,"serum,chloride,quantitative,",105.0 mmol/L
+simulation226,6,33684 days 07:35:00,3J0100000023---01,"serum,bilirubins total,quantitative,",0.4 mg/dL
+simulation226,6,33684 days 07:35:00,3J0150000023---01,"serum,bilirubin conjugated,quantitative,",0.2 mg/dL
+simulation226,6,33684 days 07:35:00,5C0700000023---01,"serum,C-reactive protein,quantitative,",4.41 mg/dL
+simulation226,6,33684 days 07:35:00,8A0650000023---01,"serum,estimated GFR based on creatinine,quantitative,",44.9 mL/min/1.73m2

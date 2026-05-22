@@ -1,0 +1,1016 @@
+patient_id,type,age,code,text,result
+simulation63,0,24413 days 00:00:00,[F],female patient,
+simulation63,4,24413 days 12:11:00,A02BC01,omeprazole,
+simulation63,4,24413 days 12:11:00,A02BC01,omeprazole,
+simulation63,4,24413 days 12:11:00,A02BC01,omeprazole,
+simulation63,4,24413 days 12:11:00,A02BC01,omeprazole,
+simulation63,4,24413 days 12:11:00,B05BB01,electrolytes,
+simulation63,4,24413 days 12:11:00,B05BB01,electrolytes,
+simulation63,4,24413 days 12:11:00,B05BB01,electrolytes,
+simulation63,4,24413 days 12:11:00,B05BB01,electrolytes,
+simulation63,4,24413 days 12:15:00,A02BC01,omeprazole,
+simulation63,4,24413 days 12:15:00,B02AB,Proteinase inhibitors,
+simulation63,4,24413 days 12:15:00,B02AB,Proteinase inhibitors,
+simulation63,4,24413 days 12:15:00,B05BB01,electrolytes,
+simulation63,4,24413 days 12:15:00,B05BB01,electrolytes,
+simulation63,4,24413 days 12:15:00,B05BB01,electrolytes,
+simulation63,4,24413 days 12:15:00,B05BB01,electrolytes,
+simulation63,4,24413 days 12:15:00,B05BB01,electrolytes,
+simulation63,4,24413 days 12:15:00,B05BB01,electrolytes,
+simulation63,4,24413 days 12:15:00,B05BB01,electrolytes,
+simulation63,4,24413 days 12:15:00,B05BB01,electrolytes,
+simulation63,4,24413 days 12:15:00,B05BB01,electrolytes,
+simulation63,4,24413 days 12:15:00,B05BB01,electrolytes,
+simulation63,4,24413 days 12:15:00,B05BB01,electrolytes,
+simulation63,4,24413 days 12:15:00,B05BB01,electrolytes,
+simulation63,4,24413 days 12:15:00,B05BB02,electrolytes with carbohydrates,
+simulation63,4,24413 days 12:15:00,B05BB02,electrolytes with carbohydrates,
+simulation63,4,24413 days 12:15:00,B05BB02,electrolytes with carbohydrates,
+simulation63,4,24413 days 12:15:00,B05BB02,electrolytes with carbohydrates,
+simulation63,4,24413 days 12:15:00,B05BB02,electrolytes with carbohydrates,
+simulation63,4,24413 days 12:15:00,H02AB02,dexamethasone,
+simulation63,4,24413 days 12:15:00,H02AB02,dexamethasone,
+simulation63,4,24413 days 12:15:00,H02AB02,dexamethasone,
+simulation63,4,24413 days 12:15:00,H02AB02,dexamethasone,
+simulation63,4,24413 days 12:15:00,H02AB02,dexamethasone,
+simulation63,4,24413 days 12:15:00,J01DD01,cefotaxime,
+simulation63,4,24413 days 12:15:00,J01DD01,cefotaxime,
+simulation63,4,24413 days 12:15:00,J01DD01,cefotaxime,
+simulation63,4,24413 days 12:15:00,J01DD01,cefotaxime,
+simulation63,4,24413 days 12:15:00,J01DD01,cefotaxime,
+simulation63,4,24413 days 12:15:00,J01DD04,ceftriaxone,
+simulation63,4,24413 days 12:15:00,J01DD04,ceftriaxone,
+simulation63,4,24413 days 12:15:00,J02AA01,amphotericin B,
+simulation63,4,24413 days 12:15:00,N01AH01,fentanyl,
+simulation63,4,24413 days 12:15:00,N01AH01,fentanyl,
+simulation63,4,24413 days 12:15:00,N01AH01,fentanyl,
+simulation63,4,24413 days 12:15:00,N01AH01,fentanyl,
+simulation63,4,24413 days 12:15:00,N01AH01,fentanyl,
+simulation63,4,24413 days 12:15:00,N01AH01,fentanyl,
+simulation63,4,24413 days 12:15:00,N01AH01,fentanyl,
+simulation63,4,24413 days 12:15:00,N01AH01,fentanyl,
+simulation63,4,24413 days 12:15:00,N01AH01,fentanyl,
+simulation63,4,24413 days 12:15:00,N01AH01,fentanyl,
+simulation63,4,24413 days 12:15:00,N01AH01,fentanyl,
+simulation63,4,24413 days 12:15:00,N01AX10,propofol,
+simulation63,4,24413 days 12:15:00,N01AX10,propofol,
+simulation63,4,24413 days 12:15:00,N01AX10,propofol,
+simulation63,4,24413 days 12:15:00,N01AX10,propofol,
+simulation63,4,24413 days 12:15:00,N01AX10,propofol,
+simulation63,4,24413 days 12:15:00,N01AX10,propofol,
+simulation63,4,24413 days 12:15:00,N01AX10,propofol,
+simulation63,4,24413 days 12:15:00,N01AX10,propofol,
+simulation63,4,24413 days 12:15:00,N01AX10,propofol,
+simulation63,4,24413 days 12:15:00,N01AX10,propofol,
+simulation63,4,24413 days 12:15:00,N01AX10,propofol,
+simulation63,4,24413 days 12:15:00,N01AX10,propofol,
+simulation63,4,24413 days 12:15:00,N01AX10,propofol,
+simulation63,4,24413 days 12:15:00,N01AX10,propofol,
+simulation63,4,24413 days 12:15:00,N01AX10,propofol,
+simulation63,4,24413 days 12:15:00,N01AX10,propofol,
+simulation63,4,24413 days 12:15:00,N01AX10,propofol,
+simulation63,4,24413 days 12:15:00,N01AX10,propofol,
+simulation63,4,24413 days 12:15:00,N01AX10,propofol,
+simulation63,4,24413 days 12:15:00,N01AX10,propofol,
+simulation63,4,24413 days 12:15:00,N01AX10,propofol,
+simulation63,4,24413 days 12:15:00,N01AX10,propofol,
+simulation63,4,24413 days 12:15:00,N01AX10,propofol,
+simulation63,4,24413 days 12:15:00,N01AX10,propofol,
+simulation63,4,24413 days 12:15:00,N01AX10,propofol,
+simulation63,4,24413 days 12:15:00,N01AX10,propofol,
+simulation63,4,24413 days 12:15:00,V07AB,"Solvents and diluting agents, incl. irrigating solutions",
+simulation63,4,24413 days 12:15:00,V07AB,"Solvents and diluting agents, incl. irrigating solutions",
+simulation63,4,24413 days 12:15:00,V07AB,"Solvents and diluting agents, incl. irrigating solutions",
+simulation63,4,24413 days 13:11:00,A02BC01,omeprazole,
+simulation63,4,24413 days 13:11:00,A02BC01,omeprazole,
+simulation63,4,24413 days 13:11:00,A02BC01,omeprazole,
+simulation63,4,24413 days 13:11:00,A02BC01,omeprazole,
+simulation63,4,24413 days 13:11:00,A02BC01,omeprazole,
+simulation63,4,24413 days 13:11:00,B05BB01,electrolytes,
+simulation63,4,24413 days 13:11:00,B05BB01,electrolytes,
+simulation63,4,24413 days 13:11:00,B05BB01,electrolytes,
+simulation63,4,24413 days 13:11:00,B05BB01,electrolytes,
+simulation63,4,24413 days 13:11:00,B05BB01,electrolytes,
+simulation63,6,24413 days 14:05:00,3H0800000019---51,"whole blood(with additive),blood gas analysis,pH,",7.004 no_unit
+simulation63,6,24413 days 14:05:00,3H0800000019---52,"whole blood(with additive),blood gas analysis,pCO2,",114.0 mmHg
+simulation63,6,24413 days 14:05:00,3H0800000019---53,"whole blood(with additive),blood gas analysis,pO2,",258.0 mmHg
+simulation63,6,24413 days 14:05:00,3H0800000019---54,"whole blood(with additive),blood gas analysis,actual bicarbonate (actual HCO3-),",22.8 mmol/L
+simulation63,6,24413 days 14:05:00,3H0800000019---55,"whole blood(with additive),blood gas analysis,base excess,",-9.1 mmol/L
+simulation63,6,24413 days 14:05:00,3H0800000019---56,"whole blood(with additive),blood gas analysis,oxygen saturation,",98.1 %
+simulation63,6,24413 days 14:05:00,3H0800000019---58,"whole blood(with additive),blood gas analysis,hemoglobin,",8.5 g/dL
+simulation63,6,24413 days 14:05:00,3H0800000019---59,"whole blood(with additive),blood gas analysis,hematocrit,",26.4 %
+simulation63,6,24413 days 14:05:00,3H0800000019---60,"whole blood(with additive),blood gas analysis,total oxygen content,",12.1 mL/dL
+simulation63,6,24413 days 14:05:00,3H0800000019---62,"whole blood(with additive),blood gas analysis,carboxyhemoglobin,",0.6 %
+simulation63,6,24413 days 14:05:00,3H0800000019---63,"whole blood(with additive),blood gas analysis,methemoglobin,",1.0 %
+simulation63,6,24413 days 14:05:00,3H0800000019---80,"whole blood(with additive),blood gas analysis,body temperature,",37.0 °C
+simulation63,6,24413 days 14:05:00,3H0800000019---81,"whole blood(with additive),blood gas analysis,ionized sodium,",139.0 mmol/L
+simulation63,6,24413 days 14:05:00,3H0800000019---82,"whole blood(with additive),blood gas analysis,ionized pottasium,",3.7 mmol/L
+simulation63,6,24413 days 14:05:00,3H0800000019---83,"whole blood(with additive),blood gas analysis,ionized chlorine,",111.0 mmol/L
+simulation63,6,24413 days 14:05:00,3H0800000019---84,"whole blood(with additive),blood gas analysis,ionized calcium,",1.21 mmol/L
+simulation63,6,24413 days 14:05:00,3H0800000019---85,"whole blood(with additive),blood gas analysis,glucose,",133.0 mg/dL
+simulation63,6,24413 days 14:05:00,3H0800000019---86,"whole blood(with additive),blood gas analysis,lactate,",0.5 mmol/L
+simulation63,6,24413 days 14:05:00,3H0800000019---88,"whole blood(with additive),blood gas analysis,bilirubin,",0.8 mg/dL
+simulation63,4,24413 days 14:11:00,B05XA01,potassium chloride,
+simulation63,4,24413 days 14:11:00,B05XA01,potassium chloride,
+simulation63,4,24413 days 14:11:00,B05XA01,potassium chloride,
+simulation63,4,24413 days 14:11:00,B05XA01,potassium chloride,
+simulation63,4,24413 days 14:11:00,B05XA01,potassium chloride,
+simulation63,4,24413 days 14:11:00,B05XA01,potassium chloride,
+simulation63,4,24413 days 14:11:00,B05XA01,potassium chloride,
+simulation63,4,24413 days 14:11:00,B05XA01,potassium chloride,
+simulation63,4,24413 days 14:11:00,B05XA01,potassium chloride,
+simulation63,4,24413 days 14:11:00,B05XA01,potassium chloride,
+simulation63,4,24413 days 14:11:00,B05XA01,potassium chloride,
+simulation63,4,24413 days 14:11:00,B05XA01,potassium chloride,
+simulation63,4,24413 days 14:38:00,H02AB02,dexamethasone,
+simulation63,4,24413 days 14:38:00,H02AB02,dexamethasone,
+simulation63,4,24413 days 14:46:00,N01AH01,fentanyl,
+simulation63,4,24413 days 14:46:00,N05CM18,dexmedetomidine,
+simulation63,4,24413 days 14:54:00,B05BB01,electrolytes,
+simulation63,4,24413 days 14:54:00,B05BB01,electrolytes,
+simulation63,6,24413 days 15:28:00,3H0800000019---51,"whole blood(with additive),blood gas analysis,pH,",7.285 no_unit
+simulation63,6,24413 days 15:28:00,3H0800000019---52,"whole blood(with additive),blood gas analysis,pCO2,",44.3 mmHg
+simulation63,6,24413 days 15:28:00,3H0800000019---53,"whole blood(with additive),blood gas analysis,pO2,",92.8 mmHg
+simulation63,6,24413 days 15:28:00,3H0800000019---54,"whole blood(with additive),blood gas analysis,actual bicarbonate (actual HCO3-),",20.4 mmol/L
+simulation63,6,24413 days 15:28:00,3H0800000019---55,"whole blood(with additive),blood gas analysis,base excess,",-5.4 mmol/L
+simulation63,6,24413 days 15:28:00,3H0800000019---56,"whole blood(with additive),blood gas analysis,oxygen saturation,",96.6 %
+simulation63,6,24413 days 15:28:00,3H0800000019---58,"whole blood(with additive),blood gas analysis,hemoglobin,",8.8 g/dL
+simulation63,6,24413 days 15:28:00,3H0800000019---59,"whole blood(with additive),blood gas analysis,hematocrit,",27.3 %
+simulation63,6,24413 days 15:28:00,3H0800000019---60,"whole blood(with additive),blood gas analysis,total oxygen content,",12.0 mL/dL
+simulation63,6,24413 days 15:28:00,3H0800000019---62,"whole blood(with additive),blood gas analysis,carboxyhemoglobin,",1.1 %
+simulation63,6,24413 days 15:28:00,3H0800000019---63,"whole blood(with additive),blood gas analysis,methemoglobin,",1.1 %
+simulation63,6,24413 days 15:28:00,3H0800000019---80,"whole blood(with additive),blood gas analysis,body temperature,",37.0 °C
+simulation63,6,24413 days 15:28:00,3H0800000019---81,"whole blood(with additive),blood gas analysis,ionized sodium,",139.0 mmol/L
+simulation63,6,24413 days 15:28:00,3H0800000019---82,"whole blood(with additive),blood gas analysis,ionized pottasium,",4.1 mmol/L
+simulation63,6,24413 days 15:28:00,3H0800000019---83,"whole blood(with additive),blood gas analysis,ionized chlorine,",111.0 mmol/L
+simulation63,6,24413 days 15:28:00,3H0800000019---84,"whole blood(with additive),blood gas analysis,ionized calcium,",1.19 mmol/L
+simulation63,6,24413 days 15:28:00,3H0800000019---85,"whole blood(with additive),blood gas analysis,glucose,",143.0 mg/dL
+simulation63,6,24413 days 15:28:00,3H0800000019---86,"whole blood(with additive),blood gas analysis,lactate,",0.6 mmol/L
+simulation63,6,24413 days 15:28:00,3H0800000019---88,"whole blood(with additive),blood gas analysis,bilirubin,",0.8 mg/dL
+simulation63,6,24413 days 15:59:00,3H0800000019---51,"whole blood(with additive),blood gas analysis,pH,",7.164 no_unit
+simulation63,6,24413 days 15:59:00,3H0800000019---52,"whole blood(with additive),blood gas analysis,pCO2,",59.3 mmHg
+simulation63,6,24413 days 15:59:00,3H0800000019---53,"whole blood(with additive),blood gas analysis,pO2,",44.0 mmHg
+simulation63,6,24413 days 15:59:00,3H0800000019---54,"whole blood(with additive),blood gas analysis,actual bicarbonate (actual HCO3-),",20.7 mmol/L
+simulation63,6,24413 days 15:59:00,3H0800000019---55,"whole blood(with additive),blood gas analysis,base excess,",-7.7 mmol/L
+simulation63,6,24413 days 15:59:00,3H0800000019---56,"whole blood(with additive),blood gas analysis,oxygen saturation,",61.8 %
+simulation63,6,24413 days 15:59:00,3H0800000019---58,"whole blood(with additive),blood gas analysis,hemoglobin,",8.8 g/dL
+simulation63,6,24413 days 15:59:00,3H0800000019---59,"whole blood(with additive),blood gas analysis,hematocrit,",27.1 %
+simulation63,6,24413 days 15:59:00,3H0800000019---60,"whole blood(with additive),blood gas analysis,total oxygen content,",7.7 mL/dL
+simulation63,6,24413 days 15:59:00,3H0800000019---62,"whole blood(with additive),blood gas analysis,carboxyhemoglobin,",1.0 %
+simulation63,6,24413 days 15:59:00,3H0800000019---63,"whole blood(with additive),blood gas analysis,methemoglobin,",1.1 %
+simulation63,6,24413 days 15:59:00,3H0800000019---80,"whole blood(with additive),blood gas analysis,body temperature,",37.0 °C
+simulation63,6,24413 days 15:59:00,3H0800000019---81,"whole blood(with additive),blood gas analysis,ionized sodium,",139.0 mmol/L
+simulation63,6,24413 days 15:59:00,3H0800000019---82,"whole blood(with additive),blood gas analysis,ionized pottasium,",4.4 mmol/L
+simulation63,6,24413 days 15:59:00,3H0800000019---83,"whole blood(with additive),blood gas analysis,ionized chlorine,",111.0 mmol/L
+simulation63,6,24413 days 15:59:00,3H0800000019---84,"whole blood(with additive),blood gas analysis,ionized calcium,",1.23 mmol/L
+simulation63,6,24413 days 15:59:00,3H0800000019---85,"whole blood(with additive),blood gas analysis,glucose,",154.0 mg/dL
+simulation63,6,24413 days 15:59:00,3H0800000019---86,"whole blood(with additive),blood gas analysis,lactate,",0.7 mmol/L
+simulation63,6,24413 days 15:59:00,3H0800000019---88,"whole blood(with additive),blood gas analysis,bilirubin,",0.9 mg/dL
+simulation63,4,24413 days 16:38:00,B05BB01,electrolytes,
+simulation63,4,24413 days 16:38:00,B05BB01,electrolytes,
+simulation63,4,24413 days 16:38:00,N05CD08,midazolam,
+simulation63,4,24413 days 16:38:00,N05CD08,midazolam,
+simulation63,4,24413 days 16:46:00,B05BB01,electrolytes,
+simulation63,4,24413 days 16:46:00,B05BB01,electrolytes,
+simulation63,4,24413 days 16:46:00,B05BB01,electrolytes,
+simulation63,4,24413 days 16:46:00,B05BB01,electrolytes,
+simulation63,4,24413 days 16:46:00,B05BB01,electrolytes,
+simulation63,4,24413 days 16:46:00,B05BB01,electrolytes,
+simulation63,4,24413 days 16:46:00,B05BB01,electrolytes,
+simulation63,4,24413 days 16:46:00,B05BB01,electrolytes,
+simulation63,4,24413 days 16:46:00,B05BB01,electrolytes,
+simulation63,4,24413 days 16:46:00,B05BB01,electrolytes,
+simulation63,4,24413 days 16:46:00,B05BB01,electrolytes,
+simulation63,4,24413 days 16:46:00,B05BB01,electrolytes,
+simulation63,4,24413 days 16:46:00,B05BB02,electrolytes with carbohydrates,
+simulation63,4,24413 days 16:46:00,C01CA03,norepinephrine,
+simulation63,4,24413 days 16:46:00,C01CA03,norepinephrine,
+simulation63,4,24413 days 16:46:00,C01CA03,norepinephrine,
+simulation63,4,24413 days 16:46:00,C01CA03,norepinephrine,
+simulation63,4,24413 days 16:46:00,C01CA03,norepinephrine,
+simulation63,4,24413 days 16:46:00,C01CA03,norepinephrine,
+simulation63,4,24413 days 16:46:00,C01CA03,norepinephrine,
+simulation63,4,24413 days 16:46:00,C01CA03,norepinephrine,
+simulation63,4,24413 days 16:46:00,C01CA03,norepinephrine,
+simulation63,4,24413 days 16:46:00,C01CA03,norepinephrine,
+simulation63,4,24413 days 16:46:00,M03AC09,rocuronium bromide,
+simulation63,4,24413 days 16:46:00,N05CD08,midazolam,
+simulation63,4,24413 days 16:46:00,N05CD08,midazolam,
+simulation63,4,24413 days 16:46:00,N05CD08,midazolam,
+simulation63,4,24413 days 16:46:00,N05CD08,midazolam,
+simulation63,4,24413 days 16:46:00,N05CD08,midazolam,
+simulation63,4,24413 days 16:46:00,N05CD08,midazolam,
+simulation63,4,24413 days 16:46:00,N05CD08,midazolam,
+simulation63,4,24413 days 16:46:00,N05CD08,midazolam,
+simulation63,4,24413 days 16:46:00,N05CD08,midazolam,
+simulation63,4,24413 days 16:46:00,N05CD08,midazolam,
+simulation63,6,24413 days 16:48:00,2A1600000019---51,"whole blood(with additive),hemogram,neutrophil,",82.9 %
+simulation63,6,24413 days 16:48:00,2A1600000019---54,"whole blood(with additive),hemogram,eosinophil,",0.0 %
+simulation63,6,24413 days 16:48:00,2A1600000019---55,"whole blood(with additive),hemogram,basophil,",0.0 %
+simulation63,6,24413 days 16:48:00,2A1600000019---56,"whole blood(with additive),hemogram,monocyte,",2.4 %
+simulation63,6,24413 days 16:48:00,2A1600000019---57,"whole blood(with additive),hemogram,lymphocyte,",14.3 %
+simulation63,6,24413 days 16:48:00,2A9900000019---51,"whole blood(with additive),CBC,red blood cell count,",270.0 ×10^4/μL
+simulation63,6,24413 days 16:48:00,2A9900000019---52,"whole blood(with additive),CBC,white blood cell count,",9.4 ×10^3/μL
+simulation63,6,24413 days 16:48:00,2A9900000019---53,"whole blood(with additive),CBC,hemoglobin,",8.1 g/dL
+simulation63,6,24413 days 16:48:00,2A9900000019---54,"whole blood(with additive),CBC,hematocrit,",25.6 %
+simulation63,6,24413 days 16:48:00,2A9900000019---55,"whole blood(with additive),CBC,platelet count,",7.2 ×10^4/μL
+simulation63,6,24413 days 16:48:00,2A9900000019---56,"whole blood(with additive),CBC,mean corpuscular volume,",94.2 fL
+simulation63,6,24413 days 16:48:00,2A9900000019---57,"whole blood(with additive),CBC,mean corpuscular hemoglobin,",29.8 pg
+simulation63,6,24413 days 16:48:00,2A9900000019---58,"whole blood(with additive),CBC,mean corpuscular hemoglobin concentration,",31.6 %
+simulation63,6,24413 days 16:48:00,2B0200000022---51,"plasma,activated partial thromboplastin time,coagulation time sample (sec),",30.8 sec
+simulation63,6,24413 days 16:48:00,2B0300000022---51,"plasma,prothrombin time,coagulation time sample (sec),",10.7 sec
+simulation63,6,24413 days 16:48:00,2B0300000022---53,"plasma,prothrombin time,PT activity (%),",112.8 %
+simulation63,6,24413 days 16:48:00,2B0300000022---55,"plasma,prothrombin time,PT ratio,",0.94 no_unit
+simulation63,6,24413 days 16:48:00,2B0300000022---57,"plasma,prothrombin time,international normalized ratio,",0.94 no_unit
+simulation63,6,24413 days 16:48:00,2B1000000022---01,"plasma,fibrinogen,quantitative,",553.0 mg/dL
+simulation63,6,24413 days 16:48:00,2B1400000022---01,"plasma,D-D dimer,quantitative,",1.5 μg/mL
+simulation63,6,24413 days 16:48:00,3A0100000023---01,"serum,total proteins,quantitative,",5.1 g/dL
+simulation63,6,24413 days 16:48:00,3A0150000023---01,"serum,albumin,quantitative,",2.3 g/dL
+simulation63,6,24413 days 16:48:00,3A0160000023---02,"serum,albumin/globulin ratio,composition ratio,",0.82 no_unit
+simulation63,6,24413 days 16:48:00,3B0100000023---01,"serum,creatine kinase,quantitative,",65.0 U/L
+simulation63,6,24413 days 16:48:00,3B0350000023---01,"serum,asparate aminotransferase,quantitative,",41.0 U/L
+simulation63,6,24413 days 16:48:00,3B0450000023---01,"serum,alanine aminotransferase,quantitative,",21.0 U/L
+simulation63,6,24413 days 16:48:00,3B0500000023---01,"serum,lactate dehydrogenase,quantitative,",365.0 U/L
+simulation63,6,24413 days 16:48:00,3B0700000023---01,"serum,alkaline phosphatase,quantitative,",71.0 U/L
+simulation63,6,24413 days 16:48:00,3B0900000023---01,"serum,gamma glutamyl transpeptidase,quantitative,",21.0 U/L
+simulation63,6,24413 days 16:48:00,3C0150000023---01,"serum,creatinine,quantitative,",0.76 mg/dL
+simulation63,6,24413 days 16:48:00,3C0200000023---01,"serum,uric acid,quantitative,",3.0 mg/dL
+simulation63,6,24413 days 16:48:00,3C0250000023---01,"serum,urea nitrogen,quantitative,",12.7 mg/dL
+simulation63,6,24413 days 16:48:00,3H0100000023---01,"serum,sodium,quantitative,",137.0 mmol/L
+simulation63,6,24413 days 16:48:00,3H0150000023---01,"serum,potassium,quantitative,",4.3 mmol/L
+simulation63,6,24413 days 16:48:00,3H0200000023---01,"serum,chloride,quantitative,",107.0 mmol/L
+simulation63,6,24413 days 16:48:00,3H0250000023---01,"serum,magnesium,quantitative,",1.9 mg/dL
+simulation63,6,24413 days 16:48:00,3H0300000023---01,"serum,calcium,quantitative,",7.4 mg/dL
+simulation63,6,24413 days 16:48:00,3H0380000023---01,"serum,adjusted calcium,quantitative,",9.1 mg/dL
+simulation63,6,24413 days 16:48:00,3H0400000023---01,"serum,inorganic phosphate,quantitative,",3.5 mg/dL
+simulation63,6,24413 days 16:48:00,3J0100000023---01,"serum,bilirubins total,quantitative,",0.6 mg/dL
+simulation63,6,24413 days 16:48:00,5C0700000023---01,"serum,C-reactive protein,quantitative,",16.67 mg/dL
+simulation63,6,24413 days 16:48:00,8A0650000023---01,"serum,estimated GFR based on creatinine,quantitative,",58.3 mL/min/1.73m2
+simulation63,4,24413 days 16:52:00,B01AB01,heparin,
+simulation63,4,24413 days 16:52:00,B01AB01,heparin,
+simulation63,4,24413 days 16:52:00,B01AB01,heparin,
+simulation63,4,24413 days 16:52:00,B01AB01,heparin,
+simulation63,4,24413 days 16:52:00,B01AB01,heparin,
+simulation63,4,24413 days 16:52:00,B05BB01,electrolytes,
+simulation63,4,24413 days 16:52:00,B05BB01,electrolytes,
+simulation63,4,24413 days 16:52:00,B05BB01,electrolytes,
+simulation63,4,24413 days 16:52:00,B05BB01,electrolytes,
+simulation63,4,24413 days 16:52:00,B05BB01,electrolytes,
+simulation63,4,24413 days 16:52:00,B05BB01,electrolytes,
+simulation63,4,24413 days 16:52:00,B05BB01,electrolytes,
+simulation63,4,24413 days 16:52:00,B05BB01,electrolytes,
+simulation63,4,24413 days 16:52:00,N05CM18,dexmedetomidine,
+simulation63,4,24413 days 16:52:00,N05CM18,dexmedetomidine,
+simulation63,4,24413 days 16:52:00,N05CM18,dexmedetomidine,
+simulation63,4,24413 days 16:52:00,N05CM18,dexmedetomidine,
+simulation63,4,24413 days 16:52:00,N05CM18,dexmedetomidine,
+simulation63,4,24413 days 16:52:00,N05CM18,dexmedetomidine,
+simulation63,4,24413 days 16:52:00,N05CM18,dexmedetomidine,
+simulation63,4,24413 days 16:52:00,N05CM18,dexmedetomidine,
+simulation63,4,24413 days 16:52:00,N05CM18,dexmedetomidine,
+simulation63,6,24413 days 17:08:00,3H0800000019---51,"whole blood(with additive),blood gas analysis,pH,",7.306 no_unit
+simulation63,6,24413 days 17:08:00,3H0800000019---52,"whole blood(with additive),blood gas analysis,pCO2,",38.6 mmHg
+simulation63,6,24413 days 17:08:00,3H0800000019---53,"whole blood(with additive),blood gas analysis,pO2,",147.0 mmHg
+simulation63,6,24413 days 17:08:00,3H0800000019---54,"whole blood(with additive),blood gas analysis,actual bicarbonate (actual HCO3-),",18.7 mmol/L
+simulation63,6,24413 days 17:08:00,3H0800000019---55,"whole blood(with additive),blood gas analysis,base excess,",-6.5 mmol/L
+simulation63,6,24413 days 17:08:00,3H0800000019---56,"whole blood(with additive),blood gas analysis,oxygen saturation,",98.6 %
+simulation63,6,24413 days 17:08:00,3H0800000019---58,"whole blood(with additive),blood gas analysis,hemoglobin,",8.6 g/dL
+simulation63,6,24413 days 17:08:00,3H0800000019---59,"whole blood(with additive),blood gas analysis,hematocrit,",26.8 %
+simulation63,6,24413 days 17:08:00,3H0800000019---60,"whole blood(with additive),blood gas analysis,total oxygen content,",11.9 mL/dL
+simulation63,6,24413 days 17:08:00,3H0800000019---62,"whole blood(with additive),blood gas analysis,carboxyhemoglobin,",1.1 %
+simulation63,6,24413 days 17:08:00,3H0800000019---63,"whole blood(with additive),blood gas analysis,methemoglobin,",1.2 %
+simulation63,6,24413 days 17:08:00,3H0800000019---80,"whole blood(with additive),blood gas analysis,body temperature,",37.0 °C
+simulation63,6,24413 days 17:08:00,3H0800000019---81,"whole blood(with additive),blood gas analysis,ionized sodium,",138.0 mmol/L
+simulation63,6,24413 days 17:08:00,3H0800000019---82,"whole blood(with additive),blood gas analysis,ionized pottasium,",4.3 mmol/L
+simulation63,6,24413 days 17:08:00,3H0800000019---83,"whole blood(with additive),blood gas analysis,ionized chlorine,",112.0 mmol/L
+simulation63,6,24413 days 17:08:00,3H0800000019---84,"whole blood(with additive),blood gas analysis,ionized calcium,",1.17 mmol/L
+simulation63,6,24413 days 17:08:00,3H0800000019---85,"whole blood(with additive),blood gas analysis,glucose,",159.0 mg/dL
+simulation63,6,24413 days 17:08:00,3H0800000019---86,"whole blood(with additive),blood gas analysis,lactate,",0.8 mmol/L
+simulation63,6,24413 days 17:08:00,3H0800000019---88,"whole blood(with additive),blood gas analysis,bilirubin,",1.1 mg/dL
+simulation63,4,24413 days 17:12:00,B05BB01,electrolytes,
+simulation63,4,24413 days 17:12:00,N05CD08,midazolam,
+simulation63,6,24413 days 17:17:00,5E1480000023---11,"serum,Aspergillus antigen,interpretation,",(-)
+simulation63,6,24413 days 17:17:00,5E3010000019---54,"whole blood(with additive),interferon-gamma release assay,negative control,",0.0 no_unit
+simulation63,6,24413 days 17:17:00,5E3010000019---55,"whole blood(with additive),interferon-gamma release assay,positive control,",410.0 no_unit
+simulation63,6,24413 days 17:17:00,5E3010000019---56,"whole blood(with additive),interferon-gamma release assay,ESAT-6,",0.0 no_unit
+simulation63,6,24413 days 17:17:00,5E3010000019---57,"whole blood(with additive),interferon-gamma release assay,CFP10,",0.0 no_unit
+simulation63,4,24413 days 17:30:00,B05BA10,combinations,
+simulation63,4,24413 days 17:30:00,B05BA10,combinations,
+simulation63,6,24413 days 17:40:00,3H0800000019---51,"whole blood(with additive),blood gas analysis,pH,",7.263 no_unit
+simulation63,6,24413 days 17:40:00,3H0800000019---52,"whole blood(with additive),blood gas analysis,pCO2,",44.9 mmHg
+simulation63,6,24413 days 17:40:00,3H0800000019---53,"whole blood(with additive),blood gas analysis,pO2,",72.8 mmHg
+simulation63,6,24413 days 17:40:00,3H0800000019---54,"whole blood(with additive),blood gas analysis,actual bicarbonate (actual HCO3-),",19.5 mmol/L
+simulation63,6,24413 days 17:40:00,3H0800000019---55,"whole blood(with additive),blood gas analysis,base excess,",-6.7 mmol/L
+simulation63,6,24413 days 17:40:00,3H0800000019---56,"whole blood(with additive),blood gas analysis,oxygen saturation,",93.5 %
+simulation63,6,24413 days 17:40:00,3H0800000019---58,"whole blood(with additive),blood gas analysis,hemoglobin,",8.8 g/dL
+simulation63,6,24413 days 17:40:00,3H0800000019---59,"whole blood(with additive),blood gas analysis,hematocrit,",27.3 %
+simulation63,6,24413 days 17:40:00,3H0800000019---60,"whole blood(with additive),blood gas analysis,total oxygen content,",11.4 mL/dL
+simulation63,6,24413 days 17:40:00,3H0800000019---62,"whole blood(with additive),blood gas analysis,carboxyhemoglobin,",1.3 %
+simulation63,6,24413 days 17:40:00,3H0800000019---63,"whole blood(with additive),blood gas analysis,methemoglobin,",1.2 %
+simulation63,6,24413 days 17:40:00,3H0800000019---80,"whole blood(with additive),blood gas analysis,body temperature,",37.0 °C
+simulation63,6,24413 days 17:40:00,3H0800000019---81,"whole blood(with additive),blood gas analysis,ionized sodium,",138.0 mmol/L
+simulation63,6,24413 days 17:40:00,3H0800000019---82,"whole blood(with additive),blood gas analysis,ionized pottasium,",4.3 mmol/L
+simulation63,6,24413 days 17:40:00,3H0800000019---83,"whole blood(with additive),blood gas analysis,ionized chlorine,",112.0 mmol/L
+simulation63,6,24413 days 17:40:00,3H0800000019---84,"whole blood(with additive),blood gas analysis,ionized calcium,",1.18 mmol/L
+simulation63,6,24413 days 17:40:00,3H0800000019---85,"whole blood(with additive),blood gas analysis,glucose,",176.0 mg/dL
+simulation63,6,24413 days 17:40:00,3H0800000019---86,"whole blood(with additive),blood gas analysis,lactate,",0.8 mmol/L
+simulation63,6,24413 days 17:40:00,3H0800000019---88,"whole blood(with additive),blood gas analysis,bilirubin,",1.1 mg/dL
+simulation63,6,24413 days 21:57:00,3H0800000019---51,"whole blood(with additive),blood gas analysis,pH,",7.333 no_unit
+simulation63,6,24413 days 21:57:00,3H0800000019---52,"whole blood(with additive),blood gas analysis,pCO2,",38.9 mmHg
+simulation63,6,24413 days 21:57:00,3H0800000019---53,"whole blood(with additive),blood gas analysis,pO2,",102.0 mmHg
+simulation63,6,24413 days 21:57:00,3H0800000019---54,"whole blood(with additive),blood gas analysis,actual bicarbonate (actual HCO3-),",20.1 mmol/L
+simulation63,6,24413 days 21:57:00,3H0800000019---55,"whole blood(with additive),blood gas analysis,base excess,",-4.8 mmol/L
+simulation63,6,24413 days 21:57:00,3H0800000019---56,"whole blood(with additive),blood gas analysis,oxygen saturation,",97.8 %
+simulation63,6,24413 days 21:57:00,3H0800000019---58,"whole blood(with additive),blood gas analysis,hemoglobin,",8.7 g/dL
+simulation63,6,24413 days 21:57:00,3H0800000019---59,"whole blood(with additive),blood gas analysis,hematocrit,",27.0 %
+simulation63,6,24413 days 21:57:00,3H0800000019---60,"whole blood(with additive),blood gas analysis,total oxygen content,",11.8 mL/dL
+simulation63,6,24413 days 21:57:00,3H0800000019---62,"whole blood(with additive),blood gas analysis,carboxyhemoglobin,",1.2 %
+simulation63,6,24413 days 21:57:00,3H0800000019---63,"whole blood(with additive),blood gas analysis,methemoglobin,",1.2 %
+simulation63,6,24413 days 21:57:00,3H0800000019---80,"whole blood(with additive),blood gas analysis,body temperature,",37.0 °C
+simulation63,6,24413 days 21:57:00,3H0800000019---81,"whole blood(with additive),blood gas analysis,ionized sodium,",139.0 mmol/L
+simulation63,6,24413 days 21:57:00,3H0800000019---82,"whole blood(with additive),blood gas analysis,ionized pottasium,",4.0 mmol/L
+simulation63,6,24413 days 21:57:00,3H0800000019---83,"whole blood(with additive),blood gas analysis,ionized chlorine,",114.0 mmol/L
+simulation63,6,24413 days 21:57:00,3H0800000019---84,"whole blood(with additive),blood gas analysis,ionized calcium,",1.17 mmol/L
+simulation63,6,24413 days 21:57:00,3H0800000019---85,"whole blood(with additive),blood gas analysis,glucose,",148.0 mg/dL
+simulation63,6,24413 days 21:57:00,3H0800000019---86,"whole blood(with additive),blood gas analysis,lactate,",1.1 mmol/L
+simulation63,6,24413 days 21:57:00,3H0800000019---88,"whole blood(with additive),blood gas analysis,bilirubin,",1.0 mg/dL
+simulation63,4,24413 days 22:17:00,B05BB01,electrolytes,
+simulation63,4,24413 days 22:17:00,B05BB01,electrolytes,
+simulation63,4,24413 days 22:17:00,B05BB01,electrolytes,
+simulation63,4,24413 days 22:17:00,B05BB01,electrolytes,
+simulation63,4,24413 days 22:17:00,C03CA01,furosemide,
+simulation63,4,24413 days 22:17:00,C03CA01,furosemide,
+simulation63,4,24413 days 22:17:00,C03CA01,furosemide,
+simulation63,4,24413 days 22:17:00,C03CA01,furosemide,
+simulation63,6,24414 days 01:03:00,3H0800000019---51,"whole blood(with additive),blood gas analysis,pH,",7.431 no_unit
+simulation63,6,24414 days 01:03:00,3H0800000019---52,"whole blood(with additive),blood gas analysis,pCO2,",31.7 mmHg
+simulation63,6,24414 days 01:03:00,3H0800000019---53,"whole blood(with additive),blood gas analysis,pO2,",84.5 mmHg
+simulation63,6,24414 days 01:03:00,3H0800000019---54,"whole blood(with additive),blood gas analysis,actual bicarbonate (actual HCO3-),",20.7 mmol/L
+simulation63,6,24414 days 01:03:00,3H0800000019---55,"whole blood(with additive),blood gas analysis,base excess,",-2.8 mmol/L
+simulation63,6,24414 days 01:03:00,3H0800000019---56,"whole blood(with additive),blood gas analysis,oxygen saturation,",96.9 %
+simulation63,6,24414 days 01:03:00,3H0800000019---58,"whole blood(with additive),blood gas analysis,hemoglobin,",8.4 g/dL
+simulation63,6,24414 days 01:03:00,3H0800000019---59,"whole blood(with additive),blood gas analysis,hematocrit,",26.2 %
+simulation63,6,24414 days 01:03:00,3H0800000019---60,"whole blood(with additive),blood gas analysis,total oxygen content,",11.4 mL/dL
+simulation63,6,24414 days 01:03:00,3H0800000019---62,"whole blood(with additive),blood gas analysis,carboxyhemoglobin,",1.4 %
+simulation63,6,24414 days 01:03:00,3H0800000019---63,"whole blood(with additive),blood gas analysis,methemoglobin,",1.2 %
+simulation63,6,24414 days 01:03:00,3H0800000019---80,"whole blood(with additive),blood gas analysis,body temperature,",37.0 °C
+simulation63,6,24414 days 01:03:00,3H0800000019---81,"whole blood(with additive),blood gas analysis,ionized sodium,",137.0 mmol/L
+simulation63,6,24414 days 01:03:00,3H0800000019---82,"whole blood(with additive),blood gas analysis,ionized pottasium,",3.9 mmol/L
+simulation63,6,24414 days 01:03:00,3H0800000019---83,"whole blood(with additive),blood gas analysis,ionized chlorine,",111.0 mmol/L
+simulation63,6,24414 days 01:03:00,3H0800000019---84,"whole blood(with additive),blood gas analysis,ionized calcium,",1.13 mmol/L
+simulation63,6,24414 days 01:03:00,3H0800000019---85,"whole blood(with additive),blood gas analysis,glucose,",168.0 mg/dL
+simulation63,6,24414 days 01:03:00,3H0800000019---86,"whole blood(with additive),blood gas analysis,lactate,",1.3 mmol/L
+simulation63,6,24414 days 01:03:00,3H0800000019---88,"whole blood(with additive),blood gas analysis,bilirubin,",1.0 mg/dL
+simulation63,6,24414 days 06:15:00,3H0800000019---51,"whole blood(with additive),blood gas analysis,pH,",7.446 no_unit
+simulation63,6,24414 days 06:15:00,3H0800000019---52,"whole blood(with additive),blood gas analysis,pCO2,",32.9 mmHg
+simulation63,6,24414 days 06:15:00,3H0800000019---53,"whole blood(with additive),blood gas analysis,pO2,",81.9 mmHg
+simulation63,6,24414 days 06:15:00,3H0800000019---54,"whole blood(with additive),blood gas analysis,actual bicarbonate (actual HCO3-),",22.3 mmol/L
+simulation63,6,24414 days 06:15:00,3H0800000019---55,"whole blood(with additive),blood gas analysis,base excess,",-0.9 mmol/L
+simulation63,6,24414 days 06:15:00,3H0800000019---56,"whole blood(with additive),blood gas analysis,oxygen saturation,",96.8 %
+simulation63,6,24414 days 06:15:00,3H0800000019---58,"whole blood(with additive),blood gas analysis,hemoglobin,",8.9 g/dL
+simulation63,6,24414 days 06:15:00,3H0800000019---59,"whole blood(with additive),blood gas analysis,hematocrit,",27.6 %
+simulation63,6,24414 days 06:15:00,3H0800000019---60,"whole blood(with additive),blood gas analysis,total oxygen content,",11.9 mL/dL
+simulation63,6,24414 days 06:15:00,3H0800000019---62,"whole blood(with additive),blood gas analysis,carboxyhemoglobin,",1.2 %
+simulation63,6,24414 days 06:15:00,3H0800000019---63,"whole blood(with additive),blood gas analysis,methemoglobin,",1.2 %
+simulation63,6,24414 days 06:15:00,3H0800000019---80,"whole blood(with additive),blood gas analysis,body temperature,",37.0 °C
+simulation63,6,24414 days 06:15:00,3H0800000019---81,"whole blood(with additive),blood gas analysis,ionized sodium,",137.0 mmol/L
+simulation63,6,24414 days 06:15:00,3H0800000019---82,"whole blood(with additive),blood gas analysis,ionized pottasium,",3.5 mmol/L
+simulation63,6,24414 days 06:15:00,3H0800000019---83,"whole blood(with additive),blood gas analysis,ionized chlorine,",109.0 mmol/L
+simulation63,6,24414 days 06:15:00,3H0800000019---84,"whole blood(with additive),blood gas analysis,ionized calcium,",1.12 mmol/L
+simulation63,6,24414 days 06:15:00,3H0800000019---85,"whole blood(with additive),blood gas analysis,glucose,",158.0 mg/dL
+simulation63,6,24414 days 06:15:00,3H0800000019---86,"whole blood(with additive),blood gas analysis,lactate,",1.7 mmol/L
+simulation63,6,24414 days 06:15:00,3H0800000019---88,"whole blood(with additive),blood gas analysis,bilirubin,",0.8 mg/dL
+simulation63,6,24414 days 06:43:00,1A0300000001---01,"urine,specific gravity [urine],quantitative,",1.025 no_unit
+simulation63,6,24414 days 06:43:00,1A9900000001---52,"urine,urinalysis qualitative/semiquantitative,pH,",5.0 no_unit
+simulation63,6,24414 days 06:43:00,1A9900000001---53,"urine,urinalysis qualitative/semiquantitative,protein (qualitative),",(-)
+simulation63,6,24414 days 06:43:00,1A9900000001---54,"urine,urinalysis qualitative/semiquantitative,glucose (qualitative),",(-)
+simulation63,6,24414 days 06:43:00,1A9900000001---58,"urine,urinalysis qualitative/semiquantitative,ketone bodies (qualitative),",(-)
+simulation63,6,24414 days 06:43:00,1A9900000001---59,"urine,urinalysis qualitative/semiquantitative,occult blood (qualitative),",(-)
+simulation63,6,24414 days 06:43:00,1A9900000001---62,"urine,urinalysis qualitative/semiquantitative,leukocytes (test paper) (qualitative),",(-)
+simulation63,6,24414 days 06:43:00,1A9900000001---64,"urine,urinalysis qualitative/semiquantitative,nitrite,",(-)
+simulation63,6,24414 days 06:43:00,2A1600000019---51,"whole blood(with additive),hemogram,neutrophil,",90.3 %
+simulation63,6,24414 days 06:43:00,2A1600000019---54,"whole blood(with additive),hemogram,eosinophil,",0.0 %
+simulation63,6,24414 days 06:43:00,2A1600000019---55,"whole blood(with additive),hemogram,basophil,",0.1 %
+simulation63,6,24414 days 06:43:00,2A1600000019---56,"whole blood(with additive),hemogram,monocyte,",2.4 %
+simulation63,6,24414 days 06:43:00,2A1600000019---57,"whole blood(with additive),hemogram,lymphocyte,",7.2 %
+simulation63,6,24414 days 06:43:00,2A9900000019---51,"whole blood(with additive),CBC,red blood cell count,",285.0 ×10^4/μL
+simulation63,6,24414 days 06:43:00,2A9900000019---52,"whole blood(with additive),CBC,white blood cell count,",12.0 ×10^3/μL
+simulation63,6,24414 days 06:43:00,2A9900000019---53,"whole blood(with additive),CBC,hemoglobin,",8.6 g/dL
+simulation63,6,24414 days 06:43:00,2A9900000019---54,"whole blood(with additive),CBC,hematocrit,",26.1 %
+simulation63,6,24414 days 06:43:00,2A9900000019---55,"whole blood(with additive),CBC,platelet count,",8.5 ×10^4/μL
+simulation63,6,24414 days 06:43:00,2A9900000019---56,"whole blood(with additive),CBC,mean corpuscular volume,",91.4 fL
+simulation63,6,24414 days 06:43:00,2A9900000019---57,"whole blood(with additive),CBC,mean corpuscular hemoglobin,",30.2 pg
+simulation63,6,24414 days 06:43:00,2A9900000019---58,"whole blood(with additive),CBC,mean corpuscular hemoglobin concentration,",33.1 %
+simulation63,6,24414 days 06:43:00,2B0200000022---51,"plasma,activated partial thromboplastin time,coagulation time sample (sec),",34.1 sec
+simulation63,6,24414 days 06:43:00,2B0300000022---51,"plasma,prothrombin time,coagulation time sample (sec),",10.6 sec
+simulation63,6,24414 days 06:43:00,2B0300000022---53,"plasma,prothrombin time,PT activity (%),",115.1 %
+simulation63,6,24414 days 06:43:00,2B0300000022---55,"plasma,prothrombin time,PT ratio,",0.93 no_unit
+simulation63,6,24414 days 06:43:00,2B0300000022---57,"plasma,prothrombin time,international normalized ratio,",0.93 no_unit
+simulation63,6,24414 days 06:43:00,2B1000000022---01,"plasma,fibrinogen,quantitative,",717.0 mg/dL
+simulation63,6,24414 days 06:43:00,2B1400000022---01,"plasma,D-D dimer,quantitative,",1.1 μg/mL
+simulation63,6,24414 days 06:43:00,3A0100000023---01,"serum,total proteins,quantitative,",5.4 g/dL
+simulation63,6,24414 days 06:43:00,3A0150000023---01,"serum,albumin,quantitative,",2.3 g/dL
+simulation63,6,24414 days 06:43:00,3A0160000023---02,"serum,albumin/globulin ratio,composition ratio,",0.77 no_unit
+simulation63,6,24414 days 06:43:00,3B0100000023---01,"serum,creatine kinase,quantitative,",110.0 U/L
+simulation63,6,24414 days 06:43:00,3B0350000023---01,"serum,asparate aminotransferase,quantitative,",36.0 U/L
+simulation63,6,24414 days 06:43:00,3B0450000023---01,"serum,alanine aminotransferase,quantitative,",22.0 U/L
+simulation63,6,24414 days 06:43:00,3B0500000023---01,"serum,lactate dehydrogenase,quantitative,",378.0 U/L
+simulation63,6,24414 days 06:43:00,3B0700000023---01,"serum,alkaline phosphatase,quantitative,",75.0 U/L
+simulation63,6,24414 days 06:43:00,3B0900000023---01,"serum,gamma glutamyl transpeptidase,quantitative,",24.0 U/L
+simulation63,6,24414 days 06:43:00,3B1600000023---01,"serum,amylase,quantitative,",296.0 U/L
+simulation63,6,24414 days 06:43:00,3C0150000001---01,"urine,creatinine,quantitative,",54.0 mg/dL
+simulation63,6,24414 days 06:43:00,3C0150000023---01,"serum,creatinine,quantitative,",1.03 mg/dL
+simulation63,6,24414 days 06:43:00,3C0250000023---01,"serum,urea nitrogen,quantitative,",17.8 mg/dL
+simulation63,6,24414 days 06:43:00,3H0100000001---01,"urine,sodium,quantitative,",59.0 mmol/L
+simulation63,6,24414 days 06:43:00,3H0100000023---01,"serum,sodium,quantitative,",137.0 mmol/L
+simulation63,6,24414 days 06:43:00,3H0150000001---01,"urine,potassium,quantitative,",41.8 mmol/L
+simulation63,6,24414 days 06:43:00,3H0150000023---01,"serum,potassium,quantitative,",3.5 mmol/L
+simulation63,6,24414 days 06:43:00,3H0200000001---01,"urine,chloride,quantitative,",149.0 mmol/L
+simulation63,6,24414 days 06:43:00,3H0200000023---01,"serum,chloride,quantitative,",105.0 mmol/L
+simulation63,6,24414 days 06:43:00,3H0250000023---01,"serum,magnesium,quantitative,",2.0 mg/dL
+simulation63,6,24414 days 06:43:00,3H0300000023---01,"serum,calcium,quantitative,",7.7 mg/dL
+simulation63,6,24414 days 06:43:00,3H0380000023---01,"serum,adjusted calcium,quantitative,",9.4 mg/dL
+simulation63,6,24414 days 06:43:00,3H0400000023---01,"serum,inorganic phosphate,quantitative,",2.6 mg/dL
+simulation63,6,24414 days 06:43:00,3J0100000023---01,"serum,bilirubins total,quantitative,",0.5 mg/dL
+simulation63,6,24414 days 06:43:00,5C0700000023---01,"serum,C-reactive protein,quantitative,",26.03 mg/dL
+simulation63,6,24414 days 06:43:00,5C2300000001---01,"urine,neutrophil gelatinase-associated lipocalin,quantitative,",171.2 ng/mL
+simulation63,6,24414 days 06:43:00,5C2300000001---28,"urine,neutrophil gelatinase-associated lipocalin,creatinine-adjusted,",300.0 μg/gCr
+simulation63,6,24414 days 06:43:00,8A0650000023---01,"serum,estimated GFR based on creatinine,quantitative,",41.6 mL/min/1.73m2
+simulation63,6,24414 days 08:36:00,2B1200000022---01,"plasma,fibrin and fibrinogen degradation products,quantitative,",4.1 μg/mL
+simulation63,6,24414 days 08:36:00,2B2000000022---31,"plasma,antithrombin,ratio to control,",89.0 %
+simulation63,6,24414 days 08:36:00,2B2100000022---01,"plasma,thrombin-antithrombin complex,quantitative,",6.0 ng/mL
+simulation63,6,24414 days 08:36:00,2B2800000022---01,"plasma,alpha2 plasmin inhibitor plasmin complex,quantitative,",1.9 μg/mL
+simulation63,6,24414 days 08:36:00,3B1800000023---01,"serum,lipase,quantitative,",695.0 U/L
+simulation63,6,24414 days 08:36:00,3D0460000019---02,"whole blood(with additive),hemoglobin A1c(NGSP),composition ratio,",6.9 %
+simulation63,6,24414 days 08:36:00,3F0150000023---01,"serum,triglyceride,quantitative,",125.0 mg/dL
+simulation63,6,24414 days 08:36:00,3F0500000023---01,"serum,cholesterol total,quantitative,",127.0 mg/dL
+simulation63,6,24414 days 08:36:00,3F0690000023---01,"serum,non HDL-cholesterol,quantitative,",83.0 mg/dL
+simulation63,6,24414 days 08:36:00,3F0700000023---01,"serum,HDL-cholesterol,quantitative,",43.8 mg/dL
+simulation63,6,24414 days 08:36:00,3F0770000023---01,"serum,LDL-cholesterol,quantitative,",58.0 mg/dL
+simulation63,6,24414 days 08:36:00,4A0250000022---01,"plasma,adrenocorticotropic hormone,quantitative,",9.4 pg/mL
+simulation63,6,24414 days 08:36:00,4D0400000023---01,"serum,cortisol,quantitative,",29.5 μg/dL
+simulation63,6,24414 days 08:36:00,5C0950000023---01,"serum,ferritin,quantitative,",404.0 ng/mL
+simulation63,6,24414 days 08:36:00,5C2100000023---01,"serum,KL-6,quantitative,",661.0 U/mL
+simulation63,6,24414 days 08:36:00,5C2150000023---01,"serum,procalcitonin,quantitative,",0.18 ng/mL
+simulation63,6,24414 days 08:36:00,5E1510000022---01,"plasma,(1 3)-beta-D-glucan,quantitative,",19.5 pg/mL
+simulation63,6,24414 days 09:52:00,5F6251450063---11,"nasal drip nasal cavity nasopharynx exfoliative,SARS-CoV-2,interpretation,viral RNA",(+)
+simulation63,6,24414 days 12:06:00,3H0800000019---51,"whole blood(with additive),blood gas analysis,pH,",7.446 no_unit
+simulation63,6,24414 days 12:06:00,3H0800000019---52,"whole blood(with additive),blood gas analysis,pCO2,",31.8 mmHg
+simulation63,6,24414 days 12:06:00,3H0800000019---53,"whole blood(with additive),blood gas analysis,pO2,",65.4 mmHg
+simulation63,6,24414 days 12:06:00,3H0800000019---54,"whole blood(with additive),blood gas analysis,actual bicarbonate (actual HCO3-),",21.4 mmol/L
+simulation63,6,24414 days 12:06:00,3H0800000019---55,"whole blood(with additive),blood gas analysis,base excess,",-1.8 mmol/L
+simulation63,6,24414 days 12:06:00,3H0800000019---56,"whole blood(with additive),blood gas analysis,oxygen saturation,",93.5 %
+simulation63,6,24414 days 12:06:00,3H0800000019---58,"whole blood(with additive),blood gas analysis,hemoglobin,",8.8 g/dL
+simulation63,6,24414 days 12:06:00,3H0800000019---59,"whole blood(with additive),blood gas analysis,hematocrit,",27.3 %
+simulation63,6,24414 days 12:06:00,3H0800000019---60,"whole blood(with additive),blood gas analysis,total oxygen content,",11.2 mL/dL
+simulation63,6,24414 days 12:06:00,3H0800000019---62,"whole blood(with additive),blood gas analysis,carboxyhemoglobin,",1.2 %
+simulation63,6,24414 days 12:06:00,3H0800000019---63,"whole blood(with additive),blood gas analysis,methemoglobin,",1.1 %
+simulation63,6,24414 days 12:06:00,3H0800000019---80,"whole blood(with additive),blood gas analysis,body temperature,",37.0 °C
+simulation63,6,24414 days 12:06:00,3H0800000019---81,"whole blood(with additive),blood gas analysis,ionized sodium,",141.0 mmol/L
+simulation63,6,24414 days 12:06:00,3H0800000019---82,"whole blood(with additive),blood gas analysis,ionized pottasium,",3.8 mmol/L
+simulation63,6,24414 days 12:06:00,3H0800000019---83,"whole blood(with additive),blood gas analysis,ionized chlorine,",106.0 mmol/L
+simulation63,6,24414 days 12:06:00,3H0800000019---84,"whole blood(with additive),blood gas analysis,ionized calcium,",1.14 mmol/L
+simulation63,6,24414 days 12:06:00,3H0800000019---85,"whole blood(with additive),blood gas analysis,glucose,",149.0 mg/dL
+simulation63,6,24414 days 12:06:00,3H0800000019---86,"whole blood(with additive),blood gas analysis,lactate,",1.3 mmol/L
+simulation63,6,24414 days 12:06:00,3H0800000019---88,"whole blood(with additive),blood gas analysis,bilirubin,",0.9 mg/dL
+simulation63,6,24414 days 13:55:00,3H0800000019---51,"whole blood(with additive),blood gas analysis,pH,",7.353 no_unit
+simulation63,6,24414 days 13:55:00,3H0800000019---52,"whole blood(with additive),blood gas analysis,pCO2,",41.7 mmHg
+simulation63,6,24414 days 13:55:00,3H0800000019---53,"whole blood(with additive),blood gas analysis,pO2,",45.7 mmHg
+simulation63,6,24414 days 13:55:00,3H0800000019---54,"whole blood(with additive),blood gas analysis,actual bicarbonate (actual HCO3-),",22.7 mmol/L
+simulation63,6,24414 days 13:55:00,3H0800000019---55,"whole blood(with additive),blood gas analysis,base excess,",-2.2 mmol/L
+simulation63,6,24414 days 13:55:00,3H0800000019---56,"whole blood(with additive),blood gas analysis,oxygen saturation,",77.6 %
+simulation63,6,24414 days 13:55:00,3H0800000019---58,"whole blood(with additive),blood gas analysis,hemoglobin,",7.8 g/dL
+simulation63,6,24414 days 13:55:00,3H0800000019---59,"whole blood(with additive),blood gas analysis,hematocrit,",24.3 %
+simulation63,6,24414 days 13:55:00,3H0800000019---60,"whole blood(with additive),blood gas analysis,total oxygen content,",8.3 mL/dL
+simulation63,6,24414 days 13:55:00,3H0800000019---62,"whole blood(with additive),blood gas analysis,carboxyhemoglobin,",1.1 %
+simulation63,6,24414 days 13:55:00,3H0800000019---63,"whole blood(with additive),blood gas analysis,methemoglobin,",1.2 %
+simulation63,6,24414 days 13:55:00,3H0800000019---80,"whole blood(with additive),blood gas analysis,body temperature,",37.0 °C
+simulation63,6,24414 days 13:55:00,3H0800000019---81,"whole blood(with additive),blood gas analysis,ionized sodium,",139.0 mmol/L
+simulation63,6,24414 days 13:55:00,3H0800000019---82,"whole blood(with additive),blood gas analysis,ionized pottasium,",3.5 mmol/L
+simulation63,6,24414 days 13:55:00,3H0800000019---83,"whole blood(with additive),blood gas analysis,ionized chlorine,",107.0 mmol/L
+simulation63,6,24414 days 13:55:00,3H0800000019---84,"whole blood(with additive),blood gas analysis,ionized calcium,",1.14 mmol/L
+simulation63,6,24414 days 13:55:00,3H0800000019---85,"whole blood(with additive),blood gas analysis,glucose,",149.0 mg/dL
+simulation63,6,24414 days 13:55:00,3H0800000019---86,"whole blood(with additive),blood gas analysis,lactate,",1.3 mmol/L
+simulation63,6,24414 days 13:55:00,3H0800000019---88,"whole blood(with additive),blood gas analysis,bilirubin,",1.1 mg/dL
+simulation63,4,24414 days 14:04:00,N01AH01,fentanyl,
+simulation63,4,24414 days 14:04:00,N01AX10,propofol,
+simulation63,4,24414 days 14:04:00,N05CM18,dexmedetomidine,
+simulation63,4,24414 days 14:50:00,B05BB01,electrolytes,
+simulation63,4,24414 days 14:50:00,B05BB01,electrolytes,
+simulation63,4,24414 days 14:50:00,B05BB01,electrolytes,
+simulation63,4,24414 days 14:50:00,B05BB01,electrolytes,
+simulation63,4,24414 days 14:50:00,B05BB01,electrolytes,
+simulation63,4,24414 days 14:50:00,C03CA01,furosemide,
+simulation63,4,24414 days 14:50:00,C03CA01,furosemide,
+simulation63,4,24414 days 14:50:00,C03CA01,furosemide,
+simulation63,4,24414 days 14:50:00,C03CA01,furosemide,
+simulation63,4,24414 days 14:50:00,C03CA01,furosemide,
+simulation63,6,24414 days 16:33:00,3H0800000019---51,"whole blood(with additive),blood gas analysis,pH,",7.393 no_unit
+simulation63,6,24414 days 16:33:00,3H0800000019---52,"whole blood(with additive),blood gas analysis,pCO2,",39.3 mmHg
+simulation63,6,24414 days 16:33:00,3H0800000019---53,"whole blood(with additive),blood gas analysis,pO2,",62.0 mmHg
+simulation63,6,24414 days 16:33:00,3H0800000019---54,"whole blood(with additive),blood gas analysis,actual bicarbonate (actual HCO3-),",23.4 mmol/L
+simulation63,6,24414 days 16:33:00,3H0800000019---55,"whole blood(with additive),blood gas analysis,base excess,",-0.9 mmol/L
+simulation63,6,24414 days 16:33:00,3H0800000019---56,"whole blood(with additive),blood gas analysis,oxygen saturation,",90.3 %
+simulation63,6,24414 days 16:33:00,3H0800000019---58,"whole blood(with additive),blood gas analysis,hemoglobin,",8.3 g/dL
+simulation63,6,24414 days 16:33:00,3H0800000019---59,"whole blood(with additive),blood gas analysis,hematocrit,",25.8 %
+simulation63,6,24414 days 16:33:00,3H0800000019---60,"whole blood(with additive),blood gas analysis,total oxygen content,",10.4 mL/dL
+simulation63,6,24414 days 16:33:00,3H0800000019---62,"whole blood(with additive),blood gas analysis,carboxyhemoglobin,",1.4 %
+simulation63,6,24414 days 16:33:00,3H0800000019---63,"whole blood(with additive),blood gas analysis,methemoglobin,",1.3 %
+simulation63,6,24414 days 16:33:00,3H0800000019---80,"whole blood(with additive),blood gas analysis,body temperature,",37.0 °C
+simulation63,6,24414 days 16:33:00,3H0800000019---81,"whole blood(with additive),blood gas analysis,ionized sodium,",139.0 mmol/L
+simulation63,6,24414 days 16:33:00,3H0800000019---82,"whole blood(with additive),blood gas analysis,ionized pottasium,",4.1 mmol/L
+simulation63,6,24414 days 16:33:00,3H0800000019---83,"whole blood(with additive),blood gas analysis,ionized chlorine,",109.0 mmol/L
+simulation63,6,24414 days 16:33:00,3H0800000019---84,"whole blood(with additive),blood gas analysis,ionized calcium,",1.13 mmol/L
+simulation63,6,24414 days 16:33:00,3H0800000019---85,"whole blood(with additive),blood gas analysis,glucose,",163.0 mg/dL
+simulation63,6,24414 days 16:33:00,3H0800000019---86,"whole blood(with additive),blood gas analysis,lactate,",1.0 mmol/L
+simulation63,6,24414 days 16:33:00,3H0800000019---88,"whole blood(with additive),blood gas analysis,bilirubin,",0.9 mg/dL
+simulation63,4,24414 days 17:00:00,B01AB01,heparin,
+simulation63,4,24414 days 17:00:00,B01AB01,heparin,
+simulation63,4,24414 days 17:00:00,B05BB01,electrolytes,
+simulation63,4,24414 days 17:00:00,B05BB01,electrolytes,
+simulation63,4,24414 days 17:00:00,B05BB01,electrolytes,
+simulation63,4,24414 days 17:00:00,B05BB01,electrolytes,
+simulation63,4,24414 days 17:00:00,B05BB01,electrolytes,
+simulation63,4,24414 days 17:00:00,B05BB01,electrolytes,
+simulation63,4,24414 days 17:00:00,B05BB01,electrolytes,
+simulation63,4,24414 days 17:00:00,B05BB01,electrolytes,
+simulation63,4,24414 days 17:00:00,B05BB02,electrolytes with carbohydrates,
+simulation63,4,24414 days 17:00:00,B05XA01,potassium chloride,
+simulation63,4,24414 days 17:00:00,B05XA01,potassium chloride,
+simulation63,4,24414 days 17:00:00,B05XA01,potassium chloride,
+simulation63,4,24414 days 17:00:00,B05XA01,potassium chloride,
+simulation63,4,24414 days 17:00:00,B05XA01,potassium chloride,
+simulation63,4,24414 days 17:00:00,C01CA03,norepinephrine,
+simulation63,4,24414 days 17:00:00,C01CA03,norepinephrine,
+simulation63,4,24414 days 17:00:00,C01CA03,norepinephrine,
+simulation63,4,24414 days 17:00:00,C03CA01,furosemide,
+simulation63,4,24414 days 17:00:00,N01AH01,fentanyl,
+simulation63,4,24414 days 17:00:00,N01AX10,propofol,
+simulation63,4,24414 days 17:00:00,N02AA01,morphine,
+simulation63,4,24414 days 17:00:00,N05CD08,midazolam,
+simulation63,4,24414 days 17:00:00,N05CD08,midazolam,
+simulation63,4,24414 days 17:00:00,N05CM18,dexmedetomidine,
+simulation63,4,24414 days 17:00:00,N05CM18,dexmedetomidine,
+simulation63,4,24414 days 17:00:00,N05CM18,dexmedetomidine,
+simulation63,4,24414 days 17:00:00,N05CM18,dexmedetomidine,
+simulation63,6,24414 days 17:04:00,3H0800000019---51,"whole blood(with additive),blood gas analysis,pH,",7.322 no_unit
+simulation63,6,24414 days 17:04:00,3H0800000019---52,"whole blood(with additive),blood gas analysis,pCO2,",48.6 mmHg
+simulation63,6,24414 days 17:04:00,3H0800000019---53,"whole blood(with additive),blood gas analysis,pO2,",80.6 mmHg
+simulation63,6,24414 days 17:04:00,3H0800000019---54,"whole blood(with additive),blood gas analysis,actual bicarbonate (actual HCO3-),",24.4 mmol/L
+simulation63,6,24414 days 17:04:00,3H0800000019---55,"whole blood(with additive),blood gas analysis,base excess,",-1.1 mmol/L
+simulation63,6,24414 days 17:04:00,3H0800000019---56,"whole blood(with additive),blood gas analysis,oxygen saturation,",94.8 %
+simulation63,6,24414 days 17:04:00,3H0800000019---58,"whole blood(with additive),blood gas analysis,hemoglobin,",8.0 g/dL
+simulation63,6,24414 days 17:04:00,3H0800000019---59,"whole blood(with additive),blood gas analysis,hematocrit,",24.9 %
+simulation63,6,24414 days 17:04:00,3H0800000019---60,"whole blood(with additive),blood gas analysis,total oxygen content,",10.5 mL/dL
+simulation63,6,24414 days 17:04:00,3H0800000019---62,"whole blood(with additive),blood gas analysis,carboxyhemoglobin,",1.0 %
+simulation63,6,24414 days 17:04:00,3H0800000019---63,"whole blood(with additive),blood gas analysis,methemoglobin,",1.3 %
+simulation63,6,24414 days 17:04:00,3H0800000019---80,"whole blood(with additive),blood gas analysis,body temperature,",37.0 °C
+simulation63,6,24414 days 17:04:00,3H0800000019---81,"whole blood(with additive),blood gas analysis,ionized sodium,",140.0 mmol/L
+simulation63,6,24414 days 17:04:00,3H0800000019---82,"whole blood(with additive),blood gas analysis,ionized pottasium,",4.1 mmol/L
+simulation63,6,24414 days 17:04:00,3H0800000019---83,"whole blood(with additive),blood gas analysis,ionized chlorine,",107.0 mmol/L
+simulation63,6,24414 days 17:04:00,3H0800000019---84,"whole blood(with additive),blood gas analysis,ionized calcium,",1.15 mmol/L
+simulation63,6,24414 days 17:04:00,3H0800000019---85,"whole blood(with additive),blood gas analysis,glucose,",170.0 mg/dL
+simulation63,6,24414 days 17:04:00,3H0800000019---86,"whole blood(with additive),blood gas analysis,lactate,",1.0 mmol/L
+simulation63,6,24414 days 17:04:00,3H0800000019---88,"whole blood(with additive),blood gas analysis,bilirubin,",0.9 mg/dL
+simulation63,6,24414 days 17:08:00,2A1600000019---51,"whole blood(with additive),hemogram,neutrophil,",95.6 %
+simulation63,6,24414 days 17:08:00,2A1600000019---54,"whole blood(with additive),hemogram,eosinophil,",0.0 %
+simulation63,6,24414 days 17:08:00,2A1600000019---55,"whole blood(with additive),hemogram,basophil,",0.1 %
+simulation63,6,24414 days 17:08:00,2A1600000019---56,"whole blood(with additive),hemogram,monocyte,",1.6 %
+simulation63,6,24414 days 17:08:00,2A1600000019---57,"whole blood(with additive),hemogram,lymphocyte,",2.7 %
+simulation63,6,24414 days 17:08:00,2A9900000019---51,"whole blood(with additive),CBC,red blood cell count,",261.0 ×10^4/μL
+simulation63,6,24414 days 17:08:00,2A9900000019---52,"whole blood(with additive),CBC,white blood cell count,",16.3 ×10^3/μL
+simulation63,6,24414 days 17:08:00,2A9900000019---53,"whole blood(with additive),CBC,hemoglobin,",7.9 g/dL
+simulation63,6,24414 days 17:08:00,2A9900000019---54,"whole blood(with additive),CBC,hematocrit,",24.9 %
+simulation63,6,24414 days 17:08:00,2A9900000019---55,"whole blood(with additive),CBC,platelet count,",9.1 ×10^4/μL
+simulation63,6,24414 days 17:08:00,2A9900000019---56,"whole blood(with additive),CBC,mean corpuscular volume,",95.3 fL
+simulation63,6,24414 days 17:08:00,2A9900000019---57,"whole blood(with additive),CBC,mean corpuscular hemoglobin,",30.3 pg
+simulation63,6,24414 days 17:08:00,2A9900000019---58,"whole blood(with additive),CBC,mean corpuscular hemoglobin concentration,",31.7 %
+simulation63,6,24414 days 17:08:00,2B0200000022---51,"plasma,activated partial thromboplastin time,coagulation time sample (sec),",40.5 sec
+simulation63,6,24414 days 17:08:00,2B0300000022---51,"plasma,prothrombin time,coagulation time sample (sec),",11.0 sec
+simulation63,6,24414 days 17:08:00,2B0300000022---53,"plasma,prothrombin time,PT activity (%),",107.3 %
+simulation63,6,24414 days 17:08:00,2B0300000022---55,"plasma,prothrombin time,PT ratio,",0.96 no_unit
+simulation63,6,24414 days 17:08:00,2B0300000022---57,"plasma,prothrombin time,international normalized ratio,",0.96 no_unit
+simulation63,6,24414 days 17:08:00,2B1000000022---01,"plasma,fibrinogen,quantitative,",769.0 mg/dL
+simulation63,6,24414 days 17:08:00,2B1400000022---01,"plasma,D-D dimer,quantitative,",1.4 μg/mL
+simulation63,6,24414 days 17:08:00,3B0100000023---01,"serum,creatine kinase,quantitative,",158.0 U/L
+simulation63,6,24414 days 17:08:00,3B0350000023---01,"serum,asparate aminotransferase,quantitative,",31.0 U/L
+simulation63,6,24414 days 17:08:00,3B0450000023---01,"serum,alanine aminotransferase,quantitative,",20.0 U/L
+simulation63,6,24414 days 17:08:00,3B0500000023---01,"serum,lactate dehydrogenase,quantitative,",372.0 U/L
+simulation63,6,24414 days 17:08:00,3B0900000023---01,"serum,gamma glutamyl transpeptidase,quantitative,",21.0 U/L
+simulation63,6,24414 days 17:08:00,3B1600000023---01,"serum,amylase,quantitative,",542.0 U/L
+simulation63,6,24414 days 17:08:00,3C0150000023---01,"serum,creatinine,quantitative,",1.11 mg/dL
+simulation63,6,24414 days 17:08:00,3C0250000023---01,"serum,urea nitrogen,quantitative,",21.2 mg/dL
+simulation63,6,24414 days 17:08:00,3H0100000023---01,"serum,sodium,quantitative,",140.0 mmol/L
+simulation63,6,24414 days 17:08:00,3H0150000023---01,"serum,potassium,quantitative,",4.1 mmol/L
+simulation63,6,24414 days 17:08:00,3H0200000023---01,"serum,chloride,quantitative,",105.0 mmol/L
+simulation63,6,24414 days 17:08:00,3H0250000023---01,"serum,magnesium,quantitative,",2.0 mg/dL
+simulation63,6,24414 days 17:08:00,3H0300000023---01,"serum,calcium,quantitative,",7.6 mg/dL
+simulation63,6,24414 days 17:08:00,3H0400000023---01,"serum,inorganic phosphate,quantitative,",3.0 mg/dL
+simulation63,6,24414 days 17:08:00,5C0700000023---01,"serum,C-reactive protein,quantitative,",27.63 mg/dL
+simulation63,6,24414 days 17:08:00,8A0650000023---01,"serum,estimated GFR based on creatinine,quantitative,",38.1 mL/min/1.73m2
+simulation63,4,24414 days 17:18:00,B05BB01,electrolytes,
+simulation63,4,24414 days 17:18:00,B05BB01,electrolytes,
+simulation63,4,24414 days 17:18:00,B05BB01,electrolytes,
+simulation63,4,24414 days 17:18:00,B05BB01,electrolytes,
+simulation63,4,24414 days 17:18:00,B05BB01,electrolytes,
+simulation63,4,24414 days 17:18:00,B05BB01,electrolytes,
+simulation63,4,24414 days 17:18:00,J01CR05,piperacillin and beta-lactamase inhibitor,
+simulation63,4,24414 days 17:18:00,J01CR05,piperacillin and beta-lactamase inhibitor,
+simulation63,4,24414 days 17:18:00,J01CR05,piperacillin and beta-lactamase inhibitor,
+simulation63,4,24414 days 17:18:00,J01CR05,piperacillin and beta-lactamase inhibitor,
+simulation63,4,24414 days 17:18:00,J01CR05,piperacillin and beta-lactamase inhibitor,
+simulation63,4,24414 days 17:18:00,J01CR05,piperacillin and beta-lactamase inhibitor,
+simulation63,6,24414 days 17:39:00,5H0100000019---14,"whole blood(with additive),blood typing ABO blood group system,type,",B
+simulation63,6,24414 days 17:39:00,5H0200000019---14,"whole blood(with additive),blood typing Rho(D) factor,type,",(+)
+simulation63,6,24414 days 17:58:00,3H0800000019---51,"whole blood(with additive),blood gas analysis,pH,",7.26 no_unit
+simulation63,6,24414 days 17:58:00,3H0800000019---52,"whole blood(with additive),blood gas analysis,pCO2,",62.7 mmHg
+simulation63,6,24414 days 17:58:00,3H0800000019---53,"whole blood(with additive),blood gas analysis,pO2,",88.5 mmHg
+simulation63,6,24414 days 17:58:00,3H0800000019---54,"whole blood(with additive),blood gas analysis,actual bicarbonate (actual HCO3-),",27.0 mmol/L
+simulation63,6,24414 days 17:58:00,3H0800000019---55,"whole blood(with additive),blood gas analysis,base excess,",0.0 mmol/L
+simulation63,6,24414 days 17:58:00,3H0800000019---56,"whole blood(with additive),blood gas analysis,oxygen saturation,",94.8 %
+simulation63,6,24414 days 17:58:00,3H0800000019---58,"whole blood(with additive),blood gas analysis,hemoglobin,",8.3 g/dL
+simulation63,6,24414 days 17:58:00,3H0800000019---59,"whole blood(with additive),blood gas analysis,hematocrit,",25.8 %
+simulation63,6,24414 days 17:58:00,3H0800000019---60,"whole blood(with additive),blood gas analysis,total oxygen content,",11.2 mL/dL
+simulation63,6,24414 days 17:58:00,3H0800000019---62,"whole blood(with additive),blood gas analysis,carboxyhemoglobin,",1.5 %
+simulation63,6,24414 days 17:58:00,3H0800000019---63,"whole blood(with additive),blood gas analysis,methemoglobin,",1.5 %
+simulation63,6,24414 days 17:58:00,3H0800000019---80,"whole blood(with additive),blood gas analysis,body temperature,",37.0 °C
+simulation63,6,24414 days 17:58:00,3H0800000019---81,"whole blood(with additive),blood gas analysis,ionized sodium,",142.0 mmol/L
+simulation63,6,24414 days 17:58:00,3H0800000019---82,"whole blood(with additive),blood gas analysis,ionized pottasium,",4.4 mmol/L
+simulation63,6,24414 days 17:58:00,3H0800000019---83,"whole blood(with additive),blood gas analysis,ionized chlorine,",105.0 mmol/L
+simulation63,6,24414 days 17:58:00,3H0800000019---84,"whole blood(with additive),blood gas analysis,ionized calcium,",1.19 mmol/L
+simulation63,6,24414 days 17:58:00,3H0800000019---85,"whole blood(with additive),blood gas analysis,glucose,",172.0 mg/dL
+simulation63,6,24414 days 17:58:00,3H0800000019---86,"whole blood(with additive),blood gas analysis,lactate,",0.7 mmol/L
+simulation63,6,24414 days 17:58:00,3H0800000019---88,"whole blood(with additive),blood gas analysis,bilirubin,",1.2 mg/dL
+simulation63,6,24414 days 19:35:00,3H0800000019---51,"whole blood(with additive),blood gas analysis,pH,",7.276 no_unit
+simulation63,6,24414 days 19:35:00,3H0800000019---52,"whole blood(with additive),blood gas analysis,pCO2,",59.3 mmHg
+simulation63,6,24414 days 19:35:00,3H0800000019---53,"whole blood(with additive),blood gas analysis,pO2,",56.5 mmHg
+simulation63,6,24414 days 19:35:00,3H0800000019---54,"whole blood(with additive),blood gas analysis,actual bicarbonate (actual HCO3-),",26.7 mmol/L
+simulation63,6,24414 days 19:35:00,3H0800000019---55,"whole blood(with additive),blood gas analysis,base excess,",0.0 mmol/L
+simulation63,6,24414 days 19:35:00,3H0800000019---56,"whole blood(with additive),blood gas analysis,oxygen saturation,",85.1 %
+simulation63,6,24414 days 19:35:00,3H0800000019---58,"whole blood(with additive),blood gas analysis,hemoglobin,",8.3 g/dL
+simulation63,6,24414 days 19:35:00,3H0800000019---59,"whole blood(with additive),blood gas analysis,hematocrit,",25.7 %
+simulation63,6,24414 days 19:35:00,3H0800000019---60,"whole blood(with additive),blood gas analysis,total oxygen content,",9.8 mL/dL
+simulation63,6,24414 days 19:35:00,3H0800000019---62,"whole blood(with additive),blood gas analysis,carboxyhemoglobin,",1.2 %
+simulation63,6,24414 days 19:35:00,3H0800000019---63,"whole blood(with additive),blood gas analysis,methemoglobin,",1.3 %
+simulation63,6,24414 days 19:35:00,3H0800000019---80,"whole blood(with additive),blood gas analysis,body temperature,",37.0 °C
+simulation63,6,24414 days 19:35:00,3H0800000019---81,"whole blood(with additive),blood gas analysis,ionized sodium,",140.0 mmol/L
+simulation63,6,24414 days 19:35:00,3H0800000019---82,"whole blood(with additive),blood gas analysis,ionized pottasium,",4.6 mmol/L
+simulation63,6,24414 days 19:35:00,3H0800000019---83,"whole blood(with additive),blood gas analysis,ionized chlorine,",105.0 mmol/L
+simulation63,6,24414 days 19:35:00,3H0800000019---84,"whole blood(with additive),blood gas analysis,ionized calcium,",1.16 mmol/L
+simulation63,6,24414 days 19:35:00,3H0800000019---85,"whole blood(with additive),blood gas analysis,glucose,",194.0 mg/dL
+simulation63,6,24414 days 19:35:00,3H0800000019---86,"whole blood(with additive),blood gas analysis,lactate,",0.7 mmol/L
+simulation63,6,24414 days 19:35:00,3H0800000019---88,"whole blood(with additive),blood gas analysis,bilirubin,",1.1 mg/dL
+simulation63,6,24414 days 21:37:00,3H0800000019---51,"whole blood(with additive),blood gas analysis,pH,",7.268 no_unit
+simulation63,6,24414 days 21:37:00,3H0800000019---52,"whole blood(with additive),blood gas analysis,pCO2,",59.3 mmHg
+simulation63,6,24414 days 21:37:00,3H0800000019---53,"whole blood(with additive),blood gas analysis,pO2,",56.5 mmHg
+simulation63,6,24414 days 21:37:00,3H0800000019---54,"whole blood(with additive),blood gas analysis,actual bicarbonate (actual HCO3-),",26.1 mmol/L
+simulation63,6,24414 days 21:37:00,3H0800000019---55,"whole blood(with additive),blood gas analysis,base excess,",-0.9 mmol/L
+simulation63,6,24414 days 21:37:00,3H0800000019---56,"whole blood(with additive),blood gas analysis,oxygen saturation,",85.1 %
+simulation63,6,24414 days 21:37:00,3H0800000019---58,"whole blood(with additive),blood gas analysis,hemoglobin,",8.2 g/dL
+simulation63,6,24414 days 21:37:00,3H0800000019---59,"whole blood(with additive),blood gas analysis,hematocrit,",25.7 %
+simulation63,6,24414 days 21:37:00,3H0800000019---60,"whole blood(with additive),blood gas analysis,total oxygen content,",9.4 mL/dL
+simulation63,6,24414 days 21:37:00,3H0800000019---62,"whole blood(with additive),blood gas analysis,carboxyhemoglobin,",1.4 %
+simulation63,6,24414 days 21:37:00,3H0800000019---63,"whole blood(with additive),blood gas analysis,methemoglobin,",1.2 %
+simulation63,6,24414 days 21:37:00,3H0800000019---80,"whole blood(with additive),blood gas analysis,body temperature,",37.0 °C
+simulation63,6,24414 days 21:37:00,3H0800000019---81,"whole blood(with additive),blood gas analysis,ionized sodium,",141.0 mmol/L
+simulation63,6,24414 days 21:37:00,3H0800000019---82,"whole blood(with additive),blood gas analysis,ionized pottasium,",4.7 mmol/L
+simulation63,6,24414 days 21:37:00,3H0800000019---83,"whole blood(with additive),blood gas analysis,ionized chlorine,",107.0 mmol/L
+simulation63,6,24414 days 21:37:00,3H0800000019---84,"whole blood(with additive),blood gas analysis,ionized calcium,",1.16 mmol/L
+simulation63,6,24414 days 21:37:00,3H0800000019---85,"whole blood(with additive),blood gas analysis,glucose,",212.0 mg/dL
+simulation63,6,24414 days 21:37:00,3H0800000019---86,"whole blood(with additive),blood gas analysis,lactate,",0.6 mmol/L
+simulation63,6,24414 days 21:37:00,3H0800000019---88,"whole blood(with additive),blood gas analysis,bilirubin,",0.9 mg/dL
+simulation63,4,24414 days 21:39:00,B05BB01,electrolytes,
+simulation63,4,24414 days 21:39:00,B05BB01,electrolytes,
+simulation63,4,24414 days 21:39:00,B05BB01,electrolytes,
+simulation63,4,24414 days 21:39:00,B05BB01,electrolytes,
+simulation63,4,24414 days 21:39:00,B05BB01,electrolytes,
+simulation63,4,24414 days 21:39:00,B05BB01,electrolytes,
+simulation63,4,24414 days 21:39:00,B05BB01,electrolytes,
+simulation63,4,24414 days 21:39:00,B05BB01,electrolytes,
+simulation63,4,24414 days 21:39:00,B05BB01,electrolytes,
+simulation63,4,24414 days 21:39:00,B05BB01,electrolytes,
+simulation63,4,24414 days 21:39:00,B05BB01,electrolytes,
+simulation63,4,24414 days 21:39:00,B05BB01,electrolytes,
+simulation63,4,24414 days 21:39:00,B05BB01,electrolytes,
+simulation63,4,24414 days 21:39:00,B05BB01,electrolytes,
+simulation63,4,24414 days 21:39:00,B05BB01,electrolytes,
+simulation63,4,24414 days 21:39:00,C03CA01,furosemide,
+simulation63,4,24414 days 21:39:00,C03CA01,furosemide,
+simulation63,4,24414 days 21:39:00,C03CA01,furosemide,
+simulation63,4,24414 days 21:39:00,C03CA01,furosemide,
+simulation63,4,24414 days 21:39:00,C03CA01,furosemide,
+simulation63,4,24414 days 21:39:00,C03CA01,furosemide,
+simulation63,4,24414 days 21:39:00,C03CA01,furosemide,
+simulation63,4,24414 days 21:39:00,C03CA01,furosemide,
+simulation63,4,24414 days 21:39:00,C03CA01,furosemide,
+simulation63,4,24414 days 21:39:00,C03CA01,furosemide,
+simulation63,4,24414 days 21:39:00,C03CA01,furosemide,
+simulation63,4,24414 days 21:39:00,C03CA01,furosemide,
+simulation63,4,24414 days 21:39:00,C03CA01,furosemide,
+simulation63,4,24414 days 21:39:00,C03CA01,furosemide,
+simulation63,4,24414 days 21:39:00,C03CA01,furosemide,
+simulation63,6,24414 days 23:01:00,3H0800000019---51,"whole blood(with additive),blood gas analysis,pH,",7.245 no_unit
+simulation63,6,24414 days 23:01:00,3H0800000019---52,"whole blood(with additive),blood gas analysis,pCO2,",60.7 mmHg
+simulation63,6,24414 days 23:01:00,3H0800000019---53,"whole blood(with additive),blood gas analysis,pO2,",68.5 mmHg
+simulation63,6,24414 days 23:01:00,3H0800000019---54,"whole blood(with additive),blood gas analysis,actual bicarbonate (actual HCO3-),",25.6 mmol/L
+simulation63,6,24414 days 23:01:00,3H0800000019---55,"whole blood(with additive),blood gas analysis,base excess,",-1.6 mmol/L
+simulation63,6,24414 days 23:01:00,3H0800000019---56,"whole blood(with additive),blood gas analysis,oxygen saturation,",90.3 %
+simulation63,6,24414 days 23:01:00,3H0800000019---58,"whole blood(with additive),blood gas analysis,hemoglobin,",8.6 g/dL
+simulation63,6,24414 days 23:01:00,3H0800000019---59,"whole blood(with additive),blood gas analysis,hematocrit,",26.6 %
+simulation63,6,24414 days 23:01:00,3H0800000019---60,"whole blood(with additive),blood gas analysis,total oxygen content,",10.7 mL/dL
+simulation63,6,24414 days 23:01:00,3H0800000019---62,"whole blood(with additive),blood gas analysis,carboxyhemoglobin,",0.9 %
+simulation63,6,24414 days 23:01:00,3H0800000019---63,"whole blood(with additive),blood gas analysis,methemoglobin,",1.3 %
+simulation63,6,24414 days 23:01:00,3H0800000019---80,"whole blood(with additive),blood gas analysis,body temperature,",37.0 °C
+simulation63,6,24414 days 23:01:00,3H0800000019---81,"whole blood(with additive),blood gas analysis,ionized sodium,",141.0 mmol/L
+simulation63,6,24414 days 23:01:00,3H0800000019---82,"whole blood(with additive),blood gas analysis,ionized pottasium,",4.7 mmol/L
+simulation63,6,24414 days 23:01:00,3H0800000019---83,"whole blood(with additive),blood gas analysis,ionized chlorine,",107.0 mmol/L
+simulation63,6,24414 days 23:01:00,3H0800000019---84,"whole blood(with additive),blood gas analysis,ionized calcium,",1.15 mmol/L
+simulation63,6,24414 days 23:01:00,3H0800000019---85,"whole blood(with additive),blood gas analysis,glucose,",216.0 mg/dL
+simulation63,6,24414 days 23:01:00,3H0800000019---86,"whole blood(with additive),blood gas analysis,lactate,",0.6 mmol/L
+simulation63,6,24414 days 23:01:00,3H0800000019---88,"whole blood(with additive),blood gas analysis,bilirubin,",1.0 mg/dL
+simulation63,6,24415 days 02:06:00,3H0800000019---51,"whole blood(with additive),blood gas analysis,pH,",7.182 no_unit
+simulation63,6,24415 days 02:06:00,3H0800000019---52,"whole blood(with additive),blood gas analysis,pCO2,",75.5 mmHg
+simulation63,6,24415 days 02:06:00,3H0800000019---53,"whole blood(with additive),blood gas analysis,pO2,",35.2 mmHg
+simulation63,6,24415 days 02:06:00,3H0800000019---54,"whole blood(with additive),blood gas analysis,actual bicarbonate (actual HCO3-),",27.4 mmol/L
+simulation63,6,24415 days 02:06:00,3H0800000019---55,"whole blood(with additive),blood gas analysis,base excess,",-1.4 mmol/L
+simulation63,6,24415 days 02:06:00,3H0800000019---56,"whole blood(with additive),blood gas analysis,oxygen saturation,",56.3 %
+simulation63,6,24415 days 02:06:00,3H0800000019---58,"whole blood(with additive),blood gas analysis,hemoglobin,",8.3 g/dL
+simulation63,6,24415 days 02:06:00,3H0800000019---59,"whole blood(with additive),blood gas analysis,hematocrit,",25.9 %
+simulation63,6,24415 days 02:06:00,3H0800000019---60,"whole blood(with additive),blood gas analysis,total oxygen content,",7.1 mL/dL
+simulation63,6,24415 days 02:06:00,3H0800000019---62,"whole blood(with additive),blood gas analysis,carboxyhemoglobin,",1.1 %
+simulation63,6,24415 days 02:06:00,3H0800000019---63,"whole blood(with additive),blood gas analysis,methemoglobin,",1.6 %
+simulation63,6,24415 days 02:06:00,3H0800000019---80,"whole blood(with additive),blood gas analysis,body temperature,",37.0 °C
+simulation63,6,24415 days 02:06:00,3H0800000019---81,"whole blood(with additive),blood gas analysis,ionized sodium,",142.0 mmol/L
+simulation63,6,24415 days 02:06:00,3H0800000019---82,"whole blood(with additive),blood gas analysis,ionized pottasium,",5.0 mmol/L
+simulation63,6,24415 days 02:06:00,3H0800000019---83,"whole blood(with additive),blood gas analysis,ionized chlorine,",106.0 mmol/L
+simulation63,6,24415 days 02:06:00,3H0800000019---84,"whole blood(with additive),blood gas analysis,ionized calcium,",1.19 mmol/L
+simulation63,6,24415 days 02:06:00,3H0800000019---85,"whole blood(with additive),blood gas analysis,glucose,",245.0 mg/dL
+simulation63,6,24415 days 02:06:00,3H0800000019---86,"whole blood(with additive),blood gas analysis,lactate,",0.5 mmol/L
+simulation63,6,24415 days 02:06:00,3H0800000019---88,"whole blood(with additive),blood gas analysis,bilirubin,",1.0 mg/dL
+simulation63,6,24415 days 03:29:00,3H0800000019---51,"whole blood(with additive),blood gas analysis,pH,",7.123 no_unit
+simulation63,6,24415 days 03:29:00,3H0800000019---52,"whole blood(with additive),blood gas analysis,pCO2,",87.2 mmHg
+simulation63,6,24415 days 03:29:00,3H0800000019---53,"whole blood(with additive),blood gas analysis,pO2,",65.4 mmHg
+simulation63,6,24415 days 03:29:00,3H0800000019---54,"whole blood(with additive),blood gas analysis,actual bicarbonate (actual HCO3-),",27.1 mmol/L
+simulation63,6,24415 days 03:29:00,3H0800000019---55,"whole blood(with additive),blood gas analysis,base excess,",-2.7 mmol/L
+simulation63,6,24415 days 03:29:00,3H0800000019---56,"whole blood(with additive),blood gas analysis,oxygen saturation,",87.0 %
+simulation63,6,24415 days 03:29:00,3H0800000019---58,"whole blood(with additive),blood gas analysis,hemoglobin,",8.5 g/dL
+simulation63,6,24415 days 03:29:00,3H0800000019---59,"whole blood(with additive),blood gas analysis,hematocrit,",26.5 %
+simulation63,6,24415 days 03:29:00,3H0800000019---60,"whole blood(with additive),blood gas analysis,total oxygen content,",10.2 mL/dL
+simulation63,6,24415 days 03:29:00,3H0800000019---62,"whole blood(with additive),blood gas analysis,carboxyhemoglobin,",1.5 %
+simulation63,6,24415 days 03:29:00,3H0800000019---63,"whole blood(with additive),blood gas analysis,methemoglobin,",1.4 %
+simulation63,6,24415 days 03:29:00,3H0800000019---80,"whole blood(with additive),blood gas analysis,body temperature,",37.0 °C
+simulation63,6,24415 days 03:29:00,3H0800000019---81,"whole blood(with additive),blood gas analysis,ionized sodium,",142.0 mmol/L
+simulation63,6,24415 days 03:29:00,3H0800000019---82,"whole blood(with additive),blood gas analysis,ionized pottasium,",5.0 mmol/L
+simulation63,6,24415 days 03:29:00,3H0800000019---83,"whole blood(with additive),blood gas analysis,ionized chlorine,",105.0 mmol/L
+simulation63,6,24415 days 03:29:00,3H0800000019---84,"whole blood(with additive),blood gas analysis,ionized calcium,",1.21 mmol/L
+simulation63,6,24415 days 03:29:00,3H0800000019---85,"whole blood(with additive),blood gas analysis,glucose,",256.0 mg/dL
+simulation63,6,24415 days 03:29:00,3H0800000019---86,"whole blood(with additive),blood gas analysis,lactate,",0.4 mmol/L
+simulation63,6,24415 days 03:29:00,3H0800000019---88,"whole blood(with additive),blood gas analysis,bilirubin,",1.2 mg/dL
+simulation63,6,24415 days 05:47:00,3H0800000019---51,"whole blood(with additive),blood gas analysis,pH,",7.211 no_unit
+simulation63,6,24415 days 05:47:00,3H0800000019---52,"whole blood(with additive),blood gas analysis,pCO2,",69.7 mmHg
+simulation63,6,24415 days 05:47:00,3H0800000019---53,"whole blood(with additive),blood gas analysis,pO2,",104.0 mmHg
+simulation63,6,24415 days 05:47:00,3H0800000019---54,"whole blood(with additive),blood gas analysis,actual bicarbonate (actual HCO3-),",27.0 mmol/L
+simulation63,6,24415 days 05:47:00,3H0800000019---55,"whole blood(with additive),blood gas analysis,base excess,",-1.0 mmol/L
+simulation63,6,24415 days 05:47:00,3H0800000019---56,"whole blood(with additive),blood gas analysis,oxygen saturation,",96.5 %
+simulation63,6,24415 days 05:47:00,3H0800000019---58,"whole blood(with additive),blood gas analysis,hemoglobin,",8.2 g/dL
+simulation63,6,24415 days 05:47:00,3H0800000019---59,"whole blood(with additive),blood gas analysis,hematocrit,",25.7 %
+simulation63,6,24415 days 05:47:00,3H0800000019---60,"whole blood(with additive),blood gas analysis,total oxygen content,",11.2 mL/dL
+simulation63,6,24415 days 05:47:00,3H0800000019---62,"whole blood(with additive),blood gas analysis,carboxyhemoglobin,",1.1 %
+simulation63,6,24415 days 05:47:00,3H0800000019---63,"whole blood(with additive),blood gas analysis,methemoglobin,",1.3 %
+simulation63,6,24415 days 05:47:00,3H0800000019---80,"whole blood(with additive),blood gas analysis,body temperature,",37.0 °C
+simulation63,6,24415 days 05:47:00,3H0800000019---81,"whole blood(with additive),blood gas analysis,ionized sodium,",141.0 mmol/L
+simulation63,6,24415 days 05:47:00,3H0800000019---82,"whole blood(with additive),blood gas analysis,ionized pottasium,",5.1 mmol/L
+simulation63,6,24415 days 05:47:00,3H0800000019---83,"whole blood(with additive),blood gas analysis,ionized chlorine,",106.0 mmol/L
+simulation63,6,24415 days 05:47:00,3H0800000019---84,"whole blood(with additive),blood gas analysis,ionized calcium,",1.17 mmol/L
+simulation63,6,24415 days 05:47:00,3H0800000019---85,"whole blood(with additive),blood gas analysis,glucose,",240.0 mg/dL
+simulation63,6,24415 days 05:47:00,3H0800000019---86,"whole blood(with additive),blood gas analysis,lactate,",0.3 mmol/L
+simulation63,6,24415 days 05:47:00,3H0800000019---88,"whole blood(with additive),blood gas analysis,bilirubin,",1.1 mg/dL
+simulation63,6,24415 days 05:54:00,1A0300000001---01,"urine,specific gravity [urine],quantitative,",1.03 no_unit
+simulation63,6,24415 days 05:54:00,1A9900000001---52,"urine,urinalysis qualitative/semiquantitative,pH,",5.0 no_unit
+simulation63,6,24415 days 05:54:00,1A9900000001---53,"urine,urinalysis qualitative/semiquantitative,protein (qualitative),",(+-)
+simulation63,6,24415 days 05:54:00,1A9900000001---54,"urine,urinalysis qualitative/semiquantitative,glucose (qualitative),",(-)
+simulation63,6,24415 days 05:54:00,1A9900000001---58,"urine,urinalysis qualitative/semiquantitative,ketone bodies (qualitative),",(-)
+simulation63,6,24415 days 05:54:00,1A9900000001---59,"urine,urinalysis qualitative/semiquantitative,occult blood (qualitative),",(2+)
+simulation63,6,24415 days 05:54:00,1A9900000001---62,"urine,urinalysis qualitative/semiquantitative,leukocytes (test paper) (qualitative),",(-)
+simulation63,6,24415 days 05:54:00,1A9900000001---64,"urine,urinalysis qualitative/semiquantitative,nitrite,",(-)
+simulation63,6,24415 days 05:54:00,2A1600000019---51,"whole blood(with additive),hemogram,neutrophil,",88.3 %
+simulation63,6,24415 days 05:54:00,2A1600000019---54,"whole blood(with additive),hemogram,eosinophil,",0.1 %
+simulation63,6,24415 days 05:54:00,2A1600000019---55,"whole blood(with additive),hemogram,basophil,",0.2 %
+simulation63,6,24415 days 05:54:00,2A1600000019---56,"whole blood(with additive),hemogram,monocyte,",2.3 %
+simulation63,6,24415 days 05:54:00,2A1600000019---57,"whole blood(with additive),hemogram,lymphocyte,",9.3 %
+simulation63,6,24415 days 05:54:00,2A9900000019---51,"whole blood(with additive),CBC,red blood cell count,",266.0 ×10^4/μL
+simulation63,6,24415 days 05:54:00,2A9900000019---52,"whole blood(with additive),CBC,white blood cell count,",18.6 ×10^3/μL
+simulation63,6,24415 days 05:54:00,2A9900000019---53,"whole blood(with additive),CBC,hemoglobin,",8.1 g/dL
+simulation63,6,24415 days 05:54:00,2A9900000019---54,"whole blood(with additive),CBC,hematocrit,",25.6 %
+simulation63,6,24415 days 05:54:00,2A9900000019---55,"whole blood(with additive),CBC,platelet count,",9.4 ×10^4/μL
+simulation63,6,24415 days 05:54:00,2A9900000019---56,"whole blood(with additive),CBC,mean corpuscular volume,",95.9 fL
+simulation63,6,24415 days 05:54:00,2A9900000019---57,"whole blood(with additive),CBC,mean corpuscular hemoglobin,",30.3 pg
+simulation63,6,24415 days 05:54:00,2A9900000019---58,"whole blood(with additive),CBC,mean corpuscular hemoglobin concentration,",31.6 %
+simulation63,6,24415 days 05:54:00,2B0200000022---51,"plasma,activated partial thromboplastin time,coagulation time sample (sec),",32.3 sec
+simulation63,6,24415 days 05:54:00,2B0300000022---51,"plasma,prothrombin time,coagulation time sample (sec),",10.7 sec
+simulation63,6,24415 days 05:54:00,2B0300000022---53,"plasma,prothrombin time,PT activity (%),",112.8 %
+simulation63,6,24415 days 05:54:00,2B0300000022---55,"plasma,prothrombin time,PT ratio,",0.94 no_unit
+simulation63,6,24415 days 05:54:00,2B0300000022---57,"plasma,prothrombin time,international normalized ratio,",0.94 no_unit
+simulation63,6,24415 days 05:54:00,2B1000000022---01,"plasma,fibrinogen,quantitative,",800.0 mg/dL
+simulation63,6,24415 days 05:54:00,2B1400000022---01,"plasma,D-D dimer,quantitative,",1.6 μg/mL
+simulation63,6,24415 days 05:54:00,3A0100000023---01,"serum,total proteins,quantitative,",5.2 g/dL
+simulation63,6,24415 days 05:54:00,3A0150000023---01,"serum,albumin,quantitative,",2.0 g/dL
+simulation63,6,24415 days 05:54:00,3A0160000023---02,"serum,albumin/globulin ratio,composition ratio,",0.63 no_unit
+simulation63,6,24415 days 05:54:00,3B0100000023---01,"serum,creatine kinase,quantitative,",154.0 U/L
+simulation63,6,24415 days 05:54:00,3B0350000023---01,"serum,asparate aminotransferase,quantitative,",26.0 U/L
+simulation63,6,24415 days 05:54:00,3B0450000023---01,"serum,alanine aminotransferase,quantitative,",21.0 U/L
+simulation63,6,24415 days 05:54:00,3B0500000023---01,"serum,lactate dehydrogenase,quantitative,",400.0 U/L
+simulation63,6,24415 days 05:54:00,3B0700000023---01,"serum,alkaline phosphatase,quantitative,",79.0 U/L
+simulation63,6,24415 days 05:54:00,3B0900000023---01,"serum,gamma glutamyl transpeptidase,quantitative,",20.0 U/L
+simulation63,6,24415 days 05:54:00,3B1600000023---01,"serum,amylase,quantitative,",500.0 U/L
+simulation63,6,24415 days 05:54:00,3C0150000001---01,"urine,creatinine,quantitative,",70.0 mg/dL
+simulation63,6,24415 days 05:54:00,3C0150000023---01,"serum,creatinine,quantitative,",1.27 mg/dL
+simulation63,6,24415 days 05:54:00,3C0250000023---01,"serum,urea nitrogen,quantitative,",25.0 mg/dL
+simulation63,6,24415 days 05:54:00,3H0100000001---01,"urine,sodium,quantitative,",72.0 mmol/L
+simulation63,6,24415 days 05:54:00,3H0100000023---01,"serum,sodium,quantitative,",141.0 mmol/L
+simulation63,6,24415 days 05:54:00,3H0150000001---01,"urine,potassium,quantitative,",61.6 mmol/L
+simulation63,6,24415 days 05:54:00,3H0150000023---01,"serum,potassium,quantitative,",5.2 mmol/L
+simulation63,6,24415 days 05:54:00,3H0200000001---01,"urine,chloride,quantitative,",124.0 mmol/L
+simulation63,6,24415 days 05:54:00,3H0200000023---01,"serum,chloride,quantitative,",104.0 mmol/L
+simulation63,6,24415 days 05:54:00,3H0250000023---01,"serum,magnesium,quantitative,",2.2 mg/dL
+simulation63,6,24415 days 05:54:00,3H0300000023---01,"serum,calcium,quantitative,",7.7 mg/dL
+simulation63,6,24415 days 05:54:00,3H0380000023---01,"serum,adjusted calcium,quantitative,",9.7 mg/dL
+simulation63,6,24415 days 05:54:00,3H0400000023---01,"serum,inorganic phosphate,quantitative,",6.1 mg/dL
+simulation63,6,24415 days 05:54:00,3J0100000023---01,"serum,bilirubins total,quantitative,",0.4 mg/dL
+simulation63,6,24415 days 05:54:00,5C0700000023---01,"serum,C-reactive protein,quantitative,",27.85 mg/dL
+simulation63,6,24415 days 05:54:00,5C2300000001---01,"urine,neutrophil gelatinase-associated lipocalin,quantitative,",94.0 ng/mL
+simulation63,6,24415 days 05:54:00,5C2300000001---28,"urine,neutrophil gelatinase-associated lipocalin,creatinine-adjusted,",135.4 μg/gCr
+simulation63,6,24415 days 05:54:00,8A0650000023---01,"serum,estimated GFR based on creatinine,quantitative,",32.8 mL/min/1.73m2
+simulation63,6,24415 days 07:31:00,3H0800000019---51,"whole blood(with additive),blood gas analysis,pH,",7.114 no_unit
+simulation63,6,24415 days 07:31:00,3H0800000019---52,"whole blood(with additive),blood gas analysis,pCO2,",97.7 mmHg
+simulation63,6,24415 days 07:31:00,3H0800000019---53,"whole blood(with additive),blood gas analysis,pO2,",95.9 mmHg
+simulation63,6,24415 days 07:31:00,3H0800000019---54,"whole blood(with additive),blood gas analysis,actual bicarbonate (actual HCO3-),",29.0 mmol/L
+simulation63,6,24415 days 07:31:00,3H0800000019---55,"whole blood(with additive),blood gas analysis,base excess,",-1.4 mmol/L
+simulation63,6,24415 days 07:31:00,3H0800000019---56,"whole blood(with additive),blood gas analysis,oxygen saturation,",95.8 %
+simulation63,6,24415 days 07:31:00,3H0800000019---58,"whole blood(with additive),blood gas analysis,hemoglobin,",8.1 g/dL
+simulation63,6,24415 days 07:31:00,3H0800000019---59,"whole blood(with additive),blood gas analysis,hematocrit,",25.2 %
+simulation63,6,24415 days 07:31:00,3H0800000019---60,"whole blood(with additive),blood gas analysis,total oxygen content,",10.8 mL/dL
+simulation63,6,24415 days 07:31:00,3H0800000019---62,"whole blood(with additive),blood gas analysis,carboxyhemoglobin,",1.0 %
+simulation63,6,24415 days 07:31:00,3H0800000019---63,"whole blood(with additive),blood gas analysis,methemoglobin,",1.3 %
+simulation63,6,24415 days 07:31:00,3H0800000019---80,"whole blood(with additive),blood gas analysis,body temperature,",37.0 °C
+simulation63,6,24415 days 07:31:00,3H0800000019---81,"whole blood(with additive),blood gas analysis,ionized sodium,",141.0 mmol/L
+simulation63,6,24415 days 07:31:00,3H0800000019---82,"whole blood(with additive),blood gas analysis,ionized pottasium,",5.5 mmol/L
+simulation63,6,24415 days 07:31:00,3H0800000019---83,"whole blood(with additive),blood gas analysis,ionized chlorine,",106.0 mmol/L
+simulation63,6,24415 days 07:31:00,3H0800000019---84,"whole blood(with additive),blood gas analysis,ionized calcium,",1.2 mmol/L
+simulation63,6,24415 days 07:31:00,3H0800000019---85,"whole blood(with additive),blood gas analysis,glucose,",245.0 mg/dL
+simulation63,6,24415 days 07:31:00,3H0800000019---86,"whole blood(with additive),blood gas analysis,lactate,",0.4 mmol/L
+simulation63,6,24415 days 07:31:00,3H0800000019---88,"whole blood(with additive),blood gas analysis,bilirubin,",1.0 mg/dL
+simulation63,6,24415 days 08:44:00,3H0800000019---51,"whole blood(with additive),blood gas analysis,pH,",7.04 no_unit
+simulation63,6,24415 days 08:44:00,3H0800000019---52,"whole blood(with additive),blood gas analysis,pCO2,",121.0 mmHg
+simulation63,6,24415 days 08:44:00,3H0800000019---53,"whole blood(with additive),blood gas analysis,pO2,",70.0 mmHg
+simulation63,6,24415 days 08:44:00,3H0800000019---54,"whole blood(with additive),blood gas analysis,actual bicarbonate (actual HCO3-),",28.7 mmol/L
+simulation63,6,24415 days 08:44:00,3H0800000019---55,"whole blood(with additive),blood gas analysis,base excess,",-2.9 mmol/L
+simulation63,6,24415 days 08:44:00,3H0800000019---56,"whole blood(with additive),blood gas analysis,oxygen saturation,",87.0 %
+simulation63,6,24415 days 08:44:00,3H0800000019---58,"whole blood(with additive),blood gas analysis,hemoglobin,",7.6 g/dL
+simulation63,6,24415 days 08:44:00,3H0800000019---59,"whole blood(with additive),blood gas analysis,hematocrit,",23.6 %
+simulation63,6,24415 days 08:44:00,3H0800000019---60,"whole blood(with additive),blood gas analysis,total oxygen content,",9.0 mL/dL
+simulation63,6,24415 days 08:44:00,3H0800000019---62,"whole blood(with additive),blood gas analysis,carboxyhemoglobin,",1.1 %
+simulation63,6,24415 days 08:44:00,3H0800000019---63,"whole blood(with additive),blood gas analysis,methemoglobin,",1.5 %
+simulation63,6,24415 days 08:44:00,3H0800000019---80,"whole blood(with additive),blood gas analysis,body temperature,",37.0 °C
+simulation63,6,24415 days 08:44:00,3H0800000019---81,"whole blood(with additive),blood gas analysis,ionized sodium,",143.0 mmol/L
+simulation63,6,24415 days 08:44:00,3H0800000019---82,"whole blood(with additive),blood gas analysis,ionized pottasium,",5.4 mmol/L
+simulation63,6,24415 days 08:44:00,3H0800000019---83,"whole blood(with additive),blood gas analysis,ionized chlorine,",106.0 mmol/L
+simulation63,6,24415 days 08:44:00,3H0800000019---84,"whole blood(with additive),blood gas analysis,ionized calcium,",1.21 mmol/L
+simulation63,6,24415 days 08:44:00,3H0800000019---85,"whole blood(with additive),blood gas analysis,glucose,",226.0 mg/dL
+simulation63,6,24415 days 08:44:00,3H0800000019---86,"whole blood(with additive),blood gas analysis,lactate,",0.5 mmol/L
+simulation63,6,24415 days 08:44:00,3H0800000019---88,"whole blood(with additive),blood gas analysis,bilirubin,",1.1 mg/dL
+simulation63,6,24415 days 09:37:00,3H0800000019---51,"whole blood(with additive),blood gas analysis,pH,",7.093 no_unit
+simulation63,6,24415 days 09:37:00,3H0800000019---52,"whole blood(with additive),blood gas analysis,pCO2,",99.7 mmHg
+simulation63,6,24415 days 09:37:00,3H0800000019---53,"whole blood(with additive),blood gas analysis,pO2,",70.0 mmHg
+simulation63,6,24415 days 09:37:00,3H0800000019---54,"whole blood(with additive),blood gas analysis,actual bicarbonate (actual HCO3-),",28.8 mmol/L
+simulation63,6,24415 days 09:37:00,3H0800000019---55,"whole blood(with additive),blood gas analysis,base excess,",-1.6 mmol/L
+simulation63,6,24415 days 09:37:00,3H0800000019---56,"whole blood(with additive),blood gas analysis,oxygen saturation,",90.3 %
+simulation63,6,24415 days 09:37:00,3H0800000019---58,"whole blood(with additive),blood gas analysis,hemoglobin,",7.9 g/dL
+simulation63,6,24415 days 09:37:00,3H0800000019---59,"whole blood(with additive),blood gas analysis,hematocrit,",24.7 %
+simulation63,6,24415 days 09:37:00,3H0800000019---60,"whole blood(with additive),blood gas analysis,total oxygen content,",9.9 mL/dL
+simulation63,6,24415 days 09:37:00,3H0800000019---62,"whole blood(with additive),blood gas analysis,carboxyhemoglobin,",1.3 %
+simulation63,6,24415 days 09:37:00,3H0800000019---63,"whole blood(with additive),blood gas analysis,methemoglobin,",1.7 %
+simulation63,6,24415 days 09:37:00,3H0800000019---80,"whole blood(with additive),blood gas analysis,body temperature,",37.0 °C
+simulation63,6,24415 days 09:37:00,3H0800000019---81,"whole blood(with additive),blood gas analysis,ionized sodium,",142.0 mmol/L
+simulation63,6,24415 days 09:37:00,3H0800000019---82,"whole blood(with additive),blood gas analysis,ionized pottasium,",5.6 mmol/L
+simulation63,6,24415 days 09:37:00,3H0800000019---83,"whole blood(with additive),blood gas analysis,ionized chlorine,",106.0 mmol/L
+simulation63,6,24415 days 09:37:00,3H0800000019---84,"whole blood(with additive),blood gas analysis,ionized calcium,",1.18 mmol/L
+simulation63,6,24415 days 09:37:00,3H0800000019---85,"whole blood(with additive),blood gas analysis,glucose,",226.0 mg/dL
+simulation63,6,24415 days 09:37:00,3H0800000019---86,"whole blood(with additive),blood gas analysis,lactate,",0.4 mmol/L
+simulation63,6,24415 days 09:37:00,3H0800000019---88,"whole blood(with additive),blood gas analysis,bilirubin,",1.2 mg/dL
+simulation63,6,24415 days 11:13:00,3H0800000019---51,"whole blood(with additive),blood gas analysis,pH,",7.132 no_unit
+simulation63,6,24415 days 11:13:00,3H0800000019---52,"whole blood(with additive),blood gas analysis,pCO2,",94.5 mmHg
+simulation63,6,24415 days 11:13:00,3H0800000019---53,"whole blood(with additive),blood gas analysis,pO2,",58.3 mmHg
+simulation63,6,24415 days 11:13:00,3H0800000019---54,"whole blood(with additive),blood gas analysis,actual bicarbonate (actual HCO3-),",29.0 mmol/L
+simulation63,6,24415 days 11:13:00,3H0800000019---55,"whole blood(with additive),blood gas analysis,base excess,",-1.0 mmol/L
+simulation63,6,24415 days 11:13:00,3H0800000019---56,"whole blood(with additive),blood gas analysis,oxygen saturation,",87.9 %
+simulation63,6,24415 days 11:13:00,3H0800000019---58,"whole blood(with additive),blood gas analysis,hemoglobin,",7.9 g/dL
+simulation63,6,24415 days 11:13:00,3H0800000019---59,"whole blood(with additive),blood gas analysis,hematocrit,",24.7 %
+simulation63,6,24415 days 11:13:00,3H0800000019---60,"whole blood(with additive),blood gas analysis,total oxygen content,",9.7 mL/dL
+simulation63,6,24415 days 11:13:00,3H0800000019---62,"whole blood(with additive),blood gas analysis,carboxyhemoglobin,",1.4 %
+simulation63,6,24415 days 11:13:00,3H0800000019---63,"whole blood(with additive),blood gas analysis,methemoglobin,",1.7 %
+simulation63,6,24415 days 11:13:00,3H0800000019---80,"whole blood(with additive),blood gas analysis,body temperature,",37.0 °C
+simulation63,6,24415 days 11:13:00,3H0800000019---81,"whole blood(with additive),blood gas analysis,ionized sodium,",141.0 mmol/L
+simulation63,6,24415 days 11:13:00,3H0800000019---82,"whole blood(with additive),blood gas analysis,ionized pottasium,",5.6 mmol/L
+simulation63,6,24415 days 11:13:00,3H0800000019---83,"whole blood(with additive),blood gas analysis,ionized chlorine,",106.0 mmol/L
+simulation63,6,24415 days 11:13:00,3H0800000019---84,"whole blood(with additive),blood gas analysis,ionized calcium,",1.16 mmol/L
+simulation63,6,24415 days 11:13:00,3H0800000019---85,"whole blood(with additive),blood gas analysis,glucose,",194.0 mg/dL
+simulation63,6,24415 days 11:13:00,3H0800000019---86,"whole blood(with additive),blood gas analysis,lactate,",0.5 mmol/L
+simulation63,6,24415 days 11:13:00,3H0800000019---88,"whole blood(with additive),blood gas analysis,bilirubin,",1.3 mg/dL
+simulation63,6,24415 days 12:46:00,3H0800000019---51,"whole blood(with additive),blood gas analysis,pH,",7.032 no_unit
+simulation63,6,24415 days 12:46:00,3H0800000019---52,"whole blood(with additive),blood gas analysis,pCO2,",127.0 mmHg
+simulation63,6,24415 days 12:46:00,3H0800000019---53,"whole blood(with additive),blood gas analysis,pO2,",48.9 mmHg
+simulation63,6,24415 days 12:46:00,3H0800000019---54,"whole blood(with additive),blood gas analysis,actual bicarbonate (actual HCO3-),",30.3 mmol/L
+simulation63,6,24415 days 12:46:00,3H0800000019---55,"whole blood(with additive),blood gas analysis,base excess,",-1.9 mmol/L
+simulation63,6,24415 days 12:46:00,3H0800000019---56,"whole blood(with additive),blood gas analysis,oxygen saturation,",73.7 %
+simulation63,6,24415 days 12:46:00,3H0800000019---58,"whole blood(with additive),blood gas analysis,hemoglobin,",8.3 g/dL
+simulation63,6,24415 days 12:46:00,3H0800000019---59,"whole blood(with additive),blood gas analysis,hematocrit,",25.9 %
+simulation63,6,24415 days 12:46:00,3H0800000019---60,"whole blood(with additive),blood gas analysis,total oxygen content,",8.5 mL/dL
+simulation63,6,24415 days 12:46:00,3H0800000019---62,"whole blood(with additive),blood gas analysis,carboxyhemoglobin,",1.4 %
+simulation63,6,24415 days 12:46:00,3H0800000019---63,"whole blood(with additive),blood gas analysis,methemoglobin,",1.7 %
+simulation63,6,24415 days 12:46:00,3H0800000019---80,"whole blood(with additive),blood gas analysis,body temperature,",37.0 °C
+simulation63,6,24415 days 12:46:00,3H0800000019---81,"whole blood(with additive),blood gas analysis,ionized sodium,",142.0 mmol/L
+simulation63,6,24415 days 12:46:00,3H0800000019---82,"whole blood(with additive),blood gas analysis,ionized pottasium,",5.8 mmol/L
+simulation63,6,24415 days 12:46:00,3H0800000019---83,"whole blood(with additive),blood gas analysis,ionized chlorine,",105.0 mmol/L
+simulation63,6,24415 days 12:46:00,3H0800000019---84,"whole blood(with additive),blood gas analysis,ionized calcium,",1.18 mmol/L
+simulation63,6,24415 days 12:46:00,3H0800000019---85,"whole blood(with additive),blood gas analysis,glucose,",178.0 mg/dL
+simulation63,6,24415 days 12:46:00,3H0800000019---86,"whole blood(with additive),blood gas analysis,lactate,",0.4 mmol/L
+simulation63,6,24415 days 12:46:00,3H0800000019---88,"whole blood(with additive),blood gas analysis,bilirubin,",1.6 mg/dL
+simulation63,6,24415 days 14:26:00,3H0800000019---51,"whole blood(with additive),blood gas analysis,pH,",7.077 no_unit
+simulation63,6,24415 days 14:26:00,3H0800000019---52,"whole blood(with additive),blood gas analysis,pCO2,",112.0 mmHg
+simulation63,6,24415 days 14:26:00,3H0800000019---53,"whole blood(with additive),blood gas analysis,pO2,",63.8 mmHg
+simulation63,6,24415 days 14:26:00,3H0800000019---54,"whole blood(with additive),blood gas analysis,actual bicarbonate (actual HCO3-),",30.2 mmol/L
+simulation63,6,24415 days 14:26:00,3H0800000019---55,"whole blood(with additive),blood gas analysis,base excess,",-1.8 mmol/L
+simulation63,6,24415 days 14:26:00,3H0800000019---56,"whole blood(with additive),blood gas analysis,oxygen saturation,",88.7 %
+simulation63,6,24415 days 14:26:00,3H0800000019---58,"whole blood(with additive),blood gas analysis,hemoglobin,",8.5 g/dL
+simulation63,6,24415 days 14:26:00,3H0800000019---59,"whole blood(with additive),blood gas analysis,hematocrit,",26.5 %
+simulation63,6,24415 days 14:26:00,3H0800000019---60,"whole blood(with additive),blood gas analysis,total oxygen content,",10.4 mL/dL
+simulation63,6,24415 days 14:26:00,3H0800000019---62,"whole blood(with additive),blood gas analysis,carboxyhemoglobin,",1.5 %
+simulation63,6,24415 days 14:26:00,3H0800000019---63,"whole blood(with additive),blood gas analysis,methemoglobin,",1.5 %
+simulation63,6,24415 days 14:26:00,3H0800000019---80,"whole blood(with additive),blood gas analysis,body temperature,",37.0 °C
+simulation63,6,24415 days 14:26:00,3H0800000019---81,"whole blood(with additive),blood gas analysis,ionized sodium,",143.0 mmol/L
+simulation63,6,24415 days 14:26:00,3H0800000019---82,"whole blood(with additive),blood gas analysis,ionized pottasium,",5.7 mmol/L
+simulation63,6,24415 days 14:26:00,3H0800000019---83,"whole blood(with additive),blood gas analysis,ionized chlorine,",106.0 mmol/L
+simulation63,6,24415 days 14:26:00,3H0800000019---84,"whole blood(with additive),blood gas analysis,ionized calcium,",1.21 mmol/L
+simulation63,6,24415 days 14:26:00,3H0800000019---85,"whole blood(with additive),blood gas analysis,glucose,",168.0 mg/dL
+simulation63,6,24415 days 14:26:00,3H0800000019---86,"whole blood(with additive),blood gas analysis,lactate,",0.8 mmol/L
+simulation63,6,24415 days 14:26:00,3H0800000019---88,"whole blood(with additive),blood gas analysis,bilirubin,",1.3 mg/dL
+simulation63,6,24415 days 15:41:00,3H0800000019---51,"whole blood(with additive),blood gas analysis,pH,",6.992 no_unit
+simulation63,6,24415 days 15:41:00,3H0800000019---52,"whole blood(with additive),blood gas analysis,pCO2,",147.0 mmHg
+simulation63,6,24415 days 15:41:00,3H0800000019---53,"whole blood(with additive),blood gas analysis,pO2,",84.5 mmHg
+simulation63,6,24415 days 15:41:00,3H0800000019---54,"whole blood(with additive),blood gas analysis,actual bicarbonate (actual HCO3-),",31.4 mmol/L
+simulation63,6,24415 days 15:41:00,3H0800000019---55,"whole blood(with additive),blood gas analysis,base excess,",-2.9 mmol/L
+simulation63,6,24415 days 15:41:00,3H0800000019---56,"whole blood(with additive),blood gas analysis,oxygen saturation,",91.6 %
+simulation63,6,24415 days 15:41:00,3H0800000019---58,"whole blood(with additive),blood gas analysis,hemoglobin,",8.6 g/dL
+simulation63,6,24415 days 15:41:00,3H0800000019---59,"whole blood(with additive),blood gas analysis,hematocrit,",26.8 %
+simulation63,6,24415 days 15:41:00,3H0800000019---60,"whole blood(with additive),blood gas analysis,total oxygen content,",10.9 mL/dL
+simulation63,6,24415 days 15:41:00,3H0800000019---62,"whole blood(with additive),blood gas analysis,carboxyhemoglobin,",1.9 %
+simulation63,6,24415 days 15:41:00,3H0800000019---63,"whole blood(with additive),blood gas analysis,methemoglobin,",1.7 %
+simulation63,6,24415 days 15:41:00,3H0800000019---80,"whole blood(with additive),blood gas analysis,body temperature,",37.0 °C
+simulation63,6,24415 days 15:41:00,3H0800000019---81,"whole blood(with additive),blood gas analysis,ionized sodium,",142.0 mmol/L
+simulation63,6,24415 days 15:41:00,3H0800000019---82,"whole blood(with additive),blood gas analysis,ionized pottasium,",5.9 mmol/L
+simulation63,6,24415 days 15:41:00,3H0800000019---83,"whole blood(with additive),blood gas analysis,ionized chlorine,",106.0 mmol/L
+simulation63,6,24415 days 15:41:00,3H0800000019---84,"whole blood(with additive),blood gas analysis,ionized calcium,",1.18 mmol/L
+simulation63,6,24415 days 15:41:00,3H0800000019---85,"whole blood(with additive),blood gas analysis,glucose,",176.0 mg/dL
+simulation63,6,24415 days 15:41:00,3H0800000019---86,"whole blood(with additive),blood gas analysis,lactate,",0.4 mmol/L
+simulation63,6,24415 days 15:41:00,3H0800000019---88,"whole blood(with additive),blood gas analysis,bilirubin,",1.4 mg/dL
+simulation63,6,24415 days 18:20:00,3H0800000019---51,"whole blood(with additive),blood gas analysis,pH,",6.984 no_unit
+simulation63,6,24415 days 18:20:00,3H0800000019---52,"whole blood(with additive),blood gas analysis,pCO2,",147.0 mmHg
+simulation63,6,24415 days 18:20:00,3H0800000019---53,"whole blood(with additive),blood gas analysis,pO2,",72.8 mmHg
+simulation63,6,24415 days 18:20:00,3H0800000019---54,"whole blood(with additive),blood gas analysis,actual bicarbonate (actual HCO3-),",33.3 mmol/L
+simulation63,6,24415 days 18:20:00,3H0800000019---55,"whole blood(with additive),blood gas analysis,base excess,",-3.6 mmol/L
+simulation63,6,24415 days 18:20:00,3H0800000019---56,"whole blood(with additive),blood gas analysis,oxygen saturation,",89.5 %
+simulation63,6,24415 days 18:20:00,3H0800000019---58,"whole blood(with additive),blood gas analysis,hemoglobin,",9.1 g/dL
+simulation63,6,24415 days 18:20:00,3H0800000019---59,"whole blood(with additive),blood gas analysis,hematocrit,",28.2 %
+simulation63,6,24415 days 18:20:00,3H0800000019---60,"whole blood(with additive),blood gas analysis,total oxygen content,",11.3 mL/dL
+simulation63,6,24415 days 18:20:00,3H0800000019---62,"whole blood(with additive),blood gas analysis,carboxyhemoglobin,",1.5 %
+simulation63,6,24415 days 18:20:00,3H0800000019---63,"whole blood(with additive),blood gas analysis,methemoglobin,",1.7 %
+simulation63,6,24415 days 18:20:00,3H0800000019---80,"whole blood(with additive),blood gas analysis,body temperature,",37.0 °C
+simulation63,6,24415 days 18:20:00,3H0800000019---81,"whole blood(with additive),blood gas analysis,ionized sodium,",143.0 mmol/L
+simulation63,6,24415 days 18:20:00,3H0800000019---82,"whole blood(with additive),blood gas analysis,ionized pottasium,",6.4 mmol/L
+simulation63,6,24415 days 18:20:00,3H0800000019---83,"whole blood(with additive),blood gas analysis,ionized chlorine,",106.0 mmol/L
+simulation63,6,24415 days 18:20:00,3H0800000019---84,"whole blood(with additive),blood gas analysis,ionized calcium,",1.2 mmol/L
+simulation63,6,24415 days 18:20:00,3H0800000019---85,"whole blood(with additive),blood gas analysis,glucose,",186.0 mg/dL
+simulation63,6,24415 days 18:20:00,3H0800000019---86,"whole blood(with additive),blood gas analysis,lactate,",0.4 mmol/L
+simulation63,6,24415 days 18:20:00,3H0800000019---88,"whole blood(with additive),blood gas analysis,bilirubin,",1.4 mg/dL
+simulation63,6,24415 days 23:03:00,3H0800000019---51,"whole blood(with additive),blood gas analysis,pH,",6.923 no_unit
+simulation63,6,24415 days 23:03:00,3H0800000019---52,"whole blood(with additive),blood gas analysis,pCO2,",142.0 mmHg
+simulation63,6,24415 days 23:03:00,3H0800000019---53,"whole blood(with additive),blood gas analysis,pO2,",62.0 mmHg
+simulation63,6,24415 days 23:03:00,3H0800000019---54,"whole blood(with additive),blood gas analysis,actual bicarbonate (actual HCO3-),",33.1 mmol/L
+simulation63,6,24415 days 23:03:00,3H0800000019---55,"whole blood(with additive),blood gas analysis,base excess,",-3.5 mmol/L
+simulation63,6,24415 days 23:03:00,3H0800000019---56,"whole blood(with additive),blood gas analysis,oxygen saturation,",87.0 %
+simulation63,6,24415 days 23:03:00,3H0800000019---58,"whole blood(with additive),blood gas analysis,hemoglobin,",9.3 g/dL
+simulation63,6,24415 days 23:03:00,3H0800000019---59,"whole blood(with additive),blood gas analysis,hematocrit,",28.8 %
+simulation63,6,24415 days 23:03:00,3H0800000019---60,"whole blood(with additive),blood gas analysis,total oxygen content,",11.2 mL/dL
+simulation63,6,24415 days 23:03:00,3H0800000019---62,"whole blood(with additive),blood gas analysis,carboxyhemoglobin,",1.6 %
+simulation63,6,24415 days 23:03:00,3H0800000019---63,"whole blood(with additive),blood gas analysis,methemoglobin,",1.8 %
+simulation63,6,24415 days 23:03:00,3H0800000019---80,"whole blood(with additive),blood gas analysis,body temperature,",37.0 °C
+simulation63,6,24415 days 23:03:00,3H0800000019---81,"whole blood(with additive),blood gas analysis,ionized sodium,",144.0 mmol/L
+simulation63,6,24415 days 23:03:00,3H0800000019---82,"whole blood(with additive),blood gas analysis,ionized pottasium,",7.1 mmol/L
+simulation63,6,24415 days 23:03:00,3H0800000019---83,"whole blood(with additive),blood gas analysis,ionized chlorine,",105.0 mmol/L
+simulation63,6,24415 days 23:03:00,3H0800000019---84,"whole blood(with additive),blood gas analysis,ionized calcium,",1.18 mmol/L
+simulation63,6,24415 days 23:03:00,3H0800000019---85,"whole blood(with additive),blood gas analysis,glucose,",184.0 mg/dL
+simulation63,6,24415 days 23:03:00,3H0800000019---86,"whole blood(with additive),blood gas analysis,lactate,",0.4 mmol/L
+simulation63,6,24415 days 23:03:00,3H0800000019---88,"whole blood(with additive),blood gas analysis,bilirubin,",1.6 mg/dL
+simulation63,3,24416 days 00:19:00,U071,"COVID-19, virus identified",
+simulation63,2,24416 days 01:29:00,[DSC],discharged,[DSC_EXP]

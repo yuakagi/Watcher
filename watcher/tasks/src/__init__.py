@@ -6,4 +6,6 @@ from .mc_all_admissions import (
     eval_mc_adm_lab_cooc,
     eval_mc_adm_lab_dist,
     eval_mc_adm_length_calib,
+    eval_mc_adm_set_mc_variability,
+    eval_mc_adm_sex_plausibility_bootstrap_inputs
 )

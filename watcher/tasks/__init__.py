@@ -6,4 +6,6 @@ from .src import (
     eval_mc_adm_length_calib,
     eval_mc_adm_corr,
     eval_mc_adm_count,
+    eval_mc_adm_set_mc_variability,
+    eval_mc_adm_sex_plausibility_bootstrap_inputs
 )
