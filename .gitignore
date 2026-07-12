@@ -2,12 +2,14 @@
 *_mc_adm.py
 init_db.py
 api_launcher_dev.py
+docker-compose.override.yml
 
 # Dev dirs
 **/notebooks/dev/
 **/mnt/
 
 # Common directories & files
+**/dummy
 **/.env
 **/.env.development
 **/docker-compose.override.yml

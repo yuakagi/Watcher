@@ -80,7 +80,6 @@ RECORD_PARAMS = {
         "source_csv": SRC_PATIENT_TABLE,
         "id_prefix": "PT",
         "columns": {
-            # Others
             COL_PID: {
                 "col_required": True,
                 "pandas_dtype": str,
@@ -89,7 +88,10 @@ RECORD_PARAMS = {
             COL_SEX: {
                 "col_required": True,
                 "pandas_dtype": str,
-                "sql_ops": f"CHAR(1) NOT NULL CHECK ({COL_SEX} IN ('M', 'F', 'O', 'U', 'A', 'N'))",
+                "sql_ops": (
+                    f"CHAR(1) NOT NULL CHECK "
+                    f"({COL_SEX} IN ('M', 'F', 'O', 'U', 'A', 'N'))"
+                ),
             },
             "first_name": {
                 "col_required": False,
@@ -106,9 +108,8 @@ RECORD_PARAMS = {
                 "pandas_dtype": date,
                 "sql_ops": "DATE NOT NULL",
             },
-            "index_fields": ["patient_id", COL_TIMESTAMP],
         },
-        # TODO: make 'COL_PID' primary key.
+        "index_fields": [COL_PID],
         "primary_key": COL_RECORD_ID,
         "foreign_key": None,
     },

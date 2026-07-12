@@ -81,7 +81,7 @@ def create_dataset(
                 val_size=0.1,
                 train_period="2011/01/01-2022/12/31",
                 test_period="2023/01/01-2023/12/31",
-                uodate_period="2022/01/01-2022/12/31",
+                update_period="2022/01/01-2022/12/31",
                 db_schema="public",
                 max_sequence_length=2048,
                 max_workers=10,
