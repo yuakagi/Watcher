@@ -1,0 +1,7 @@
+watcher.preprocess package
+==========================
+
+.. automodule:: watcher.preprocess
+   :members:
+   :undoc-members:
+   :show-inheritance:

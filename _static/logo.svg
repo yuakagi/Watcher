@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480.62 153.12">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #61ab46;
+      }
+
+      .cls-1, .cls-2 {
+        font-family: Arial-BoldMT, Arial;
+        font-size: 120px;
+        font-weight: 700;
+      }
+
+      .cls-2 {
+        fill: #266f37;
+      }
+    </style>
+  </defs>
+  <text class="cls-2" transform="translate(5.64 107.95)"><tspan x="0" y="0">Watcher</tspan></text>
+  <text class="cls-1" transform="translate(0 102.95)"><tspan x="0" y="0">Watcher</tspan></text>
+</svg>

@@ -1,0 +1,371 @@
+/* ======================================================
+   Font and Base Layout
+   ====================================================== */
+body {
+  font-family: 'Noto Serif JP', sans-serif;
+  color: #1a1a1a;
+  background-color: #ffffff;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: 'Noto Serif JP', sans-serif;
+  font-weight: 700;
+  color: #111;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 0.2em;
+}
+
+a {
+  color: #0172b3;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  color: #004e91;
+  text-decoration: underline;
+}
+
+a:visited {
+  color: #ca3f3f;
+}
+
+a:active {
+  color: #044f91;
+}
+
+code,
+pre {
+  font-family: 'Courier', monospace;
+  background-color: #f7f7f7;
+  color: #000;
+}
+
+/* ======================================================
+   Sidebar & Navbar Styling
+   ====================================================== */
+:root {
+  --bg-0: #f7f5ee;
+  --bg-1: #e3e0cd;
+  --bg-2: #c7c2a6;
+  --bg-3: #a8a486;
+  --bg-4: #898265;
+  --bg-5: #625f4a;
+}
+
+.wy-nav-side {
+  background: var(--bg-0) !important;
+  color: #4a4a4a;
+  font-family: 'Noto Serif JP', sans-serif;
+}
+
+/* Force logo size for both sidebar  */
+/* Sidebar logo: make the <img> actually take space */
+.wy-side-nav-search img.logo,
+.wy-side-nav-search a>img.logo,
+.wy-side-nav-search__logo img,
+.wy-side-nav-search__logo svg {
+  height: 90px !important;
+  width: auto !important;
+  display: block !important;
+  max-width: 100% !important;
+}
+
+.wy-side-nav-search {
+  background-color: var(--bg-1) !important;
+  border-bottom: 1px solid var(--bg-2) !important;
+  padding: 1.2em 1em;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333 !important;
+}
+
+.wy-side-nav-search>a,
+.wy-side-nav-search>a:visited {
+  color: #333 !important;
+}
+
+.wy-side-nav-search>a>img.logo {
+  margin-right: 8px;
+}
+
+.wy-menu-vertical header,
+.wy-menu-vertical .caption-text {
+  background: transparent !important;
+  padding: 1em 1em;
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+}
+
+.wy-menu-vertical li a {
+  background-color: transparent !important;
+  color: #4a4a4a !important;
+  padding: 1.2em 1em;
+  transition: background 0.2s ease;
+}
+
+.wy-menu-vertical li a:hover {
+  background-color: var(--bg-1) !important;
+  color: #000 !important;
+}
+
+.wy-menu-vertical li.current>a,
+.wy-menu-vertical li.on a {
+  background-color: var(--bg-2) !important;
+  font-weight: bold;
+  color: #000 !important;
+}
+
+.wy-menu-vertical li.current>ul li a {
+  background-color: var(--bg-0) !important;
+  color: #4a4a4a !important;
+}
+
+.wy-menu-vertical li.current>ul li a:hover {
+  background-color: var(--bg-1) !important;
+  color: #000 !important;
+}
+
+/* Add left padding to sidebar items */
+.wy-menu-vertical li.toctree-l1 > a {
+  padding-left: 2em !important;  /* top-level */
+}
+
+.wy-menu-vertical li.toctree-l2 > a {
+  padding-left: 3em !important;  /* nested one level */
+}
+
+.wy-menu-vertical li.toctree-l3 > a {
+  padding-left: 4em !important;    /* nested two levels */
+}
+.wy-menu-vertical p.caption {
+  padding: 0.5em 1em 0.3em 0.6em !important; /* top right bottom left */
+}
+.wy-menu-vertical p.caption .caption-text {
+  padding-left: 0 !important;
+}
+
+/* Optional: make the "+" toggle icon align better */
+.wy-menu-vertical li.toctree-l1 > a .toctree-expand,
+.wy-menu-vertical li.toctree-l2 > a .toctree-expand,
+.wy-menu-vertical li.toctree-l3 > a .toctree-expand {
+  margin-left: 0.5em;  /* keep the icon near the edge */
+  margin-right: 0.5em;
+}
+
+
+/* Sticky top bar on small screens */
+/* ---------- Mobile header: centered logo, small clickable area, sticky ---------- */
+@media (max-width: 768px) {
+  .wy-nav-top {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 45px;
+    background-color: #e3e0cd;
+    /* keep your bar color here (mobile only) */
+    border-bottom: 1px solid var(--bg-2);
+    /* thin bottom line in your palette */
+  }
+
+  /* Only the logo is clickable (bounded width, no distortion) */
+  .wy-nav-top a {
+    display: inline-block;
+    inline-size: min(160px, 60vw);
+    /* narrow, responsive click area */
+    block-size: 45px;
+    /* match bar height */
+    background: url("../_static/images/logos/logo.svg") no-repeat center / contain !important;
+    /* <-- path check */
+    text-indent: -9999px;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    /* neutralize theme padding */
+  }
+
+  /* Keep hamburger reachable on the left */
+  .wy-nav-top .fa-bars,
+  .wy-nav-top .wy-nav-top-toggle {
+    position: absolute;
+    left: 12px;
+    color: #333 !important;
+    /* dark gray/black */
+  }
+
+  /* Ancestor resets for sticky on iOS */
+  .wy-body-for-nav,
+  .wy-grid-for-nav,
+  .wy-nav-content-wrap {
+    overflow: visible !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+  }
+
+  /* Keep content below the bar */
+  .wy-nav-content {
+    padding-top: 58px;
+  }
+}
+
+/* ---------- iOS-only fixed fallback (if Safari still flakes) ---------- */
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 768px) {
+    .wy-nav-top {
+      position: fixed !important;
+      top: env(safe-area-inset-top, 0);
+      left: 0;
+      right: 0;
+      z-index: 4000;
+    }
+
+    .wy-nav-content-wrap {
+      padding-top: calc(45px + env(safe-area-inset-top, 0)) !important;
+    }
+
+    .wy-nav-content {
+      padding-top: 0 !important;
+    }
+
+    .wy-nav-side {
+      top: calc(45px + env(safe-area-inset-top, 0)) !important;
+    }
+  }
+}
+
+
+/* ======================================================
+   Function Boxes and Admonitions
+   ====================================================== */
+.viewcode-link,
+.viewcode-link:hover {
+  color: #625f4a !important;
+  font-weight: normal;
+  font-family: 'Noto Serif JP', sans-serif;
+  text-decoration: none;
+}
+
+/* Signature block styles */
+.sig {
+  font-family: 'Noto Serif JP', sans-serif !important;
+  background-color: var(--bg-0) !important;
+  border-top: 3px solid var(--bg-2) !important;
+  border-left: none !important;
+  box-shadow: none !important;
+  margin-left: 0 !important;
+  padding-left: 0.5em !important;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.sig,
+.sig-name,
+.sig-return {
+  color: #000 !important;
+  font-family: 'Noto Serif JP', sans-serif !important;
+}
+
+.sig-param,
+.sig-paren {
+  color: #49566d !important;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.toctree-wrapper li code,
+.toctree-wrapper li .pre,
+.toctree-wrapper li .xref.py,
+.toctree-wrapper li .xref.py.py-obj {
+  all: unset;
+  font-family: 'Noto Serif JP', sans-serif;
+  color: #0172b3;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.toctree-wrapper li .xref.py:hover,
+.toctree-wrapper li .xref.py.py-obj:hover {
+  color: #004e91;
+}
+
+div.admonition.warning {
+  background-color: #f9cfce !important;
+  border-left: 6px solid #de6866 !important;
+}
+
+div.admonition.warning>.admonition-title {
+  background-color: #eda4a7 !important;
+  color: #000;
+}
+
+div.admonition.note {
+  background-color: #c9e7fc !important;
+  border-left: 6px solid #5799d2 !important;
+}
+
+div.admonition.note>.admonition-title {
+  background-color: #9dccec !important;
+  color: #000;
+}
+
+/* ======================================================
+   Mobile Overflow & Readability Fixes
+   ====================================================== */
+
+/* Prevent nav content from overflowing on small screens */
+.wy-nav-content {
+  overflow-x: hidden;
+  padding-left: 1em;
+  padding-right: 1em;
+  max-width: 1200px;
+  /* Or 1000–1920px depending on your design */
+  width: 100%;
+  /* Allows shrinking on small screens */
+  margin: 0 auto;
+  /* Centers the content */
+  box-sizing: border-box;
+  /* Includes padding in width calculation */
+}
+
+
+/* Field lists like Parameters and Returns */
+.field-list,
+.docutils .field,
+dl.field-list {
+  overflow-x: auto;
+  word-wrap: break-word;
+  white-space: normal;
+  max-width: 100%;
+}
+
+/* Code blocks */
+pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-width: 100%;
+}
+
+/* Signature line overflow control */
+dl.class>dt,
+dl.function>dt {
+  overflow-x: auto;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+

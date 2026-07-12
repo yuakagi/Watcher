@@ -1,0 +1,7 @@
+watcher.models package
+======================
+
+.. automodule:: watcher.models
+   :members:
+   :undoc-members:
+   :show-inheritance:
